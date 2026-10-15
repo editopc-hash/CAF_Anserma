@@ -96,7 +96,7 @@ const DEFAULT_PRODUCTS = [
     badge: "Exclusivo",
     icon: "fa-solid fa-shirt",
     color: "from-neutral-700 to-neutral-900",
-    image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=600&q=80",
+    image: "assets/images/tienda/camiseta-negra-caf.png",
     status: "disponible"
   },
   {
@@ -343,12 +343,12 @@ function initHeroSlider() {
         <div class="absolute inset-0">
           <img src="${b.image}" alt="${altText}" class="w-full h-full object-cover">
           <!-- Dynamic Overlay with user defined opacity -->
-          <div class="absolute inset-0" style="background-color: rgba(9, 13, 22, ${op});"></div>
-          <div class="absolute inset-0 bg-gradient-to-t from-[#090d16] via-transparent to-transparent"></div>
+          <div class="absolute inset-0 pointer-events-none transition-opacity duration-300" style="background-color: rgba(9, 13, 22, ${op});"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-[#090d16] via-transparent to-transparent pointer-events-none transition-opacity duration-300" style="opacity: ${op};"></div>
         </div>
-        ${hasAnyContent ? `
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 flex items-center min-h-[560px] md:min-h-[640px]">
-          <div class="max-w-2xl space-y-6">
+        <div class="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 flex items-center min-h-[560px] md:min-h-[640px] ${hasAnyContent ? '' : 'pointer-events-none'}">
+          ${hasAnyContent ? `
+          <div class="max-w-2xl space-y-6 pointer-events-auto">
             ${hasBadge ? `
               <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full ${
                 b.badgeColor === 'orange' ? 'bg-orange-500/20 border-orange-500/40 text-orange-400' : 'bg-lime-500/20 border-lime-500/40 text-lime-400'
@@ -386,8 +386,8 @@ function initHeroSlider() {
               </div>
             ` : ''}
           </div>
+          ` : ''}
         </div>
-        ` : ''}
       </div>
     `;
   }).join('');

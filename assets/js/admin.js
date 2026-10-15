@@ -102,7 +102,7 @@ const DEFAULT_PRODUCTS = [
     badge: "Exclusivo",
     icon: "fa-solid fa-shirt",
     color: "from-neutral-700 to-neutral-900",
-    image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=600&q=80",
+    image: "assets/images/tienda/camiseta-negra-caf.png",
     status: "disponible"
   },
   {

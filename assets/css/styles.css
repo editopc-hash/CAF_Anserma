@@ -74,9 +74,19 @@ body {
 }
 
 /* Banner Slider transitions */
+.hero-slide-height {
+  min-height: 560px;
+}
+@media (min-width: 768px) {
+  .hero-slide-height {
+    min-height: 640px;
+  }
+}
+
 .slider-container {
   position: relative;
   overflow: hidden;
+  width: 100%;
 }
 
 .slide {
@@ -84,11 +94,18 @@ body {
   top: 0;
   left: 0;
   width: 100%;
+  min-height: 560px;
   height: 100%;
   opacity: 0;
   transition: opacity 0.8s ease-in-out, transform 0.8s ease-out;
   transform: scale(1.03);
   pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  .slide {
+    min-height: 640px;
+  }
 }
 
 .slide.active {
