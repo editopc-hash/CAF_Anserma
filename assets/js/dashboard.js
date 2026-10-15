@@ -120,19 +120,38 @@ function initUserSession() {
     try {
       currentUser = JSON.parse(stored);
     } catch (e) {
-      currentUser = { ...DEFAULT_USER };
+      currentUser = null;
     }
   } else {
-    currentUser = { ...DEFAULT_USER };
-    localStorage.setItem('caf_current_user', JSON.stringify(currentUser));
+    currentUser = null; // No iniciar sesión por defecto
   }
 
   // Check if we are on dashboard.html
   if (document.getElementById('dashboard-app')) {
+    checkDashboardAuth();
+  }
+}
+
+function checkDashboardAuth() {
+  const overlay = document.getElementById('dashboard-login-overlay');
+  const mainView = document.getElementById('dashboard-main-view');
+
+  if (!currentUser) {
+    if (overlay) overlay.classList.remove('hidden');
+    if (mainView) mainView.classList.add('hidden');
+  } else {
+    if (overlay) overlay.classList.add('hidden');
+    if (mainView) mainView.classList.remove('hidden');
     renderDashboard();
     setupDashboardEvents();
   }
 }
+
+window.loginAsDemoSocio = function() {
+  currentUser = { ...DEFAULT_USER };
+  localStorage.setItem('caf_current_user', JSON.stringify(currentUser));
+  checkDashboardAuth();
+};
 
 // ==========================================
 // RENDER COMPLETE DASHBOARD
@@ -682,6 +701,7 @@ function setupDashboardEvents() {
   if (logoutBtn) {
     logoutBtn.addEventListener('click', () => {
       if (confirm("¿Deseas cerrar tu sesión?")) {
+        localStorage.removeItem('caf_current_user');
         window.location.href = "index.html";
       }
     });

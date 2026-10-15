@@ -38,8 +38,32 @@
 </head>
 <body id="dashboard-app" class="bg-[#090d16] text-slate-100 antialiased selection:bg-lime-500 selection:text-black min-h-screen flex flex-col justify-between">
 
-  <!-- ================= TOP HEADER ================= -->
-  <header class="glass-nav sticky top-0 z-40 border-b border-slate-800">
+  <!-- ================= OVERLAY: INICIAR SESIÓN DE SOCIO ================= -->
+  <div id="dashboard-login-overlay" class="fixed inset-0 z-50 bg-[#090d16]/95 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="bg-slate-950 border border-slate-800 rounded-3xl max-w-md w-full p-8 shadow-2xl relative text-center">
+      <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-lime-400 to-lime-600 flex items-center justify-center text-black font-black text-2xl mx-auto shadow-lg shadow-lime-500/20 mb-3">
+        CAF
+      </div>
+      <h2 class="text-2xl font-black text-white">Portal de Socios CAF</h2>
+      <p class="text-xs text-slate-400 mt-1 mb-6">Inicia sesión para consultar tu progreso físico, estado de cuenta, rutinas y dieta.</p>
+
+      <div class="space-y-3">
+        <!-- Botón para entrar como socio demo -->
+        <button onclick="window.loginAsDemoSocio()" class="w-full py-3.5 bg-lime-500 hover:bg-lime-400 text-black font-black text-sm rounded-xl shadow-lg transition flex items-center justify-center gap-2">
+          <i class="fa-solid fa-user-check"></i>
+          <span>Entrar como Socio Demo (Carlos Andrés)</span>
+        </button>
+
+        <a href="index.html" class="w-full py-3 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 font-bold text-xs rounded-xl block transition">
+          <i class="fa-solid fa-arrow-left mr-1"></i> Volver al sitio web principal
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div id="dashboard-main-view" class="flex-1 flex flex-col">
+    <!-- ================= TOP HEADER ================= -->
+    <header class="glass-nav sticky top-0 z-40 border-b border-slate-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-20">
         
@@ -597,6 +621,7 @@
       </a>
     </div>
   </footer>
+  </div><!-- /#dashboard-main-view -->
 
   <!-- Scripts -->
   <script src="assets/js/dashboard.js"></script>

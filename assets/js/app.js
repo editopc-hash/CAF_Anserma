@@ -1287,7 +1287,32 @@ function initLoginModal() {
       }
 
       // Check if Socio or generic login
+      // Check if Client / Socio
       if (u) {
+        let demoUser = JSON.parse(localStorage.getItem('caf_current_user') || 'null');
+        if (!demoUser) {
+          demoUser = {
+            id: "CAF-USR-2026-089",
+            name: u.includes('@') ? "Carlos Andrés Ramírez" : u,
+            email: u.includes('@') ? u : "socio@caf.com",
+            phone: "312 456 7890",
+            cedula: "1.053.840.123",
+            confaCategory: "A",
+            goal: "Pérdida de peso & Definición",
+            initialWeight: 85.0,
+            currentWeight: 78.4,
+            targetWeight: 74.0,
+            height: 175,
+            membershipPlan: "Confa Categoría A",
+            membershipPrice: 55000,
+            paymentMethod: "Nequi",
+            paymentMethodDetails: "Nequi terminada en 4589",
+            balanceDue: 0,
+            nextPaymentDate: "2026-10-28",
+            membershipStatus: "Activo (Al día)"
+          };
+        }
+        localStorage.setItem('caf_current_user', JSON.stringify(demoUser));
         window.location.href = 'dashboard.html';
         return;
       }
@@ -1310,6 +1335,108 @@ function initLoginModal() {
 
   if (demoSocioBtn) {
     demoSocioBtn.addEventListener('click', () => {
+      const demoUser = {
+        id: "CAF-USR-2026-089",
+        name: "Carlos Andrés Ramírez",
+        email: "carlos.ramirez@caf.com",
+        phone: "312 456 7890",
+        cedula: "1.053.840.123",
+        confaCategory: "A",
+        goal: "Pérdida de peso & Definición",
+        initialWeight: 85.0,
+        currentWeight: 78.4,
+        targetWeight: 74.0,
+        height: 175,
+        membershipPlan: "Confa Categoría A",
+        membershipPrice: 55000,
+        paymentMethod: "Nequi",
+        paymentMethodDetails: "Nequi terminada en 4589",
+        balanceDue: 0,
+        nextPaymentDate: "2026-10-28",
+        membershipStatus: "Activo (Al día)",
+        weightLogs: [
+          { date: "01 Sep 2026", weight: 85.0 },
+          { date: "08 Sep 2026", weight: 84.1 },
+          { date: "15 Sep 2026", weight: 82.8 },
+          { date: "22 Sep 2026", weight: 81.5 },
+          { date: "29 Sep 2026", weight: 80.2 },
+          { date: "06 Oct 2026", weight: 79.1 },
+          { date: "13 Oct 2026", weight: 78.4 }
+        ],
+        paymentHistory: [
+          { id: "REC-2026-104", date: "28 Sep 2026", concept: "Mensualidad CAF - Confa Cat A", amount: 55000, method: "Nequi", status: "Aprobado" },
+          { id: "REC-2026-078", date: "28 Ago 2026", concept: "Mensualidad CAF - Confa Cat A", amount: 55000, method: "Nequi", status: "Aprobado" },
+          { id: "REC-2026-042", date: "28 Jul 2026", concept: "Mensualidad CAF - Confa Cat A", amount: 55000, method: "Efectivo Taquilla", status: "Aprobado" },
+          { id: "REC-2026-015", date: "28 Jun 2026", concept: "Matrícula e Inscripción Convenio", amount: 20000, method: "Daviplata", status: "Aprobado" }
+        ],
+        assignedRoutine: {
+          title: "Programa Reducción de Peso & Hipertrofia Funcional",
+          trainer: "Víctor Zamorano",
+          days: [
+            {
+              day: "Lunes - Empuje (Pecho, Hombro y Tríceps)",
+              items: [
+                { name: "Press de banca plano con mancuernas", sets: "4x12", done: true },
+                { name: "Press inclinado en multipower", sets: "4x10", done: true },
+                { name: "Elevaciones laterales para deltoides", sets: "4x15", done: false },
+                { name: "Fondos en paralelas o máquina asistida", sets: "3x12", done: false },
+                { name: "Caminadora con inclinación al 10%", sets: "20 min", done: false }
+              ]
+            },
+            {
+              day: "Miércoles - Tracción (Espalda, Bíceps y Core)",
+              items: [
+                { name: "Jalón al pecho agarre cerrado neutro", sets: "4x12", done: false },
+                { name: "Remo con mancuerna a una mano", sets: "4x10 por lado", done: false },
+                { name: "Pájaros posteriores en polea", sets: "3x15", done: false },
+                { name: "Curl de bíceps con barra Z", sets: "4x12", done: false },
+                { name: "Circuito de planchas y elevación de piernas", sets: "4 rondas", done: false }
+              ]
+            },
+            {
+              day: "Viernes - Tren Inferior & Acondicionamiento",
+              items: [
+                { name: "Sentadilla profunda en rack", sets: "4x10", done: false },
+                { name: "Prensa de 45° con buena bajada", sets: "4x12", done: false },
+                { name: "Hip Thrust con barra", sets: "4x12", done: false },
+                { name: "Curl femoral en máquina", sets: "4x15", done: false },
+                { name: "WOD Funcional de alta intensidad", sets: "15 min", done: false }
+              ]
+            }
+          ]
+        },
+        assignedDiet: {
+          calories: "2,150 kcal",
+          protein: "160g",
+          carbs: "190g",
+          fats: "55g",
+          waterLiters: "3.2 Litros al día",
+          notes: "Plan enfocado en reducción de grasa manteniendo masa muscular. Acompañamiento por instructores de sala CAF Anserma.",
+          meals: [
+            {
+              meal: "Desayuno (7:00 AM)",
+              desc: "3 huevos revueltos con tomate y cebolla, 1 arepa campesina sin mantequilla, café con stevia, 1 porción de papaya."
+            },
+            {
+              meal: "Media Mañana (10:30 AM)",
+              desc: "1 yogur griego natural sin azúcar + 1 puñado de frutos secos."
+            },
+            {
+              meal: "Almuerzo (1:00 PM)",
+              desc: "150g de pechuga a la plancha, 1 taza de arroz blanco, ensalada verde con aceite de oliva."
+            },
+            {
+              meal: "Pre-Entreno / Snack (4:30 PM)",
+              desc: "1 batido de Proteína Whey CAF con agua + 1 banano."
+            },
+            {
+              meal: "Cena (8:00 PM)",
+              desc: "1 lata de atún en agua o 130g de tilapia a la plancha, vegetales salteados y té caliente."
+            }
+          ]
+        }
+      };
+      localStorage.setItem('caf_current_user', JSON.stringify(demoUser));
       window.location.href = 'dashboard.html';
     });
   }
