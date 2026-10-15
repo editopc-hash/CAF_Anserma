@@ -6,82 +6,76 @@ Diseñado y optimizado para **GitHub Pages** (100% estático, sin requerir servi
 
 ---
 
-## 🚀 Características Implementadas
+## 🔑 Credenciales de Acceso
 
-1. **Banners de Alto Impacto (Hero Slider)**:
-   - Slider interactivo con autoplay y transiciones suaves con los dos banners oficiales:
-     - `assets/images/banner/banner-anserma-cambio.png` (*"En Anserma, tu cambio comienza hoy"*)
-     - `assets/images/banner/banner-cambia-cuerpo.png` (*"Cambia tu cuerpo, cambia tu mente"*)
-   - Botones CTA directos hacia WhatsApp, planes y generador de rutinas.
+### 🛡️ 1. Usuario Administrador (Panel Completo)
+- **Usuario:** `123456`
+- **Contraseña:** `123456`
+- **Acceso:** [admin.html](admin.html) o mediante el botón *"Admin"* / *"Mi Cuenta"* en la barra de navegación de [index.html](index.html).
 
-2. **Galería Fotográfica Interactiva**:
-   - 8 fotografías de alta definición categorizadas: Musculación & Pesas, CrossFit & Calistenia, Rumbaterapia & Clases, Cardio & Reducción, y Plan Pareja.
-   - Filtros dinámicos por disciplina.
-   - Modal Lightbox para visualización en pantalla completa con navegación por teclado y flechas.
+#### Funcionalidades del Administrador:
+1. **Control de Finanzas e Inscritos:**
+   - Visualización de ingresos mensuales desglosados: **Mensualidades Gym**, **Compras Tienda (Ropa/Suplementos)**, **Otros Conceptos (Inscripciones/Pases día)** y **Total Mensual Recaudado**.
+   - Tabla completa de socios inscritos con cálculo dinámico de:
+     - Fecha en que se le vence el plan.
+     - Días vencidos del plan (*ej. "Vencido hace 5 días"* en rojo con ícono de alerta).
+     - Días restantes (*ej. "Al día (15 días restantes)"* o *"Por vencer (2 días)"*).
+   - Botón directo de **WhatsApp con mensaje pre-redactado** para cobranza y recordatorio de pago a socios vencidos o por vencer.
+   - Botón para **Renovar 30 días** la membresía con un solo clic.
+   - Formulario para **Inscribir nuevos socios**.
+2. **Editor de Banners (Personalización y Opacidad):**
+   - Subida de imágenes personalizadas (soporta carga directa desde el computador con vista previa inmediata).
+   - Habilitar y deshabilitar banners individuales.
+   - **Control deslizante de opacidad del banner (slider de 0% a 100%):** permite ajustar la transparencia del sombreado oscuro desde transparente total hasta oscuro intenso, con vista previa en tiempo real.
+   - Edición de textos (Título, Subtítulo, Badge) y botones de acción (Texto y Enlaces).
+3. **Editor de Tienda (Ropa Deportiva y Suplementos):**
+   - Agregar nuevos productos con precio en COP, categoría, badge promocional y descripción.
+   - Editar precios, descripciones y nombres de productos existentes.
+   - Modificar estado de stock (Disponible / Agotado) con un clic.
+   - Eliminar productos del catálogo.
 
-3. **Tu Rutina Personalizada (Generador Inteligente)**:
-   - Creador interactivo según:
-     - Objetivo (Reducción de peso, Hipertrofia/Masa muscular, CrossFit & Funcional)
-     - Nivel actual (Principiante, Intermedio, Avanzado)
-     - Días semanales disponibles (3, 4, 5 o 6 días)
-   - Generación instantánea de series, repeticiones, descansos y tips nutricionales del entrenador Víctor Zamorano.
-   - Posibilidad de guardar la rutina directamente en el Dashboard de socio y consultarla vía WhatsApp.
+---
 
-4. **Horario General y Horario de Clases Grupales**:
-   - **Horario General**:
-     - Lunes a Viernes: 5:00 AM – 12:00 PM y 2:00 PM – 9:30 PM
-     - Sábados: 6:00 AM – 4:00 PM
-     - Domingos y Festivos: 7:00 AM – 1:00 PM
-   - Indicador en vivo (`¡ABIERTO AHORA!` / `Cerrado en este momento`) calculado en tiempo real según el reloj del dispositivo.
-   - Programación de clases por días: Rumbaterapia, Krav Maga (Defensa personal), CrossFit WODs y Musculación guiada.
-   - Botón directo de reserva de cupo por WhatsApp.
+### 👤 2. Usuario Socio (Portal de Alumno)
+- **Usuario:** `carlos.ramirez@caf.com` (o botón de 1 clic *"Entrar como Socio Demo"* en el modal de login).
+- **Acceso:** [dashboard.html](dashboard.html).
+- **Funcionalidades:**
+  - Control de peso inicial (85 kg) vs actual (78.4 kg) y cálculo de -6.6 kg bajados.
+  - Gráfica interactiva de evolución de peso semanal (**Chart.js**) con registro de nuevas pesadas.
+  - Ver cuánto debe (saldo al día $0 COP) y próximo corte.
+  - Su rutina asignada (checklist interactivo por días con notas de Víctor Zamorano).
+  - Su plan de dieta y nutrición con calculadora de hidratación diaria.
+  - Actualizar datos personales y cambiar de plan (Confa A, B, C, Pareja, Particular).
+  - Consultar historial de pagos y ver recibo oficial imprimible.
 
-5. **Tienda Oficial: Ropa Deportiva y Suplementos**:
-   - Catálogo de productos: Proteínas Whey, Creatina Monohidratada Creapure, Pre-Entrenos, BCAA, Camisetas Oversize oficiales, Licras de compresión, Tops y Shakers.
-   - Filtros por categoría y buscador instantáneo en vivo.
-   - Carrito de compras deslizante con cálculo de subtotales en Pesos Colombianos (COP).
-   - Botón de checkout que redacta automáticamente el pedido y lo envía formateado a WhatsApp.
+---
 
-6. **Planes y Tarifas Completas (Investigación Confa y Particulares)**:
-   - **Convenio Confa**:
-     - Categoría A: **$55.000 COP** / mes
-     - Categoría B: **$80.000 COP** / mes
-     - Categoría C: **$119.000 COP** / mes
-     - Particular (No afiliado): **$131.000 COP** / mes
-     - Planes Fin de Semana Confa: desde $15.000 a $44.000 COP.
-   - **Plan Pareja Dúo CAF**: $220.000 COP ($110.000 COP por persona, ahorro de $42.000 COP).
-   - **Tiquetera 12 Días**: $75.000 COP (vigencia flexible de 60 días).
-   - **Pase por Día**: $10.000 COP.
-   - Calculadora rápida de ahorro Confa interactiva.
+## 🚀 Características del Sitio Público (`index.html`)
 
-7. **Convenio Confa (Sección Exclusiva)**:
-   - Explicación detallada del convenio entre Confa Caldas y el CAF Anserma.
-   - Requisitos para acceder a la tarifa subsidiada y beneficios para la familia.
-
-8. **Contáctenos & Botón Flotante de WhatsApp**:
-   - Formulario de contacto que genera automáticamente un mensaje personalizado hacia WhatsApp.
-   - Ubicación exacta: Piso 2 de la Carrera 5 # 22 - 32 (Avenida Libertador), Anserma, Caldas.
-   - Botón flotante de WhatsApp siempre visible.
-
-9. **Inicio de Sesión y Dashboard de Socio (`dashboard.html`)**:
-   - Persistencia de datos mediante `localStorage`.
-   - Incluye cuenta de demostración precargada:
-     - **Socio**: Carlos Andrés Ramírez
-     - **Cédula**: 1.053.840.123 (Confa Categoría A)
-   - Funcionalidades del Dashboard:
-     - **Control de peso**: Peso inicial (85.0 kg), actual (78.4 kg) y cálculo de -6.6 kg bajados.
-     - **Gráfica de evolución semanal**: Gráfico interactivo con **Chart.js** con meta objetivo y registro de nuevas pesadas en tiempo real.
-     - **Ver cuánto debe**: Estado de cuenta al día ($0 COP) o cuota pendiente con simulación de pago.
-     - **Su rutina asignada**: Checklist interactivo por días para tachar ejercicios completados.
-     - **Su plan de dieta y nutrición**: Desglose calórico, comidas diarias y cálculo de hidratación diaria.
-     - **Actualizar datos personales**: Nombre, correo, teléfono, cédula, categoría Confa, peso inicial, actual y meta.
-     - **Consultar historial de pagos**: Comprobantes con recibo digital oficial imprimible.
-     - **Modificar forma de pago**: Nequi, Daviplata, Tarjeta o Taquilla Confa.
-     - **Cambiar plan**: Modal interactivo para cambiar de tarifa inmediatamente.
-
-10. **Listo para Subir a GitHub Pages**:
-    - Rutas relativas para todos los recursos (`assets/...`).
-    - Nombres de archivos limpios y compatibles con servidores Linux de GitHub.
+1. **Banners de Alto Impacto (Hero Slider Dinámico):**
+   - Sincronizado en tiempo real con el panel administrador (refleja cambios de imagen, textos y nivel de opacidad).
+   - Incluye los banners oficiales de la sede Anserma.
+2. **Galería Fotográfica:**
+   - 8 imágenes en alta resolución con filtros por disciplina y visor **Lightbox**.
+3. **Tu Rutina Personalizada:**
+   - Generador inteligente con plan detallado de ejercicios, series, repeticiones y descansos.
+4. **Horarios y Clases Grupales:**
+   - Insignia en tiempo real con horario local (*¡Abierto ahora!* / *Cerrado*).
+   - Programación de Rumbaterapia, Krav Maga (Defensa personal) y CrossFit WODs.
+5. **Tienda Oficial:**
+   - Venta de ropa deportiva y suplementos con carrito de compras deslizante y checkout a WhatsApp.
+6. **Planes y Tarifas Completas:**
+   - Convenio Confa (Cat A: $55.000, Cat B: $80.000, Cat C: $119.000, Particular: $131.000, Fin de semana desde $15.000).
+   - Plan Pareja Dúo ($220.000) y Tiquetera 12 Días ($75.000).
+   - Calculadora de ahorro Confa.
+7. **Convenio Confa:**
+   - Explicación del subsidio y proceso de verificación con cédula.
+8. **Contáctenos y Ubicación:**
+   - Cra 5 # 22-32 Piso 2 (Avenida Libertador), Anserma, Caldas.
+   - Formulario de contacto directo a WhatsApp.
+9. **Botón Flotante de WhatsApp y Flechita para Subir:**
+   - Botón de WhatsApp en la esquina inferior derecha.
+   - **Flechita flotante encima del icono de WhatsApp:** al hacer clic, sube suavemente hasta la parte inicial de la web.
 
 ---
 
@@ -91,18 +85,20 @@ Diseñado y optimizado para **GitHub Pages** (100% estático, sin requerir servi
 d:\antigrativy\CAF\
 │
 ├── index.html                   # Página principal (Landing, Banners, Galería, Tienda, Planes, Confa, Contacto)
-├── dashboard.html               # Panel de socio (Progreso, Gráfica, Pagos, Dieta, Rutina, Datos personales)
+├── admin.html                   # Panel Administrador (123456 / 123456)
+├── dashboard.html               # Panel Socio (Progreso, Gráfica, Pagos, Dieta, Rutina)
 ├── README.md                    # Documentación y guía de despliegue
 │
 ├── assets/
 │   ├── css/
-│   │   └── styles.css           # Estilos personalizados, modo oscuro, fuentes Teko y Plus Jakarta
+│   │   └── styles.css           # Estilos personalizados, botón subir, modo oscuro y animaciones
 │   ├── js/
-│   │   ├── app.js               # Lógica de la página principal (Slider, Carrito, Galería, Rutinas)
-│   │   └── dashboard.js         # Lógica del dashboard de usuario (Chart.js, LocalStorage, Pagos)
+│   │   ├── app.js               # Lógica de la web principal, slider, carrito y flechita de scroll
+│   │   ├── admin.js             # Lógica del panel administrador (Finanzas, días vencidos, editor banners y tienda)
+│   │   └── dashboard.js         # Lógica del dashboard de socio (Chart.js, pagos y checklist)
 │   └── images/
-│       ├── banner/              # Banners web optimizados
-│       └── galeria/             # 8 Fotografías de las instalaciones
+│       ├── banner/              # Banners oficiales
+│       └── galeria/             # 8 Fotografías de la sede
 │
 └── imágenes/                    # Carpeta original provista por el usuario
 ```
@@ -113,27 +109,22 @@ d:\antigrativy\CAF\
 
 1. Abre tu terminal en la carpeta del proyecto:
    ```bash
-   git init
    git add .
-   git commit -m "Sitio web oficial CAF Anserma Caldas"
+   git commit -m "Agregar panel de administrador, editor de banners, tienda y botón subir"
    ```
 
-2. Crea un repositorio en tu cuenta de GitHub (ejemplo: `caf-anserma`) y enlázalo:
+2. Si aún no has enlazado tu repositorio remoto de GitHub:
    ```bash
    git branch -M main
    git remote add origin https://github.com/TU-USUARIO/caf-anserma.git
    git push -u origin main
    ```
 
-3. **Activar GitHub Pages**:
-   - En tu repositorio de GitHub, haz clic en **Settings** (Configuración).
-   - En el menú lateral izquierdo, haz clic en **Pages**.
-   - En **Source** (Origen), selecciona:
-     - Branch: `main`
-     - Folder: `/ (root)`
-   - Haz clic en **Save** (Guardar).
-   - ¡En 1 a 2 minutos tu sitio estará en vivo en: `https://TU-USUARIO.github.io/caf-anserma/`!
+3. **Activar GitHub Pages:**
+   - En tu repositorio de GitHub ve a **Settings** > **Pages**.
+   - En **Build and deployment > Branch**, selecciona `main` y la carpeta `/ (root)`.
+   - Haz clic en **Save**. En 1 a 2 minutos estará disponible en `https://TU-USUARIO.github.io/caf-anserma/`.
 
 ---
 
-*Desarrollado con dedicación para el CAF Anserma Caldas - Centro de Entrenamiento Víctor Zamorano.*
+*CAF Anserma Caldas - Centro de Entrenamiento Víctor Zamorano.*

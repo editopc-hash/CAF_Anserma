@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administrador | CAF Anserma Caldas</title>
+  
+  <link rel="icon" type="image/png" href="assets/images/banner/banner-anserma-cambio.png">
+
+  <!-- Tailwind CSS & FontAwesome -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            caf: {
+              lime: '#84cc16',
+              dark: '#090d16',
+              card: '#111827',
+              orange: '#f97316',
+              cyan: '#06b6d4'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#090d16] text-slate-100 antialiased selection:bg-lime-500 selection:text-black min-h-screen flex flex-col justify-between">
+
+  <!-- ================= LOGIN OVERLAY (SI NO ESTÁ AUTENTICADO) ================= -->
+  <div id="admin-login-overlay" class="fixed inset-0 z-50 bg-[#090d16]/95 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-slate-950 border border-slate-800 rounded-3xl max-w-md w-full p-8 shadow-2xl relative">
+      <div class="text-center mb-6">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-lime-400 to-lime-600 flex items-center justify-center text-black font-black text-2xl mx-auto shadow-lg shadow-lime-500/20 mb-3">
+          CAF
+        </div>
+        <h2 class="text-2xl font-black text-white">Panel de Administración</h2>
+        <p class="text-xs text-slate-400 mt-1">Centro de Acondicionamiento Físico Víctor Zamorano</p>
+      </div>
+
+      <div id="admin-login-error" class="hidden mb-4 p-3 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-400 text-xs font-semibold text-center">
+        <!-- Error text -->
+      </div>
+
+      <form id="admin-login-form" class="space-y-4">
+        <div>
+          <label for="admin-user-input" class="block text-xs font-bold text-slate-300 uppercase mb-1">Usuario Administrador:</label>
+          <div class="relative">
+            <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"><i class="fa-solid fa-user-shield"></i></span>
+            <input id="admin-user-input" type="text" required placeholder="123456" value="123456" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl pl-9 pr-4 py-3 text-sm focus:outline-none focus:border-lime-500 font-mono">
+          </div>
+        </div>
+
+        <div>
+          <label for="admin-pass-input" class="block text-xs font-bold text-slate-300 uppercase mb-1">Contraseña:</label>
+          <div class="relative">
+            <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"><i class="fa-solid fa-key"></i></span>
+            <input id="admin-pass-input" type="password" required placeholder="123456" value="123456" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl pl-9 pr-4 py-3 text-sm focus:outline-none focus:border-lime-500 font-mono">
+          </div>
+        </div>
+
+        <button type="submit" class="w-full py-3.5 bg-lime-500 hover:bg-lime-400 text-black font-black text-sm rounded-xl shadow-lg transition flex items-center justify-center gap-2">
+          <i class="fa-solid fa-right-to-bracket"></i>
+          <span>INGRESAR AL PANEL DE CONTROL</span>
+        </button>
+
+        <div class="pt-3 border-t border-slate-900 text-center">
+          <a href="index.html" class="text-xs text-slate-400 hover:text-white transition">
+            <i class="fa-solid fa-arrow-left mr-1"></i> Regresar al sitio web principal
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MAIN ADMIN APP ================= -->
+  <div id="admin-main-app" class="hidden flex-1 flex flex-col">
+    
+    <!-- Header -->
+    <header class="glass-nav sticky top-0 z-40 border-b border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-20">
+          
+          <div class="flex items-center gap-4">
+            <div class="flex items-center gap-2.5">
+              <div class="w-10 h-10 rounded-xl bg-lime-500 flex items-center justify-center text-black font-black text-xl shadow-md">
+                CAF
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="text-base font-black text-white">PANEL ADMINISTRADOR</span>
+                  <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-lime-500/20 text-lime-400 border border-lime-500/30">USR: 123456</span>
+                </div>
+                <p class="text-[10px] text-slate-400">Anserma Caldas · Víctor Zamorano</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <a href="index.html" target="_blank" class="px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-300 hover:text-lime-400 hover:border-lime-500/40 transition flex items-center gap-1.5">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              <span class="hidden sm:inline">Ver Sitio Web</span>
+            </a>
+            <button id="admin-logout-btn" class="px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-rose-400 hover:bg-rose-500/10 hover:border-rose-500/40 transition flex items-center gap-1.5">
+              <i class="fa-solid fa-power-off"></i>
+              <span class="hidden sm:inline">Cerrar Sesión</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-1">
+      
+      <!-- Admin Navigation Tabs -->
+      <div class="flex flex-wrap items-center gap-2.5 mb-8 bg-slate-950 p-2 rounded-2xl border border-slate-800/80">
+        <button onclick="window.switchAdminSection('finanzas')" id="admin-tab-btn-finanzas" class="admin-tab-btn px-5 py-3 rounded-xl text-xs sm:text-sm font-bold bg-lime-500 text-black transition flex items-center gap-2">
+          <i class="fa-solid fa-users-gear text-base"></i>
+          <span>1. Finanzas & Socios Inscritos</span>
+        </button>
+        <button onclick="window.switchAdminSection('banners')" id="admin-tab-btn-banners" class="admin-tab-btn px-5 py-3 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-300 hover:text-white transition flex items-center gap-2">
+          <i class="fa-solid fa-images text-base"></i>
+          <span>2. Editor de Banners & Opacidad</span>
+        </button>
+        <button onclick="window.switchAdminSection('tienda')" id="admin-tab-btn-tienda" class="admin-tab-btn px-5 py-3 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-300 hover:text-white transition flex items-center gap-2">
+          <i class="fa-solid fa-store text-base"></i>
+          <span>3. Editor Ropa Deportiva & Suplementos</span>
+        </button>
+      </div>
+
+      <!-- ================= SECTION 1: FINANZAS & SOCIOS ================= -->
+      <section id="admin-section-finanzas" class="admin-tab-content space-y-8">
+        
+        <!-- Financial KPI Cards -->
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h2 class="text-xl sm:text-2xl font-black text-white uppercase">Resumen de Ingresos Mensuales</h2>
+              <p class="text-xs text-slate-400">Total generado mensual por membresías de gym, compras de tienda y otros conceptos.</p>
+            </div>
+            <button id="admin-edit-finances-btn" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl border border-slate-700 transition flex items-center gap-1.5">
+              <i class="fa-solid fa-sliders text-lime-400"></i> Ajustar Ventas Tienda/Otros
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            
+            <!-- Total Mensual Recaudado -->
+            <div class="bg-gradient-to-br from-slate-900 to-slate-950 border-2 border-lime-500/50 p-5 rounded-2xl shadow-xl shadow-lime-500/5">
+              <span class="text-xs text-lime-400 font-extrabold uppercase tracking-wider block">TOTAL RECAUDADO MENSUAL</span>
+              <span id="admin-total-revenue" class="text-2xl sm:text-3xl font-black text-white mt-1 block">$0 COP</span>
+              <p class="text-[11px] text-slate-400 mt-2">Suma de mensualidades gym, tienda y otros.</p>
+            </div>
+
+            <!-- Ingresos por Gym -->
+            <div class="bg-slate-900/90 border border-slate-800 p-5 rounded-2xl">
+              <div class="flex items-center justify-between">
+                <span class="text-xs text-slate-400 font-bold uppercase">Mensualidades Gym</span>
+                <span class="w-7 h-7 rounded-lg bg-lime-500/10 text-lime-400 flex items-center justify-center text-xs"><i class="fa-solid fa-dumbbell"></i></span>
+              </div>
+              <span id="admin-gym-revenue" class="text-xl font-black text-lime-400 mt-2 block">$0 COP</span>
+              <p class="text-[11px] text-slate-400 mt-1">Confa (A, B, C), Particular y Parejas.</p>
+            </div>
+
+            <!-- Ingresos por Tienda -->
+            <div class="bg-slate-900/90 border border-slate-800 p-5 rounded-2xl">
+              <div class="flex items-center justify-between">
+                <span class="text-xs text-slate-400 font-bold uppercase">Ventas Tienda</span>
+                <span class="w-7 h-7 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-xs"><i class="fa-solid fa-bottle-droplet"></i></span>
+              </div>
+              <span id="admin-store-revenue" class="text-xl font-black text-cyan-400 mt-2 block">$0 COP</span>
+              <p class="text-[11px] text-slate-400 mt-1">Ropa deportiva, proteínas y accesorios.</p>
+            </div>
+
+            <!-- Otros Ingresos -->
+            <div class="bg-slate-900/90 border border-slate-800 p-5 rounded-2xl">
+              <div class="flex items-center justify-between">
+                <span class="text-xs text-slate-400 font-bold uppercase">Otros Conceptos</span>
+                <span class="w-7 h-7 rounded-lg bg-orange-500/10 text-orange-400 flex items-center justify-center text-xs"><i class="fa-solid fa-ticket"></i></span>
+              </div>
+              <span id="admin-other-revenue" class="text-xl font-black text-orange-400 mt-2 block">$0 COP</span>
+              <p class="text-[11px] text-slate-400 mt-1">Inscripciones, pases por día y tiqueteras.</p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Membership Status Counters -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl text-center">
+            <span class="text-[10px] text-slate-400 uppercase tracking-wider block">Total Inscritos</span>
+            <span id="admin-total-members" class="text-2xl font-black text-white">0</span>
+          </div>
+          <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl text-center">
+            <span class="text-[10px] text-emerald-400 uppercase tracking-wider block">Planes Al Día</span>
+            <span id="admin-members-aldia" class="text-2xl font-black text-emerald-400">0</span>
+          </div>
+          <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl text-center">
+            <span class="text-[10px] text-amber-400 uppercase tracking-wider block">Por Vencer (&le; 3 días)</span>
+            <span id="admin-members-porvencer" class="text-2xl font-black text-amber-400">0</span>
+          </div>
+          <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl text-center">
+            <span class="text-[10px] text-rose-400 uppercase tracking-wider block">Planes Vencidos</span>
+            <span id="admin-members-vencidos" class="text-2xl font-black text-rose-400">0</span>
+          </div>
+        </div>
+
+        <!-- Members Table and Search/Filter Bar -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-7">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-800">
+            <div>
+              <h3 class="text-lg font-black text-white uppercase">Control de Socios Inscritos y Vencimientos</h3>
+              <p class="text-xs text-slate-400">Monitorea cuándo se vence el plan de cada socio y los días vencidos.</p>
+            </div>
+            
+            <button id="admin-open-add-member-btn" class="px-4 py-2.5 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-xs rounded-xl shadow-md transition flex items-center gap-2 shrink-0">
+              <i class="fa-solid fa-user-plus"></i> Inscribir Nuevo Socio
+            </button>
+          </div>
+
+          <!-- Filters -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
+            <div class="sm:col-span-2 relative">
+              <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+              <input id="admin-member-search" type="text" placeholder="Buscar por nombre, cédula o teléfono..." class="w-full bg-slate-950 border border-slate-800 text-white rounded-xl pl-9 pr-4 py-2.5 text-xs focus:outline-none focus:border-lime-500">
+            </div>
+            <div>
+              <select id="admin-member-filter" class="w-full bg-slate-950 border border-slate-800 text-white rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-lime-500">
+                <option value="todos">Todos los Estados</option>
+                <option value="al día">Al día</option>
+                <option value="por vencer">Por vencer (&le; 3 días)</option>
+                <option value="vencido">Vencidos (Días en mora)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Table -->
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead>
+                <tr class="text-slate-400 border-b border-slate-800 font-semibold">
+                  <th class="py-3 px-4">Socio / Cédula</th>
+                  <th class="py-3 px-4">Plan & Tarifa</th>
+                  <th class="py-3 px-4">Fecha Vence</th>
+                  <th class="py-3 px-4">Estado</th>
+                  <th class="py-3 px-4">Días Vencidos / Restantes</th>
+                  <th class="py-3 px-4">Pago</th>
+                  <th class="py-3 px-4 text-right">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="admin-members-tbody">
+                <!-- Rendered by admin.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ================= SECTION 2: EDITOR DE BANNERS ================= -->
+      <section id="admin-section-banners" class="admin-tab-content hidden space-y-6">
+        
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+          <div>
+            <h2 class="text-xl sm:text-2xl font-black text-white uppercase">Editor de Banners Principales</h2>
+            <p class="text-xs text-slate-400">Edita imágenes, textos, botones, habilita/deshabilita y ajusta la opacidad del overlay (0% a 100%).</p>
+          </div>
+          <button id="admin-add-banner-btn" class="px-4 py-2.5 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-xs rounded-xl shadow-md transition flex items-center gap-2">
+            <i class="fa-solid fa-plus-circle"></i> Agregar Nuevo Banner
+          </button>
+        </div>
+
+        <div class="bg-lime-500/10 border border-lime-500/20 p-4 rounded-2xl flex items-start gap-3">
+          <i class="fa-solid fa-circle-info text-lime-400 mt-0.5"></i>
+          <p class="text-xs text-slate-300">
+            <strong>Sincronización en tiempo real:</strong> Los cambios de textos, botones, imágenes y el nivel de opacidad se guardan en el sistema y se reflejan inmediatamente en la página principal (<a href="index.html" target="_blank" class="text-lime-400 underline">index.html</a>).
+          </p>
+        </div>
+
+        <!-- Banners List Container -->
+        <div id="admin-banners-list" class="space-y-6">
+          <!-- Rendered dynamically by admin.js -->
+        </div>
+
+      </section>
+
+      <!-- ================= SECTION 3: EDITOR DE ROPA Y SUPLEMENTOS ================= -->
+      <section id="admin-section-tienda" class="admin-tab-content hidden space-y-6">
+        
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+          <div>
+            <h2 class="text-xl sm:text-2xl font-black text-white uppercase">Gestión de Ropa Deportiva y Suplementos</h2>
+            <p class="text-xs text-slate-400">Agrega nuevos productos, modifica precios, categorías y disponibilidad en la tienda.</p>
+          </div>
+          <button id="admin-open-add-product-btn" class="px-4 py-2.5 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-xs rounded-xl shadow-md transition flex items-center gap-2">
+            <i class="fa-solid fa-plus-circle"></i> + Agregar Producto
+          </button>
+        </div>
+
+        <!-- Filter and Search Bar -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="sm:col-span-2 relative">
+            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+            <input id="admin-prod-search" type="text" placeholder="Buscar producto por nombre o descripción..." class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl pl-9 pr-4 py-2.5 text-xs focus:outline-none focus:border-lime-500">
+          </div>
+          <div>
+            <select id="admin-prod-filter" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-lime-500">
+              <option value="todos">Todas las Categorías</option>
+              <option value="suplementos">Suplementos</option>
+              <option value="ropa">Ropa Deportiva</option>
+              <option value="accesorios">Accesorios</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Products List Grid -->
+        <div id="admin-products-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          <!-- Rendered by admin.js -->
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-slate-900 py-6 text-slate-500 text-xs text-center">
+      <div class="max-w-7xl mx-auto px-4">
+        <p>CAF Anserma Caldas · Centro de Entrenamiento Víctor Zamorano · Panel Administrativo Oficial</p>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- ================= MODAL: INSCRIBIR NUEVO SOCIO ================= -->
+  <div id="admin-new-member-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-950 border border-slate-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-4">
+        <h3 class="text-base font-black text-white uppercase">Inscribir Nuevo Socio</h3>
+        <button id="admin-close-add-member-btn" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <form id="admin-new-member-form" class="space-y-3.5">
+        <div>
+          <label for="new-mem-name" class="block text-xs font-bold text-slate-300 uppercase mb-1">Nombre Completo:</label>
+          <input id="new-mem-name" type="text" required placeholder="Ej: Marcela López" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2 text-xs focus:border-lime-500">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="new-mem-cedula" class="block text-xs font-bold text-slate-300 uppercase mb-1">Cédula:</label>
+            <input id="new-mem-cedula" type="text" required placeholder="1.053..." class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2 text-xs focus:border-lime-500">
+          </div>
+          <div>
+            <label for="new-mem-phone" class="block text-xs font-bold text-slate-300 uppercase mb-1">Teléfono / WhatsApp:</label>
+            <input id="new-mem-phone" type="tel" required placeholder="312..." class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2 text-xs focus:border-lime-500">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="new-mem-plan" class="block text-xs font-bold text-slate-300 uppercase mb-1">Plan:</label>
+            <select id="new-mem-plan" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-3 py-2 text-xs focus:border-lime-500">
+              <option value="55000">Confa Categoría A ($55.000)</option>
+              <option value="80000">Confa Categoría B ($80.000)</option>
+              <option value="119000">Confa Categoría C ($119.000)</option>
+              <option value="131000">Particular Mensual ($131.000)</option>
+              <option value="220000">Plan Pareja Dúo ($220.000)</option>
+              <option value="75000">Tiquetera 12 Días ($75.000)</option>
+              <option value="25000">Confa Fin de Semana ($25.000)</option>
+            </select>
+          </div>
+          <div>
+            <label for="new-mem-category" class="block text-xs font-bold text-slate-300 uppercase mb-1">Categoría Confa:</label>
+            <select id="new-mem-category" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-3 py-2 text-xs focus:border-lime-500">
+              <option value="A">Categoría A</option>
+              <option value="B">Categoría B</option>
+              <option value="C">Categoría C</option>
+              <option value="Particular">Particular</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="new-mem-payment" class="block text-xs font-bold text-slate-300 uppercase mb-1">Método de Pago:</label>
+            <select id="new-mem-payment" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-3 py-2 text-xs focus:border-lime-500">
+              <option value="Nequi">Nequi</option>
+              <option value="Daviplata">Daviplata</option>
+              <option value="Efectivo Taquilla">Efectivo Taquilla</option>
+              <option value="Tarjeta">Tarjeta Débito/Crédito</option>
+            </select>
+          </div>
+          <div>
+            <label for="new-mem-days" class="block text-xs font-bold text-slate-300 uppercase mb-1">Vigencia (Días):</label>
+            <input id="new-mem-days" type="number" value="30" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2 text-xs focus:border-lime-500">
+          </div>
+        </div>
+
+        <div class="pt-3">
+          <button type="submit" class="w-full py-3 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-xs rounded-xl shadow-md transition">
+            Guardar e Inscribir Socio
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: AJUSTAR FINANZAS TIENDA/OTROS ================= -->
+  <div id="admin-finances-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-950 border border-slate-800 rounded-3xl max-w-md w-full p-6 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-4">
+        <h3 class="text-base font-black text-white uppercase">Ajustar Ingresos Tienda / Otros</h3>
+        <button id="admin-close-finances-btn" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <form id="admin-finances-form" class="space-y-4">
+        <div>
+          <label for="fin-store-sales" class="block text-xs font-bold text-slate-300 uppercase mb-1">Ventas Mensuales Tienda (Ropa/Suplementos) COP:</label>
+          <input id="fin-store-sales" type="number" required class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2.5 text-xs focus:border-lime-500">
+        </div>
+
+        <div>
+          <label for="fin-other-income" class="block text-xs font-bold text-slate-300 uppercase mb-1">Otros Ingresos (Inscripciones, pases día) COP:</label>
+          <input id="fin-other-income" type="number" required class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2.5 text-xs focus:border-lime-500">
+        </div>
+
+        <button type="submit" class="w-full py-3 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-xs rounded-xl shadow-md transition">
+          Actualizar Cifras Financieras
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: AGREGAR PRODUCTO TIENDA ================= -->
+  <div id="admin-product-add-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-950 border border-slate-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-4">
+        <h3 class="text-base font-black text-white uppercase">Agregar Producto a la Tienda</h3>
+        <button id="admin-close-product-add-btn" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <form id="admin-product-add-form" class="space-y-3.5">
+        <div>
+          <label for="add-prod-name" class="block text-xs font-bold text-slate-300 uppercase mb-1">Nombre del Producto:</label>
+          <input id="add-prod-name" type="text" required placeholder="Ej: Proteína ISO Whey 2lb" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2 text-xs focus:border-lime-500">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="add-prod-category" class="block text-xs font-bold text-slate-300 uppercase mb-1">Categoría:</label>
+            <select id="add-prod-category" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-3 py-2 text-xs focus:border-lime-500">
+              <option value="suplementos">Suplementos</option>
+              <option value="ropa">Ropa Deportiva</option>
+              <option value="accesorios">Accesorios</option>
+            </select>
+          </div>
+          <div>
+            <label for="add-prod-price" class="block text-xs font-bold text-slate-300 uppercase mb-1">Precio (COP):</label>
+            <input id="add-prod-price" type="number" required placeholder="Ej: 120000" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2 text-xs focus:border-lime-500">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="add-prod-badge" class="block text-xs font-bold text-slate-300 uppercase mb-1">Badge Promocional:</label>
+            <input id="add-prod-badge" type="text" placeholder="Ej: Novedad / Más Vendido" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2 text-xs focus:border-lime-500">
+          </div>
+          <div>
+            <label for="add-prod-icon" class="block text-xs font-bold text-slate-300 uppercase mb-1">Ícono FontAwesome:</label>
+            <input id="add-prod-icon" type="text" value="fa-solid fa-bottle-droplet" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2 text-xs focus:border-lime-500 font-mono">
+          </div>
+        </div>
+
+        <div>
+          <label for="add-prod-desc" class="block text-xs font-bold text-slate-300 uppercase mb-1">Descripción:</label>
+          <textarea id="add-prod-desc" rows="2" placeholder="Beneficios, gramaje y recomendaciones..." class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2 text-xs focus:border-lime-500"></textarea>
+        </div>
+
+        <div class="pt-3">
+          <button type="submit" class="w-full py-3 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-xs rounded-xl shadow-md transition">
+            Crear Producto
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: EDITAR PRODUCTO TIENDA ================= -->
+  <div id="admin-product-edit-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-950 border border-slate-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-4">
+        <h3 class="text-base font-black text-white uppercase">Editar Producto</h3>
+        <button id="admin-close-product-edit-btn" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <form id="admin-product-edit-form" class="space-y-3.5">
+        <input type="hidden" id="edit-prod-id">
+
+        <div>
+          <label for="edit-prod-name" class="block text-xs font-bold text-slate-300 uppercase mb-1">Nombre del Producto:</label>
+          <input id="edit-prod-name" type="text" required class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2 text-xs focus:border-lime-500">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="edit-prod-category" class="block text-xs font-bold text-slate-300 uppercase mb-1">Categoría:</label>
+            <select id="edit-prod-category" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-3 py-2 text-xs focus:border-lime-500">
+              <option value="suplementos">Suplementos</option>
+              <option value="ropa">Ropa Deportiva</option>
+              <option value="accesorios">Accesorios</option>
+            </select>
+          </div>
+          <div>
+            <label for="edit-prod-price" class="block text-xs font-bold text-slate-300 uppercase mb-1">Precio (COP):</label>
+            <input id="edit-prod-price" type="number" required class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2 text-xs focus:border-lime-500">
+          </div>
+        </div>
+
+        <div>
+          <label for="edit-prod-badge" class="block text-xs font-bold text-slate-300 uppercase mb-1">Badge Promocional:</label>
+          <input id="edit-prod-badge" type="text" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2 text-xs focus:border-lime-500">
+        </div>
+
+        <div>
+          <label for="edit-prod-desc" class="block text-xs font-bold text-slate-300 uppercase mb-1">Descripción:</label>
+          <textarea id="edit-prod-desc" rows="2" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2 text-xs focus:border-lime-500"></textarea>
+        </div>
+
+        <div class="pt-3">
+          <button type="submit" class="w-full py-3 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-xs rounded-xl shadow-md transition">
+            Guardar Cambios
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/admin.js"></script>
+
+  <script>
+    // Tab Navigation between the 3 main sections
+    window.switchAdminSection = function(sectionKey) {
+      document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+        btn.classList.remove('bg-lime-500', 'text-black', 'font-bold');
+        btn.classList.add('bg-slate-900', 'text-slate-300', 'font-semibold');
+      });
+      document.querySelectorAll('.admin-tab-content').forEach(section => {
+        section.classList.add('hidden');
+      });
+
+      const activeBtn = document.getElementById(`admin-tab-btn-${sectionKey}`);
+      const activeSection = document.getElementById(`admin-section-${sectionKey}`);
+
+      if (activeBtn) {
+        activeBtn.classList.remove('bg-slate-900', 'text-slate-300', 'font-semibold');
+        activeBtn.classList.add('bg-lime-500', 'text-black', 'font-bold');
+      }
+      if (activeSection) {
+        activeSection.classList.remove('hidden');
+      }
+    };
+  </script>
+</body>
+</html>

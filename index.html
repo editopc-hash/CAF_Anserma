@@ -87,11 +87,17 @@
             <span class="cart-count-badge badge-count bg-lime-500 text-black hidden">0</span>
           </button>
 
-          <!-- User / Dashboard Button -->
-          <a id="nav-auth-btn" href="dashboard.html" class="px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 hover:text-lime-400 hover:border-lime-500/50 text-xs sm:text-sm font-bold flex items-center gap-2 transition">
-            <i class="fa-regular fa-user"></i>
-            <span>Mi Cuenta</span>
+          <!-- Admin Direct Link -->
+          <a href="admin.html" class="hidden md:flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-800 hover:border-lime-500/30 text-[11px] font-bold text-slate-400 hover:text-lime-400 transition" title="Panel de Administrador (123456 / 123456)">
+            <i class="fa-solid fa-user-shield text-lime-400"></i>
+            <span>Admin</span>
           </a>
+
+          <!-- User / Dashboard Button -->
+          <button class="open-login-modal-btn px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 hover:text-lime-400 hover:border-lime-500/50 text-xs sm:text-sm font-bold flex items-center gap-2 transition">
+            <i class="fa-regular fa-user"></i>
+            <span id="nav-auth-btn">Mi Cuenta</span>
+          </button>
 
           <!-- WhatsApp Direct -->
           <a href="https://wa.me/573100000000?text=Hola%20CAF%20Anserma%20(Víctor%20Zamorano),%20deseo%20información%20sobre%20inscripciones%20y%20tarifas." target="_blank" class="hidden sm:flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs sm:text-sm shadow-lg shadow-emerald-600/20 transition">
@@ -137,74 +143,44 @@
     </div>
   </header>
 
-  <!-- ================= 1. HERO SLIDER (2 BANNERS) ================= -->
+  <!-- ================= 1. HERO SLIDER (BANNERS DINÁMICOS & OPACIDAD) ================= -->
   <section id="inicio" class="relative overflow-hidden slider-container hero-slide-height flex items-center">
     
-    <!-- Banner 1: En Anserma, tu cambio comienza hoy -->
-    <div class="slide active">
-      <div class="absolute inset-0">
-        <img src="assets/images/banner/banner-anserma-cambio.png" alt="En Anserma, tu cambio comienza hoy - CAF Víctor Zamorano" class="w-full h-full object-cover">
-        <div class="absolute inset-0 bg-gradient-to-r from-[#090d16]/95 via-[#090d16]/70 to-[#090d16]/40"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-[#090d16] via-transparent to-transparent"></div>
-      </div>
-      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 flex items-center min-h-[560px] md:min-h-[640px]">
-        <div class="max-w-2xl space-y-6">
-          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-lime-500/20 border border-lime-500/40 text-lime-400 text-xs font-extrabold">
-            <i class="fa-solid fa-location-dot"></i> PISO 2, CRA 5 # 22 - 32 · AVENIDA LIBERTADOR · ANSERMA
-          </div>
-          <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white uppercase leading-none">
-            EN ANSERMA,<br>
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-lime-500">TU CAMBIO</span><br>
-            COMIENZA HOY.
-          </h1>
-          <p class="text-slate-300 text-base sm:text-lg font-medium leading-relaxed">
-            Centro de Acondicionamiento Físico CAF & Centro de Entrenamiento Víctor Zamorano. Musculación, CrossFit, Funcional, Rumbaterapia, Krav Maga y el convenio más completo de Caldas con Confa.
-          </p>
-          <div class="flex flex-wrap items-center gap-4 pt-2">
-            <a href="#planes" class="px-6 py-3.5 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-sm sm:text-base rounded-2xl shadow-xl shadow-lime-500/25 transition transform hover:-translate-y-0.5 flex items-center gap-2">
-              <span>¡Inscríbete Hoy!</span>
-              <i class="fa-solid fa-arrow-right"></i>
-            </a>
-            <a href="#convenios" class="px-6 py-3.5 bg-slate-900/90 hover:bg-slate-800 text-white border border-slate-700 hover:border-lime-500/50 font-bold text-sm sm:text-base rounded-2xl backdrop-blur-md transition flex items-center gap-2">
-              <i class="fa-solid fa-handshake text-lime-400"></i>
-              <span>Convenio Confa</span>
-            </a>
-            <a href="#rutina" class="px-5 py-3.5 bg-transparent hover:bg-white/10 text-slate-300 hover:text-white font-semibold text-sm rounded-2xl transition">
-              <i class="fa-solid fa-wand-magic-sparkles mr-1 text-lime-400"></i> Rutina Gratis
-            </a>
-          </div>
+    <!-- Dynamic Slides Wrapper -->
+    <div id="hero-slider-wrapper" class="w-full h-full relative">
+      <!-- Banner 1: En Anserma, tu cambio comienza hoy -->
+      <div class="slide active">
+        <div class="absolute inset-0">
+          <img src="assets/images/banner/banner-anserma-cambio.png" alt="En Anserma, tu cambio comienza hoy - CAF Víctor Zamorano" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-slate-950/75"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-[#090d16] via-transparent to-transparent"></div>
         </div>
-      </div>
-    </div>
-
-    <!-- Banner 2: Cambia tu cuerpo, cambia tu mente -->
-    <div class="slide">
-      <div class="absolute inset-0">
-        <img src="assets/images/banner/banner-cambia-cuerpo.png" alt="Cambia tu cuerpo, cambia tu mente - CAF Víctor Zamorano" class="w-full h-full object-cover">
-        <div class="absolute inset-0 bg-gradient-to-r from-[#090d16]/95 via-[#090d16]/75 to-[#090d16]/40"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-[#090d16] via-transparent to-transparent"></div>
-      </div>
-      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 flex items-center min-h-[560px] md:min-h-[640px]">
-        <div class="max-w-2xl space-y-6">
-          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-500/20 border border-orange-500/40 text-orange-400 text-xs font-extrabold">
-            <i class="fa-solid fa-fire"></i> RESULTADOS REALES CON ASESORÍA DE SALA
-          </div>
-          <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white uppercase leading-none">
-            CAMBIA TU CUERPO,<br>
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-amber-400 to-lime-400">CAMBIA TU MENTE.</span>
-          </h1>
-          <p class="text-slate-300 text-base sm:text-lg font-medium leading-relaxed">
-            Planes diseñados para cada meta: hipertrofia, reducción de peso, acondicionamiento y bienestar total. Entrena solo o aprovecha nuestro exclusivo <strong class="text-white">Plan Pareja CAF</strong>.
-          </p>
-          <div class="flex flex-wrap items-center gap-4 pt-2">
-            <a href="#rutina" class="px-6 py-3.5 bg-orange-500 hover:bg-orange-400 text-black font-extrabold text-sm sm:text-base rounded-2xl shadow-xl shadow-orange-500/25 transition transform hover:-translate-y-0.5 flex items-center gap-2">
-              <i class="fa-solid fa-dumbbell"></i>
-              <span>Crear Mi Rutina</span>
-            </a>
-            <a href="https://wa.me/573100000000?text=Hola%20CAF%20Anserma,%20quiero%20conocer%20el%20Plan%20Pareja%20y%20tarifas." target="_blank" class="px-6 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm sm:text-base rounded-2xl shadow-lg transition flex items-center gap-2">
-              <i class="fa-brands fa-whatsapp"></i>
-              <span>Preguntar por WhatsApp</span>
-            </a>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 flex items-center min-h-[560px] md:min-h-[640px]">
+          <div class="max-w-2xl space-y-6">
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-lime-500/20 border border-lime-500/40 text-lime-400 text-xs font-extrabold">
+              <i class="fa-solid fa-location-dot"></i> PISO 2, CRA 5 # 22 - 32 · AVENIDA LIBERTADOR · ANSERMA
+            </div>
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white uppercase leading-none">
+              EN ANSERMA,<br>
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-lime-500">TU CAMBIO</span><br>
+              COMIENZA HOY.
+            </h1>
+            <p class="text-slate-300 text-base sm:text-lg font-medium leading-relaxed">
+              Centro de Acondicionamiento Físico CAF & Centro de Entrenamiento Víctor Zamorano. Musculación, CrossFit, Funcional, Rumbaterapia, Krav Maga y el convenio más completo de Caldas con Confa.
+            </p>
+            <div class="flex flex-wrap items-center gap-4 pt-2">
+              <a href="#planes" class="px-6 py-3.5 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-sm sm:text-base rounded-2xl shadow-xl shadow-lime-500/25 transition transform hover:-translate-y-0.5 flex items-center gap-2">
+                <span>¡Inscríbete Hoy!</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </a>
+              <a href="#convenios" class="px-6 py-3.5 bg-slate-900/90 hover:bg-slate-800 text-white border border-slate-700 hover:border-lime-500/50 font-bold text-sm sm:text-base rounded-2xl backdrop-blur-md transition flex items-center gap-2">
+                <i class="fa-solid fa-handshake text-lime-400"></i>
+                <span>Convenio Confa</span>
+              </a>
+              <a href="#rutina" class="px-5 py-3.5 bg-transparent hover:bg-white/10 text-slate-300 hover:text-white font-semibold text-sm rounded-2xl transition">
+                <i class="fa-solid fa-wand-magic-sparkles mr-1 text-lime-400"></i> Rutina Gratis
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -218,10 +194,9 @@
       <i class="fa-solid fa-chevron-right"></i>
     </button>
 
-    <!-- Slider Dots -->
-    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2.5">
+    <!-- Slider Dots Container -->
+    <div id="slider-dots-container" class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2.5">
       <button class="slider-dot h-3 w-8 rounded-full bg-lime-500 transition-all duration-300"></button>
-      <button class="slider-dot h-3 w-3 rounded-full bg-white/40 hover:bg-white transition-all duration-300"></button>
     </div>
 
   </section>
@@ -1016,12 +991,17 @@
         </div>
 
         <div>
-          <h4 class="text-white font-bold text-sm mb-3">Acceso Socios</h4>
-          <p class="text-slate-400 mb-3">Monitorea tu peso, consulta tu saldo y accede a tu rutina desde el panel de control.</p>
-          <a href="dashboard.html" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white font-bold hover:border-lime-500 transition">
-            <i class="fa-solid fa-arrow-right-to-bracket text-lime-400"></i>
-            <span>Ir a Mi Dashboard</span>
-          </a>
+          <h4 class="text-white font-bold text-sm mb-3">Acceso Socios & Admin</h4>
+          <p class="text-slate-400 mb-3">Monitorea tu peso o gestiona inscritos, finanzas y banners desde el panel administrativo.</p>
+          <div class="flex flex-col gap-2">
+            <button class="open-login-modal-btn w-full py-2.5 px-3 rounded-xl bg-slate-900 border border-slate-700 text-white font-bold hover:border-lime-500 transition text-xs flex items-center justify-center gap-2">
+              <i class="fa-solid fa-arrow-right-to-bracket text-lime-400"></i>
+              <span>Iniciar Sesión / Mi Cuenta</span>
+            </button>
+            <a href="admin.html" class="w-full py-2 px-3 rounded-xl bg-slate-950 border border-slate-800 text-slate-400 hover:text-lime-400 transition text-[11px] text-center font-bold">
+              <i class="fa-solid fa-user-shield text-lime-400 mr-1"></i> Panel Admin (123456 / 123456)
+            </a>
+          </div>
         </div>
 
       </div>
@@ -1033,10 +1013,62 @@
     </div>
   </footer>
 
+  <!-- ================= BACK TO TOP BUTTON (FLECHITA ENCIMA DE WHATSAPP) ================= -->
+  <button id="back-to-top-btn" class="back-to-top-btn" title="Subir al inicio de la página" aria-label="Volver arriba">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
   <!-- ================= FLOATING WHATSAPP BUTTON ================= -->
   <a href="https://wa.me/573100000000?text=Hola%20CAF%20Anserma,%20quisiera%20más%20información%20sobre%20los%20planes%20y%20el%20convenio%20Confa." target="_blank" class="whatsapp-float flex items-center justify-center w-14 h-14 bg-emerald-500 hover:bg-emerald-400 text-white rounded-full text-2xl" title="Preguntar por WhatsApp">
     <i class="fa-brands fa-whatsapp"></i>
   </a>
+
+  <!-- ================= MODAL: INICIO DE SESIÓN (ADMIN 123456 & SOCIO) ================= -->
+  <div id="login-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-slate-950 border border-slate-800 rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative">
+      <button id="close-login-modal-btn" class="absolute top-5 right-5 text-slate-400 hover:text-white">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div class="text-center mb-6">
+        <div class="w-12 h-12 rounded-2xl bg-lime-500 flex items-center justify-center text-black font-black text-xl mx-auto shadow-md mb-2">
+          CAF
+        </div>
+        <h3 class="text-xl font-black text-white">Iniciar Sesión</h3>
+        <p class="text-xs text-slate-400">Acceso para Socios y Panel Administrador</p>
+      </div>
+
+      <div id="login-error-msg" class="hidden mb-4 p-3 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-400 text-xs font-semibold text-center"></div>
+
+      <form id="login-form" class="space-y-4">
+        <div>
+          <label for="login-username-input" class="block text-xs font-bold text-slate-300 uppercase mb-1">Usuario o Correo:</label>
+          <input id="login-username-input" type="text" required placeholder="Ej: 123456 o correo@socio.com" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:border-lime-500 font-mono">
+        </div>
+
+        <div>
+          <label for="login-password-input" class="block text-xs font-bold text-slate-300 uppercase mb-1">Contraseña:</label>
+          <input id="login-password-input" type="password" required placeholder="••••••" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:border-lime-500 font-mono">
+        </div>
+
+        <button type="submit" class="w-full py-3 bg-lime-500 hover:bg-lime-400 text-black font-black text-xs sm:text-sm rounded-xl shadow-lg transition">
+          Ingresar
+        </button>
+
+        <div class="pt-4 border-t border-slate-800/80 space-y-2">
+          <span class="text-[11px] text-slate-400 block text-center uppercase tracking-wider font-bold">Accesos Rápidos:</span>
+          
+          <button type="button" id="login-demo-admin-btn" class="w-full py-2.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-lime-400 font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition">
+            <i class="fa-solid fa-user-shield"></i> Entrar como Administrador (123456 / 123456)
+          </button>
+          
+          <button type="button" id="login-demo-socio-btn" class="w-full py-2.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition">
+            <i class="fa-solid fa-user"></i> Entrar como Socio Demo (Carlos Andrés)
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- Main JavaScript File -->
   <script src="assets/js/app.js"></script>

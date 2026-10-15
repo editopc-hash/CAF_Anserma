@@ -3,8 +3,42 @@
  * Anserma, Caldas | Main Application Logic
  */
 
-// --- Initial Data ---
-const PRODUCTS = [
+// --- Initial Default Banners ---
+const DEFAULT_BANNERS = [
+  {
+    id: 1,
+    badge: "PISO 2, CRA 5 # 22 - 32 · AVENIDA LIBERTADOR · ANSERMA",
+    badgeIcon: "fa-solid fa-location-dot",
+    badgeColor: "lime",
+    title: "EN ANSERMA,\n<span class=\"text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-lime-500\">TU CAMBIO</span>\nCOMIENZA HOY.",
+    subtitle: "Centro de Acondicionamiento Físico CAF & Centro de Entrenamiento Víctor Zamorano. Musculación, CrossFit, Funcional, Rumbaterapia, Krav Maga y el convenio más completo de Caldas con Confa.",
+    image: "assets/images/banner/banner-anserma-cambio.png",
+    enabled: true,
+    opacity: 75, // 0 to 100%
+    btn1Text: "¡Inscríbete Hoy!",
+    btn1Link: "#planes",
+    btn2Text: "Convenio Confa",
+    btn2Link: "#convenios"
+  },
+  {
+    id: 2,
+    badge: "RESULTADOS REALES CON ASESORÍA DE SALA",
+    badgeIcon: "fa-solid fa-fire",
+    badgeColor: "orange",
+    title: "CAMBIA TU CUERPO,\n<span class=\"text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-amber-400 to-lime-400\">CAMBIA TU MENTE.</span>",
+    subtitle: "Planes diseñados para cada meta: hipertrofia, reducción de peso, acondicionamiento y bienestar total. Entrena solo o aprovecha nuestro exclusivo Plan Pareja CAF.",
+    image: "assets/images/banner/banner-cambia-cuerpo.png",
+    enabled: true,
+    opacity: 80, // 0 to 100%
+    btn1Text: "Crear Mi Rutina",
+    btn1Link: "#rutina",
+    btn2Text: "Preguntar por WhatsApp",
+    btn2Link: "https://wa.me/573100000000?text=Hola%20CAF%20Anserma,%20quiero%20conocer%20el%20Plan%20Pareja%20y%20tarifas."
+  }
+];
+
+// --- Initial Default Products ---
+const DEFAULT_PRODUCTS = [
   {
     id: 1,
     name: "Proteína Whey 100% Pura 2lb",
@@ -13,7 +47,9 @@ const PRODUCTS = [
     desc: "25g de proteína aislada por porción, rápida absorción para desarrollo y recuperación muscular.",
     badge: "Más Vendido",
     icon: "fa-solid fa-bottle-droplet",
-    color: "from-amber-500 to-yellow-600"
+    color: "from-amber-500 to-yellow-600",
+    image: "",
+    status: "disponible"
   },
   {
     id: 2,
@@ -23,7 +59,9 @@ const PRODUCTS = [
     desc: "100% micronizada sin sabor. Aumenta tu fuerza, resistencia y potencia en entrenamientos pesados.",
     badge: "Fuerza Pura",
     icon: "fa-solid fa-bolt",
-    color: "from-lime-500 to-emerald-600"
+    color: "from-lime-500 to-emerald-600",
+    image: "",
+    status: "disponible"
   },
   {
     id: 3,
@@ -33,7 +71,9 @@ const PRODUCTS = [
     desc: "Energía explosiva, vascularización y concentración extrema para tus sesiones más intensas.",
     badge: "Energía",
     icon: "fa-solid fa-fire-flame-curved",
-    color: "from-orange-500 to-red-600"
+    color: "from-orange-500 to-red-600",
+    image: "",
+    status: "disponible"
   },
   {
     id: 4,
@@ -43,7 +83,9 @@ const PRODUCTS = [
     desc: "Aminoácidos esenciales para evitar el catabolismo e hidratarte durante la rutina.",
     badge: "Recuperación",
     icon: "fa-solid fa-heart-pulse",
-    color: "from-cyan-500 to-blue-600"
+    color: "from-cyan-500 to-blue-600",
+    image: "",
+    status: "disponible"
   },
   {
     id: 5,
@@ -53,7 +95,9 @@ const PRODUCTS = [
     desc: "Algodón premium de alto gramaje, corte holgado y diseño exclusivo de nuestra sede Anserma.",
     badge: "Exclusivo",
     icon: "fa-solid fa-shirt",
-    color: "from-neutral-700 to-neutral-900"
+    color: "from-neutral-700 to-neutral-900",
+    image: "",
+    status: "disponible"
   },
   {
     id: 6,
@@ -63,7 +107,9 @@ const PRODUCTS = [
     desc: "Tejido transpirable antitranspirante, soporte muscular óptimo para pesas y funcional.",
     badge: "Confort",
     icon: "fa-solid fa-person-running",
-    color: "from-zinc-700 to-slate-900"
+    color: "from-zinc-700 to-slate-900",
+    image: "",
+    status: "disponible"
   },
   {
     id: 7,
@@ -73,7 +119,9 @@ const PRODUCTS = [
     desc: "Soporte ergonómico de alto impacto, ideal para Rumbaterapia, CrossFit y musculación.",
     badge: "Mujer CAF",
     icon: "fa-solid fa-vest",
-    color: "from-pink-600 to-rose-700"
+    color: "from-pink-600 to-rose-700",
+    image: "",
+    status: "disponible"
   },
   {
     id: 8,
@@ -83,7 +131,9 @@ const PRODUCTS = [
     desc: "Estilo urbano deportivo con logo en alto relieve de Víctor Zamorano CAF.",
     badge: "Accesorio",
     icon: "fa-solid fa-hat-cowboy-side",
-    color: "from-slate-800 to-zinc-950"
+    color: "from-slate-800 to-zinc-950",
+    image: "",
+    status: "disponible"
   },
   {
     id: 9,
@@ -93,7 +143,9 @@ const PRODUCTS = [
     desc: "Libre de BPA con rejilla mezcladora antiderrame y compartimento para pastillas o scoops.",
     badge: "Indispensable",
     icon: "fa-solid fa-glass-water",
-    color: "from-emerald-600 to-teal-700"
+    color: "from-emerald-600 to-teal-700",
+    image: "",
+    status: "disponible"
   },
   {
     id: 10,
@@ -103,9 +155,33 @@ const PRODUCTS = [
     desc: "Aumenta tus cargas en peso muerto y remos sin comprometer el agarre. Algodón reforzado.",
     badge: "Levantamiento",
     icon: "fa-solid fa-hand-fist",
-    color: "from-amber-600 to-yellow-700"
+    color: "from-amber-600 to-yellow-700",
+    image: "",
+    status: "disponible"
   }
 ];
+
+// Helper to get banners from storage
+function getAppBanners() {
+  const stored = localStorage.getItem('caf_banners');
+  if (stored) {
+    try {
+      const parsed = JSON.parse(stored);
+      const enabledOnly = parsed.filter(b => b.enabled !== false);
+      if (enabledOnly.length > 0) return enabledOnly;
+    } catch (e) {}
+  }
+  return DEFAULT_BANNERS;
+}
+
+// Helper to get products from storage
+function getAppProducts() {
+  const stored = localStorage.getItem('caf_products');
+  if (stored) {
+    try { return JSON.parse(stored); } catch (e) {}
+  }
+  return DEFAULT_PRODUCTS;
+}
 
 const GALLERY_DATA = [
   {
@@ -205,7 +281,7 @@ const SCHEDULE_DATA = [
 ];
 
 // --- Shopping Cart State ---
-let cart = JSON.parse(localStorage.getItem('caf_cart')) || [];
+let cart = JSON.parse(localStorage.getItem('caf_cart') || '[]');
 
 // --- Global App Init ---
 document.addEventListener('DOMContentLoaded', () => {
@@ -219,17 +295,82 @@ document.addEventListener('DOMContentLoaded', () => {
   initConfaCalculator();
   initContactForm();
   initMobileMenu();
+  initBackToTop();
+  initLoginModal();
   updateUserNavBadge();
 });
 
 // ==========================================
-// 1. HERO SLIDER (2 BANNERS)
+// 1. HERO SLIDER DINÁMICO (BANNERS & OPACIDAD)
 // ==========================================
 function initHeroSlider() {
-  const slides = document.querySelectorAll('.slider-container .slide');
-  const dots = document.querySelectorAll('.slider-dot');
+  const sliderWrapper = document.getElementById('hero-slider-wrapper');
+  const dotsContainer = document.getElementById('slider-dots-container');
   const prevBtn = document.getElementById('slider-prev');
   const nextBtn = document.getElementById('slider-next');
+  if (!sliderWrapper) return;
+
+  const banners = getAppBanners();
+  if (banners.length === 0) return;
+
+  // Render slides dynamically with configured opacity and images
+  sliderWrapper.innerHTML = banners.map((b, i) => {
+    // Opacity calculation (0 to 100% -> 0 to 1.0)
+    const op = (b.opacity !== undefined ? b.opacity : 75) / 100;
+    
+    return `
+      <div class="slide ${i === 0 ? 'active' : ''}">
+        <div class="absolute inset-0">
+          <img src="${b.image}" alt="${b.title.replace(/<[^>]*>?/gm, '')}" class="w-full h-full object-cover">
+          <!-- Dynamic Overlay with user defined opacity -->
+          <div class="absolute inset-0" style="background-color: rgba(9, 13, 22, ${op});"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-[#090d16] via-transparent to-transparent"></div>
+        </div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 flex items-center min-h-[560px] md:min-h-[640px]">
+          <div class="max-w-2xl space-y-6">
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full ${
+              b.badgeColor === 'orange' ? 'bg-orange-500/20 border-orange-500/40 text-orange-400' : 'bg-lime-500/20 border-lime-500/40 text-lime-400'
+            } border text-xs font-extrabold uppercase">
+              <i class="${b.badgeIcon || 'fa-solid fa-location-dot'}"></i> ${b.badge}
+            </div>
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white uppercase leading-none">
+              ${b.title.replace(/\n/g, '<br>')}
+            </h1>
+            <p class="text-slate-300 text-base sm:text-lg font-medium leading-relaxed">
+              ${b.subtitle}
+            </p>
+            <div class="flex flex-wrap items-center gap-4 pt-2">
+              ${b.btn1Text ? `
+                <a href="${b.btn1Link || '#planes'}" class="px-6 py-3.5 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-sm sm:text-base rounded-2xl shadow-xl shadow-lime-500/25 transition transform hover:-translate-y-0.5 flex items-center gap-2">
+                  <span>${b.btn1Text}</span>
+                  <i class="fa-solid fa-arrow-right"></i>
+                </a>
+              ` : ''}
+              ${b.btn2Text ? `
+                <a href="${b.btn2Link || '#convenios'}" class="px-6 py-3.5 bg-slate-900/90 hover:bg-slate-800 text-white border border-slate-700 hover:border-lime-500/50 font-bold text-sm sm:text-base rounded-2xl backdrop-blur-md transition flex items-center gap-2">
+                  <i class="fa-solid fa-handshake text-lime-400"></i>
+                  <span>${b.btn2Text}</span>
+                </a>
+              ` : ''}
+              <a href="#rutina" class="px-5 py-3.5 bg-transparent hover:bg-white/10 text-slate-300 hover:text-white font-semibold text-sm rounded-2xl transition">
+                <i class="fa-solid fa-wand-magic-sparkles mr-1 text-lime-400"></i> Rutina Gratis
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // Render dots
+  if (dotsContainer) {
+    dotsContainer.innerHTML = banners.map((_, idx) => `
+      <button class="slider-dot h-3 ${idx === 0 ? 'w-8 bg-lime-500' : 'w-3 bg-white/40'} rounded-full transition-all duration-300" data-slide="${idx}"></button>
+    `).join('');
+  }
+
+  const slides = document.querySelectorAll('.slider-container .slide');
+  const dots = document.querySelectorAll('.slider-dot');
   let currentSlide = 0;
   let slideInterval = null;
 
@@ -266,21 +407,12 @@ function initHeroSlider() {
   }
 
   if (prevBtn && nextBtn) {
-    prevBtn.addEventListener('click', () => {
-      prevSlide();
-      startAutoplay();
-    });
-    nextBtn.addEventListener('click', () => {
-      nextSlide();
-      startAutoplay();
-    });
+    prevBtn.onclick = () => { prevSlide(); startAutoplay(); };
+    nextBtn.onclick = () => { nextSlide(); startAutoplay(); };
   }
 
   dots.forEach((dot, idx) => {
-    dot.addEventListener('click', () => {
-      showSlide(idx);
-      startAutoplay();
-    });
+    dot.onclick = () => { showSlide(idx); startAutoplay(); };
   });
 
   const sliderBox = document.querySelector('.slider-container');
@@ -289,7 +421,6 @@ function initHeroSlider() {
     sliderBox.addEventListener('mouseleave', startAutoplay);
   }
 
-  // Show first slide and start
   showSlide(0);
   startAutoplay();
 }
@@ -302,7 +433,7 @@ function initLiveStatus() {
   if (!statusBadge) return;
 
   const now = new Date();
-  const day = now.getDay(); // 0 is Sunday, 6 is Saturday
+  const day = now.getDay();
   const hour = now.getHours();
   const min = now.getMinutes();
   const currentTime = hour + min / 60;
@@ -310,20 +441,17 @@ function initLiveStatus() {
   let isOpen = false;
   let scheduleText = "";
 
-  if (day >= 1 && day <= 5) { // Lunes a Viernes
-    // 5:00 AM a 12:00 PM y 2:00 PM a 9:30 PM
+  if (day >= 1 && day <= 5) {
     if ((currentTime >= 5 && currentTime < 12) || (currentTime >= 14 && currentTime < 21.5)) {
       isOpen = true;
     }
     scheduleText = "Hoy: 5:00 AM - 12:00 PM & 2:00 PM - 9:30 PM";
-  } else if (day === 6) { // Sábado
-    // 6:00 AM a 4:00 PM
+  } else if (day === 6) {
     if (currentTime >= 6 && currentTime < 16) {
       isOpen = true;
     }
     scheduleText = "Hoy: 6:00 AM - 4:00 PM";
-  } else { // Domingo o festivo
-    // 7:00 AM a 1:00 PM
+  } else {
     if (currentTime >= 7 && currentTime < 13) {
       isOpen = true;
     }
@@ -361,12 +489,10 @@ function initGallery() {
   const lightboxPrev = document.getElementById('lightbox-prev');
   const lightboxNext = document.getElementById('lightbox-next');
 
-  let currentCategory = 'todas';
   let filteredItems = [...GALLERY_DATA];
   let currentLightboxIdx = 0;
 
   function renderGallery(cat = 'todas') {
-    currentCategory = cat;
     if (cat === 'todas') {
       filteredItems = [...GALLERY_DATA];
     } else {
@@ -461,7 +587,7 @@ function initGallery() {
 }
 
 // ==========================================
-// 4. TU RUTINA PERSONALIZADA (INTERACTIVA)
+// 4. TU RUTINA PERSONALIZADA
 // ==========================================
 function initRoutineGenerator() {
   const form = document.getElementById('routine-generator-form');
@@ -627,7 +753,6 @@ function generateCustomRoutine(goal, level, days, focus) {
 
   const selectedData = routineCatalog[goal] || routineCatalog.hipertrofia;
 
-  // Build HTML
   let daysHtml = selectedData.days.slice(0, Math.min(days, selectedData.days.length)).map(d => `
     <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-5 hover:border-lime-500/30 transition">
       <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
@@ -693,11 +818,10 @@ function generateCustomRoutine(goal, level, days, focus) {
   resultContainer.scrollIntoView({ behavior: 'smooth' });
 }
 
-// Function to save routine to LocalStorage for the dashboard
 window.saveRoutineToUserDashboard = function(goalKey) {
   const user = JSON.parse(localStorage.getItem('caf_current_user') || 'null');
   if (!user) {
-    alert("Para guardar tu rutina personalizada, por favor inicia sesión o entra como socio en el botón 'Mi Cuenta / Dashboard'.");
+    alert("Para guardar tu rutina personalizada, por favor inicia sesión o entra como socio en el botón 'Mi Cuenta'.");
     const loginModal = document.getElementById('login-modal');
     if (loginModal) loginModal.classList.remove('hidden');
     return;
@@ -786,7 +910,7 @@ function initSchedule() {
 }
 
 // ==========================================
-// 6. TIENDA DE ROPA Y SUPLEMENTOS
+// 6. TIENDA DE ROPA Y SUPLEMENTOS (DINÁMICA)
 // ==========================================
 function initStore() {
   const grid = document.getElementById('store-grid');
@@ -795,51 +919,71 @@ function initStore() {
   if (!grid) return;
 
   function renderStore(cat = 'todos', search = '') {
-    let filtered = PRODUCTS;
+    let products = getAppProducts();
+    
     if (cat !== 'todos') {
-      filtered = filtered.filter(p => p.category === cat);
+      products = products.filter(p => p.category === cat);
     }
     if (search.trim()) {
-      filtered = filtered.filter(p => p.name.toLowerCase().includes(search.toLowerCase()) || p.desc.toLowerCase().includes(search.toLowerCase()));
+      products = products.filter(p => p.name.toLowerCase().includes(search.toLowerCase()) || p.desc.toLowerCase().includes(search.toLowerCase()));
     }
 
-    if (filtered.length === 0) {
+    if (products.length === 0) {
       grid.innerHTML = `
         <div class="col-span-full text-center py-12 text-slate-400">
-          <i class="fa-solid fa-box-open text-4xl mb-3 text-slate-600"></i>
-          <p>No encontramos productos con ese término de búsqueda.</p>
+          <i class="fa-solid fa-box-open text-4xl mb-3 text-slate-600 block"></i>
+          <p>No encontramos productos con ese término de búsqueda o categoría.</p>
         </div>
       `;
       return;
     }
 
-    grid.innerHTML = filtered.map(product => `
-      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between hover:border-lime-500/40 hover:shadow-xl hover:shadow-lime-500/5 transition duration-300 group">
-        <div>
-          <div class="relative w-full h-44 rounded-xl bg-gradient-to-br ${product.color} flex items-center justify-center p-4 mb-4 overflow-hidden shadow-inner">
-            <div class="absolute inset-0 bg-black/20 backdrop-blur-[1px]"></div>
-            <i class="${product.icon} text-6xl text-white drop-shadow-lg relative z-10 transform group-hover:scale-110 transition-transform duration-300"></i>
-            <span class="absolute top-2 left-2 bg-black/70 backdrop-blur-md text-lime-400 text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full border border-lime-500/30">
-              ${product.badge}
-            </span>
-          </div>
+    grid.innerHTML = products.map(product => {
+      const isAgotado = product.status === 'agotado';
 
-          <span class="text-xs uppercase tracking-wider text-slate-400 font-semibold">${product.category}</span>
-          <h4 class="text-white font-bold text-base md:text-lg mt-0.5 group-hover:text-lime-400 transition-colors">${product.name}</h4>
-          <p class="text-xs text-slate-400 mt-1 line-clamp-2">${product.desc}</p>
-        </div>
-
-        <div class="mt-5 pt-4 border-t border-slate-800/80 flex items-center justify-between">
+      return `
+        <div class="bg-slate-900/90 border ${isAgotado ? 'border-amber-900/40 opacity-75' : 'border-slate-800'} rounded-2xl p-5 flex flex-col justify-between hover:border-lime-500/40 hover:shadow-xl hover:shadow-lime-500/5 transition duration-300 group">
           <div>
-            <span class="text-[11px] text-slate-400 block">Precio sede</span>
-            <span class="text-lg md:text-xl font-black text-lime-400">$${product.price.toLocaleString('es-CO')}</span>
+            <div class="relative w-full h-44 rounded-xl bg-gradient-to-br ${product.color || 'from-slate-800 to-slate-950'} flex items-center justify-center p-4 mb-4 overflow-hidden shadow-inner">
+              <div class="absolute inset-0 bg-black/20 backdrop-blur-[1px]"></div>
+              ${product.image ? `
+                <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover relative z-10 group-hover:scale-110 transition-transform duration-300">
+              ` : `
+                <i class="${product.icon || 'fa-solid fa-dumbbell'} text-6xl text-white drop-shadow-lg relative z-10 transform group-hover:scale-110 transition-transform duration-300"></i>
+              `}
+              <span class="absolute top-2 left-2 bg-black/70 backdrop-blur-md text-lime-400 text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full border border-lime-500/30">
+                ${product.badge}
+              </span>
+              ${isAgotado ? `
+                <span class="absolute top-2 right-2 bg-rose-600/90 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-full">
+                  Agotado
+                </span>
+              ` : ''}
+            </div>
+
+            <span class="text-xs uppercase tracking-wider text-slate-400 font-semibold">${product.category}</span>
+            <h4 class="text-white font-bold text-base md:text-lg mt-0.5 group-hover:text-lime-400 transition-colors">${product.name}</h4>
+            <p class="text-xs text-slate-400 mt-1 line-clamp-2">${product.desc}</p>
           </div>
-          <button onclick="window.addToCart(${product.id})" class="px-3.5 py-2.5 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-xs rounded-xl shadow-md flex items-center gap-1.5 transition">
-            <i class="fa-solid fa-cart-plus"></i> Agregar
-          </button>
+
+          <div class="mt-5 pt-4 border-t border-slate-800/80 flex items-center justify-between">
+            <div>
+              <span class="text-[11px] text-slate-400 block">Precio sede</span>
+              <span class="text-lg md:text-xl font-black text-lime-400">$${product.price.toLocaleString('es-CO')}</span>
+            </div>
+            ${isAgotado ? `
+              <button disabled class="px-3.5 py-2 bg-slate-800 text-slate-500 font-bold text-xs rounded-xl cursor-not-allowed">
+                Sin Stock
+              </button>
+            ` : `
+              <button onclick="window.addToCart(${product.id})" class="px-3.5 py-2.5 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-xs rounded-xl shadow-md flex items-center gap-1.5 transition">
+                <i class="fa-solid fa-cart-plus"></i> Agregar
+              </button>
+            `}
+          </div>
         </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
   }
 
   filterBtns.forEach(btn => {
@@ -880,7 +1024,8 @@ function initCart() {
   const checkoutWhatsappBtn = document.getElementById('cart-checkout-whatsapp');
 
   window.addToCart = function(productId) {
-    const prod = PRODUCTS.find(p => p.id === productId);
+    const products = getAppProducts();
+    const prod = products.find(p => p.id === productId);
     if (!prod) return;
 
     const existing = cart.find(item => item.id === productId);
@@ -948,8 +1093,8 @@ function initCart() {
       return `
         <div class="flex items-center justify-between gap-3 bg-slate-900/80 border border-slate-800 p-3.5 rounded-xl">
           <div class="flex items-center gap-3">
-            <div class="w-12 h-12 rounded-lg bg-gradient-to-br ${item.color} flex items-center justify-center text-white text-xl shrink-0">
-              <i class="${item.icon}"></i>
+            <div class="w-12 h-12 rounded-lg bg-gradient-to-br ${item.color || 'from-slate-700 to-slate-900'} flex items-center justify-center text-white text-xl shrink-0 overflow-hidden">
+              ${item.image ? `<img src="${item.image}" class="w-full h-full object-cover">` : `<i class="${item.icon || 'fa-solid fa-tag'}"></i>`}
             </div>
             <div>
               <h5 class="text-white font-bold text-sm leading-tight">${item.name}</h5>
@@ -991,12 +1136,12 @@ function initCart() {
     }
   }
 
-  if (cartBtn) cartBtn.addEventListener('click', openCart);
-  if (closeCartBtn) closeCartBtn.addEventListener('click', closeCart);
-  if (cartOverlay) cartOverlay.addEventListener('click', closeCart);
+  if (cartBtn) cartBtn.onclick = openCart;
+  if (closeCartBtn) closeCartBtn.onclick = closeCart;
+  if (cartOverlay) cartOverlay.onclick = closeCart;
 
   if (checkoutWhatsappBtn) {
-    checkoutWhatsappBtn.addEventListener('click', () => {
+    checkoutWhatsappBtn.onclick = () => {
       if (cart.length === 0) {
         alert("Agrega al menos un producto a tu carrito.");
         return;
@@ -1014,7 +1159,7 @@ function initCart() {
 
       const encoded = encodeURIComponent(orderText);
       window.open(`https://wa.me/573100000000?text=${encoded}`, '_blank');
-    });
+    };
   }
 
   updateCartBadges();
@@ -1077,7 +1222,101 @@ function initContactForm() {
 }
 
 // ==========================================
-// 10. MENÚ MÓVIL Y NAVBAR RESPONSIVE
+// 10. BOTÓN VOLVER ARRIBA (FLECHITA ENCIMA DE WHATSAPP)
+// ==========================================
+function initBackToTop() {
+  const backToTopBtn = document.getElementById('back-to-top-btn');
+  if (!backToTopBtn) return;
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 200) {
+      backToTopBtn.classList.add('visible');
+    } else {
+      backToTopBtn.classList.remove('visible');
+    }
+  });
+
+  backToTopBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+}
+
+// ==========================================
+// 11. UNIFIED LOGIN MODAL (ADMIN 123456 & SOCIO)
+// ==========================================
+function initLoginModal() {
+  const modal = document.getElementById('login-modal');
+  const openBtns = document.querySelectorAll('.open-login-modal-btn');
+  const closeBtn = document.getElementById('close-login-modal-btn');
+  const form = document.getElementById('login-form');
+  const errorBox = document.getElementById('login-error-msg');
+  const demoAdminBtn = document.getElementById('login-demo-admin-btn');
+  const demoSocioBtn = document.getElementById('login-demo-socio-btn');
+
+  if (openBtns) {
+    openBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (modal) modal.classList.remove('hidden');
+      });
+    });
+  }
+
+  if (closeBtn && modal) {
+    closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.classList.add('hidden');
+    });
+  }
+
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const u = document.getElementById('login-username-input')?.value.trim();
+      const p = document.getElementById('login-password-input')?.value.trim();
+
+      // Check if Admin Credentials (123456 / 123456)
+      if (u === '123456' && p === '123456') {
+        localStorage.setItem('caf_admin_logged', 'true');
+        window.location.href = 'admin.html';
+        return;
+      }
+
+      // Check if Socio or generic login
+      if (u) {
+        window.location.href = 'dashboard.html';
+        return;
+      }
+
+      if (errorBox) {
+        errorBox.textContent = 'Credenciales no válidas. Usa 123456 / 123456 para Administrador.';
+        errorBox.classList.remove('hidden');
+      }
+    });
+  }
+
+  if (demoAdminBtn) {
+    demoAdminBtn.addEventListener('click', () => {
+      document.getElementById('login-username-input').value = '123456';
+      document.getElementById('login-password-input').value = '123456';
+      localStorage.setItem('caf_admin_logged', 'true');
+      window.location.href = 'admin.html';
+    });
+  }
+
+  if (demoSocioBtn) {
+    demoSocioBtn.addEventListener('click', () => {
+      window.location.href = 'dashboard.html';
+    });
+  }
+}
+
+// ==========================================
+// 12. MENÚ MÓVIL Y NAVBAR RESPONSIVE
 // ==========================================
 function initMobileMenu() {
   const toggleBtn = document.getElementById('mobile-menu-btn');
@@ -1104,7 +1343,6 @@ function initMobileMenu() {
   });
 }
 
-// Check logged in user to update nav badge
 function updateUserNavBadge() {
   const user = JSON.parse(localStorage.getItem('caf_current_user') || 'null');
   const authBtn = document.getElementById('nav-auth-btn');
@@ -1116,12 +1354,5 @@ function updateUserNavBadge() {
       <span class="hidden sm:inline">${user.name.split(' ')[0]}</span>
       <span class="sm:hidden">Mi Cuenta</span>
     `;
-    authBtn.href = "dashboard.html";
-  } else {
-    authBtn.innerHTML = `
-      <i class="fa-regular fa-user"></i>
-      <span>Mi Cuenta</span>
-    `;
-    authBtn.href = "dashboard.html";
   }
 }
