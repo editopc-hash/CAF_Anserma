@@ -17,9 +17,9 @@ const DEFAULT_BANNERS = [
     title: "EN ANSERMA,\nTU CAMBIO\nCOMIENZA HOY.",
     highlightWord: "TU CAMBIO",
     subtitle: "Centro de Acondicionamiento Físico CAF & Centro de Entrenamiento Víctor Zamorano. Musculación, CrossFit, Funcional, Rumbaterapia, Krav Maga y el convenio más completo de Caldas con Confa.",
-    image: "assets/images/banner/banner-anserma-cambio.png",
+    image: "assets/images/banner/banner-final-01.png",
     enabled: true,
-    opacity: 75, // 0 to 100%
+    opacity: 0, // 0 to 100%
     btn1Text: "¡Inscríbete Hoy!",
     btn1Link: "#planes",
     btn2Text: "Convenio Confa",
@@ -27,19 +27,19 @@ const DEFAULT_BANNERS = [
   },
   {
     id: 2,
-    badge: "RESULTADOS REALES CON ASESORÍA DE SALA",
+    badge: "",
     badgeIcon: "fa-solid fa-fire",
     badgeColor: "orange",
-    title: "CAMBIA TU CUERPO,\nCAMBIA TU MENTE.",
-    highlightWord: "CAMBIA TU MENTE.",
-    subtitle: "Planes diseñados para cada meta: hipertrofia, reducción de peso, acondicionamiento y bienestar total. Entrena solo o aprovecha nuestro exclusivo Plan Pareja CAF.",
-    image: "assets/images/banner/banner-cambia-cuerpo.png",
+    title: "",
+    highlightWord: "",
+    subtitle: "",
+    image: "assets/images/banner/banner-final-02.png",
     enabled: true,
-    opacity: 80, // 0 to 100%
-    btn1Text: "Crear Mi Rutina",
-    btn1Link: "#rutina",
-    btn2Text: "Preguntar por WhatsApp",
-    btn2Link: "https://wa.me/573100000000?text=Hola%20CAF%20Anserma,%20quiero%20conocer%20el%20Plan%20Pareja%20y%20tarifas."
+    opacity: 0, // 0 to 100%
+    btn1Text: "",
+    btn1Link: "#planes",
+    btn2Text: "",
+    btn2Link: "#planes"
   }
 ];
 

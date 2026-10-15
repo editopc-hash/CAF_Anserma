@@ -115,7 +115,7 @@
                 const clone = Object.assign({}, item);
                 if (clone.image && clone.image.startsWith('data:image') && clone.image.length > 80000) {
                   if (k === 'caf_banners') {
-                    clone.image = clone.id === 1 ? 'assets/images/banner/banner-anserma-cambio.png' : 'assets/images/banner/banner-confa.png';
+                    clone.image = clone.id === 1 ? 'assets/images/banner/banner-final-01.png' : 'assets/images/banner/banner-final-02.png';
                   } else if (k === 'caf_products') {
                     clone.image = 'assets/images/tienda/proteina-whey-100.jpg';
                   } else if (k === 'caf_gallery') {
