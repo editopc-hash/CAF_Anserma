@@ -2368,8 +2368,8 @@ window.renderMemberTabRutina = function(member) {
         <p class="text-xs text-slate-400 mt-0.5"><i class="fa-solid fa-user-ninja text-slate-500 mr-1"></i>Entrenador a cargo: <strong class="text-slate-300">${routine.trainer || 'Víctor Zamorano'}</strong></p>
       </div>
 
-      <!-- Quick Preset Change -->
-      <div class="flex items-center gap-2">
+      <!-- Quick Preset Change & Exercise Library -->
+      <div class="flex flex-wrap items-center gap-2">
         <select id="admin-routine-preset-select" class="bg-slate-950 border border-slate-800 text-white rounded-xl px-3 py-2 text-xs focus:border-lime-500">
           <option value="perdida_peso" ${routine.key === 'perdida_peso' ? 'selected' : ''}>Programa Reducción & Hipertrofia</option>
           <option value="hipertrofia_fuerza" ${routine.key === 'hipertrofia_fuerza' ? 'selected' : ''}>Hipertrofia Máxima & Halterofilia</option>
@@ -2379,6 +2379,9 @@ window.renderMemberTabRutina = function(member) {
         </select>
         <button onclick="window.applyRoutinePreset('${member.id}')" class="px-3.5 py-2 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-xs rounded-xl transition">
           Asignar Rutina
+        </button>
+        <button onclick="window.openExerciseLibrary()" class="px-3 py-2 bg-slate-950 border border-slate-800 hover:border-lime-500/50 text-lime-400 font-extrabold text-xs rounded-xl transition flex items-center gap-1.5 shadow-sm">
+          <i class="fa-solid fa-book-open"></i> Biblioteca (1,324 Ejercicios)
         </button>
       </div>
     </div>
@@ -2395,15 +2398,21 @@ window.renderMemberTabRutina = function(member) {
           <div class="space-y-2">
             ${(d.items || []).map((ex, itemIdx) => `
               <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-950/70 border border-slate-800/60 hover:border-slate-700 transition">
-                <label class="flex items-center gap-3 cursor-pointer flex-1 select-none">
-                  <input type="checkbox" ${ex.done ? 'checked' : ''} onchange="window.toggleMemberExerciseDone('${member.id}', ${dayIdx}, ${itemIdx})" class="w-4 h-4 rounded accent-lime-500 cursor-pointer">
-                  <span class="text-xs font-semibold ${ex.done ? 'line-through text-slate-500' : 'text-slate-200'}">
+                <label class="flex items-center gap-3 cursor-pointer flex-1 select-none min-w-0 pr-2">
+                  <input type="checkbox" ${ex.done ? 'checked' : ''} onchange="window.toggleMemberExerciseDone('${member.id}', ${dayIdx}, ${itemIdx})" class="w-4 h-4 rounded accent-lime-500 cursor-pointer shrink-0">
+                  <span class="text-xs font-semibold truncate ${ex.done ? 'line-through text-slate-500' : 'text-slate-200'}">
                     ${ex.name}
                   </span>
                 </label>
-                <span class="text-xs font-mono font-bold text-lime-400 bg-lime-500/10 px-2 py-0.5 rounded-lg border border-lime-500/20">
-                  ${ex.sets}
-                </span>
+                <div class="flex items-center gap-2 shrink-0">
+                  <button type="button" onclick="window.openExerciseGuide('${ex.name.replace(/'/g, "\\'")}')" class="px-2 py-1 rounded-lg bg-slate-900 hover:bg-lime-500 hover:text-black border border-slate-800 text-slate-300 hover:border-lime-500 text-[11px] font-bold transition flex items-center gap-1 shadow-sm" title="Ver animación técnica en GIF">
+                    <i class="fa-solid fa-play text-lime-400 text-[9px]"></i>
+                    <span class="hidden sm:inline">Ver GIF</span>
+                  </button>
+                  <span class="text-xs font-mono font-bold text-lime-400 bg-lime-500/10 px-2 py-0.5 rounded-lg border border-lime-500/20">
+                    ${ex.sets}
+                  </span>
+                </div>
               </div>
             `).join('')}
           </div>

@@ -353,14 +353,19 @@ function renderRoutineSection() {
   const routine = currentUser.assignedRoutine;
 
   container.innerHTML = `
-    <div class="flex items-center justify-between mb-4">
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
       <div>
         <h4 class="text-white font-extrabold text-lg">${routine.title}</h4>
         <p class="text-xs text-slate-400">Diseñado por: <span class="text-lime-400 font-bold">${routine.trainer}</span></p>
       </div>
-      <button onclick="window.resetRoutineChecklist()" class="text-xs text-slate-400 hover:text-white px-2.5 py-1 bg-slate-800 rounded-lg transition">
-        <i class="fa-solid fa-arrows-rotate mr-1"></i> Reiniciar semana
-      </button>
+      <div class="flex items-center gap-2">
+        <button onclick="window.openExerciseLibrary()" class="text-xs text-lime-400 hover:text-black hover:bg-lime-500 px-3 py-1.5 bg-lime-500/10 border border-lime-500/30 rounded-xl transition flex items-center gap-1.5 font-bold shadow-sm">
+          <i class="fa-solid fa-book-open"></i> Biblioteca (1,324 Ejercicios)
+        </button>
+        <button onclick="window.resetRoutineChecklist()" class="text-xs text-slate-400 hover:text-white px-2.5 py-1.5 bg-slate-800 rounded-xl transition">
+          <i class="fa-solid fa-arrows-rotate mr-1"></i> Reiniciar
+        </button>
+      </div>
     </div>
     <div class="space-y-4">
       ${routine.days.map((d, dIdx) => `
@@ -370,13 +375,19 @@ function renderRoutineSection() {
           </h5>
           <div class="space-y-2">
             ${d.items.map((item, itemIdx) => `
-              <label class="flex items-center justify-between p-2.5 rounded-lg bg-slate-950/60 border border-slate-800/80 cursor-pointer hover:border-slate-700 transition">
-                <div class="flex items-center gap-3">
-                  <input type="checkbox" ${item.done ? 'checked' : ''} onchange="window.toggleRoutineItem(${dIdx}, ${itemIdx})" class="w-4 h-4 rounded text-lime-500 focus:ring-lime-400 bg-slate-900 border-slate-700">
-                  <span class="text-xs sm:text-sm font-medium ${item.done ? 'line-through text-slate-500' : 'text-slate-200'}">${item.name}</span>
+              <div class="flex items-center justify-between p-2.5 rounded-lg bg-slate-950/60 border border-slate-800/80 hover:border-slate-700 transition">
+                <label class="flex items-center gap-3 cursor-pointer flex-1 min-w-0 pr-2">
+                  <input type="checkbox" ${item.done ? 'checked' : ''} onchange="window.toggleRoutineItem(${dIdx}, ${itemIdx})" class="w-4 h-4 rounded text-lime-500 focus:ring-lime-400 bg-slate-900 border-slate-700 shrink-0">
+                  <span class="text-xs sm:text-sm font-medium truncate ${item.done ? 'line-through text-slate-500' : 'text-slate-200'}">${item.name}</span>
+                </label>
+                <div class="flex items-center gap-2 shrink-0">
+                  <button type="button" onclick="window.openExerciseGuide('${item.name.replace(/'/g, "\\'")}')" class="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-lime-500 hover:text-black border border-slate-800 text-slate-300 hover:border-lime-500 text-[11px] font-bold transition flex items-center gap-1.5 shadow-sm" title="Ver animación técnica en GIF y pasos de ejecución">
+                    <i class="fa-solid fa-play text-lime-400 text-[9px]"></i>
+                    <span class="hidden sm:inline">Técnica</span>
+                  </button>
+                  <span class="text-xs font-semibold px-2 py-0.5 rounded bg-slate-800 ${item.done ? 'text-slate-500' : 'text-lime-400'}">${item.sets}</span>
                 </div>
-                <span class="text-xs font-semibold px-2 py-0.5 rounded bg-slate-800 ${item.done ? 'text-slate-500' : 'text-lime-400'}">${item.sets}</span>
-              </label>
+              </div>
             `).join('')}
           </div>
         </div>

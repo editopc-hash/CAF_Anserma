@@ -831,14 +831,17 @@ function generateCustomRoutine(goal, level, days, focus) {
       </div>
       <div class="space-y-2.5">
         ${d.exercises.map((ex, i) => `
-          <div class="flex items-center justify-between text-xs md:text-sm bg-slate-950/60 p-2.5 rounded-lg border border-slate-800/60">
-            <div class="flex items-center gap-2.5">
-              <span class="w-5 h-5 rounded-full bg-lime-500/20 text-lime-400 font-bold flex items-center justify-center text-xs">${i + 1}</span>
-              <span class="text-slate-200 font-medium">${ex.name}</span>
+          <div class="flex items-center justify-between text-xs md:text-sm bg-slate-950/60 p-2.5 rounded-xl border border-slate-800/60 hover:border-lime-500/30 transition">
+            <div class="flex items-center gap-2.5 min-w-0 pr-2">
+              <span class="w-5 h-5 rounded-full bg-lime-500/20 text-lime-400 font-bold flex items-center justify-center text-xs shrink-0">${i + 1}</span>
+              <span class="text-slate-200 font-medium truncate">${ex.name}</span>
             </div>
-            <div class="text-right flex items-center gap-3">
-              <span class="text-lime-400 font-semibold">${ex.sets} · ${ex.reps}</span>
-              <span class="text-slate-400 text-xs hidden sm:inline"><i class="fa-regular fa-clock"></i> ${ex.rest}</span>
+            <div class="text-right flex items-center gap-2 shrink-0">
+              <button type="button" onclick="window.openExerciseGuide('${ex.name.replace(/'/g, "\\'")}')" class="px-2.5 py-1 rounded-lg bg-lime-500/10 hover:bg-lime-500 hover:text-black border border-lime-500/30 text-lime-400 text-[11px] font-bold transition flex items-center gap-1.5 shadow-sm" title="Ver animación GIF y técnica correcta paso a paso">
+                <i class="fa-solid fa-play text-[9px]"></i>
+                <span>Ver Técnica</span>
+              </button>
+              <span class="text-lime-400 font-semibold text-xs hidden sm:inline">${ex.sets} · ${ex.reps}</span>
             </div>
           </div>
         `).join('')}
