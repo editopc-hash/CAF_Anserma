@@ -1392,7 +1392,7 @@ function initLoginModal() {
       }
 
       if (errorBox) {
-        errorBox.textContent = 'Credenciales no válidas. Usa 123456 / cristal para Administrador.';
+        errorBox.textContent = 'Credenciales no válidas. Verifica tu usuario y contraseña.';
         errorBox.classList.remove('hidden');
       }
     });
@@ -1400,9 +1400,6 @@ function initLoginModal() {
 
   if (demoAdminBtn) {
     demoAdminBtn.addEventListener('click', () => {
-      document.getElementById('login-username-input').value = '123456';
-      document.getElementById('login-password-input').value = 'cristal';
-      localStorage.setItem('caf_admin_logged', 'true');
       window.location.href = 'admin.html';
     });
   }

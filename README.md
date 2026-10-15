@@ -8,10 +8,9 @@ Diseñado y optimizado para **GitHub Pages** (100% estático, sin requerir servi
 
 ## 🔑 Credenciales de Acceso
 
-### 🛡️ 1. Usuario Administrador (Panel Completo)
-- **Usuario:** `123456`
-- **Contraseña:** `123456`
-- **Acceso:** [admin.html](admin.html) o mediante el botón *"Admin"* / *"Mi Cuenta"* en la barra de navegación de [index.html](index.html).
+### 🛡️ 1. Panel de Administración
+- **Acceso:** [admin.html](admin.html) o mediante el botón *"Admin"* en la barra de navegación de [index.html](index.html).
+- Requiere credenciales de administrador autorizadas.
 
 #### Funcionalidades del Administrador:
 1. **Control de Finanzas e Inscritos:**
@@ -85,7 +84,7 @@ Diseñado y optimizado para **GitHub Pages** (100% estático, sin requerir servi
 d:\antigrativy\CAF\
 │
 ├── index.html                   # Página principal (Landing, Banners, Galería, Tienda, Planes, Confa, Contacto)
-├── admin.html                   # Panel Administrador (123456 / 123456)
+├── admin.html                   # Panel Administrador de Control y Gestión
 ├── dashboard.html               # Panel Socio (Progreso, Gráfica, Pagos, Dieta, Rutina)
 ├── README.md                    # Documentación y guía de despliegue
 │

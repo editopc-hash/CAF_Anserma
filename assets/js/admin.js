@@ -817,6 +817,10 @@ function checkAdminAuth() {
   if (!isLogged) {
     if (loginOverlay) loginOverlay.classList.remove('hidden');
     if (mainApp) mainApp.classList.add('hidden');
+    const uInput = document.getElementById('admin-user-input');
+    const pInput = document.getElementById('admin-pass-input');
+    if (uInput) uInput.value = '';
+    if (pInput) pInput.value = '';
   } else {
     if (loginOverlay) loginOverlay.classList.add('hidden');
     if (mainApp) mainApp.classList.remove('hidden');
@@ -842,7 +846,7 @@ function initAdminLogin() {
     } else {
       if (errorMsg) {
         errorMsg.classList.remove('hidden');
-        errorMsg.textContent = "Usuario o contraseña incorrectos. Usa 123456 / cristal";
+        errorMsg.textContent = "Usuario o contraseña incorrectos.";
       }
     }
   });

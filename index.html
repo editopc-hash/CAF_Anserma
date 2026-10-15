@@ -88,7 +88,7 @@
           </button>
 
           <!-- Admin Direct Link -->
-          <a href="admin.html" class="hidden md:flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-800 hover:border-lime-500/30 text-[11px] font-bold text-slate-400 hover:text-lime-400 transition" title="Panel de Administrador (123456 / cristal)">
+          <a href="admin.html" class="hidden md:flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-800 hover:border-lime-500/30 text-[11px] font-bold text-slate-400 hover:text-lime-400 transition" title="Panel de Administrador">
             <i class="fa-solid fa-user-shield text-lime-400"></i>
             <span>Admin</span>
           </a>
@@ -1046,7 +1046,7 @@
               <span>Iniciar Sesión / Mi Cuenta</span>
             </button>
             <a href="admin.html" class="w-full py-2 px-3 rounded-xl bg-slate-950 border border-slate-800 text-slate-400 hover:text-lime-400 transition text-[11px] text-center font-bold">
-              <i class="fa-solid fa-user-shield text-lime-400 mr-1"></i> Panel Admin (123456 / cristal)
+              <i class="fa-solid fa-user-shield text-lime-400 mr-1"></i> Panel de Administrador
             </a>
           </div>
         </div>
@@ -1070,7 +1070,7 @@
     <i class="fa-brands fa-whatsapp"></i>
   </a>
 
-  <!-- ================= MODAL: INICIO DE SESIÓN (ADMIN 123456 & SOCIO) ================= -->
+  <!-- ================= MODAL: INICIO DE SESIÓN ================= -->
   <div id="login-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="bg-slate-950 border border-slate-800 rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative">
       <button id="close-login-modal-btn" class="absolute top-5 right-5 text-slate-400 hover:text-white">
@@ -1090,12 +1090,12 @@
       <form id="login-form" class="space-y-4">
         <div>
           <label for="login-username-input" class="block text-xs font-bold text-slate-300 uppercase mb-1">Usuario o Correo:</label>
-          <input id="login-username-input" type="text" required placeholder="Ej: 123456 o correo@socio.com" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:border-lime-500 font-mono">
+          <input id="login-username-input" type="text" required placeholder="Ej: usuario o correo@socio.com" autocomplete="username" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:border-lime-500 font-mono">
         </div>
 
         <div>
           <label for="login-password-input" class="block text-xs font-bold text-slate-300 uppercase mb-1">Contraseña:</label>
-          <input id="login-password-input" type="password" required placeholder="••••••" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:border-lime-500 font-mono">
+          <input id="login-password-input" type="password" required placeholder="••••••••" autocomplete="current-password" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:border-lime-500 font-mono">
         </div>
 
         <button type="submit" class="w-full py-3 bg-lime-500 hover:bg-lime-400 text-black font-black text-xs sm:text-sm rounded-xl shadow-lg transition">
@@ -1103,12 +1103,6 @@
         </button>
 
         <div class="pt-4 border-t border-slate-800/80 space-y-2">
-          <span class="text-[11px] text-slate-400 block text-center uppercase tracking-wider font-bold">Accesos Rápidos:</span>
-          
-          <button type="button" id="login-demo-admin-btn" class="w-full py-2.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-lime-400 font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition">
-            <i class="fa-solid fa-user-shield"></i> Entrar como Administrador (123456 / cristal)
-          </button>
-          
           <button type="button" id="login-demo-socio-btn" class="w-full py-2.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition">
             <i class="fa-solid fa-user"></i> Entrar como Socio Demo (Carlos Andrés)
           </button>
