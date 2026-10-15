@@ -476,8 +476,29 @@
             <input id="add-prod-badge" type="text" placeholder="Ej: Novedad / Más Vendido" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2 text-xs focus:border-lime-500">
           </div>
           <div>
-            <label for="add-prod-icon" class="block text-xs font-bold text-slate-300 uppercase mb-1">Ícono FontAwesome:</label>
+            <label for="add-prod-icon" class="block text-xs font-bold text-slate-300 uppercase mb-1">Ícono Alternativo:</label>
             <input id="add-prod-icon" type="text" value="fa-solid fa-bottle-droplet" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2 text-xs focus:border-lime-500 font-mono">
+          </div>
+        </div>
+
+        <!-- Imagen del Producto -->
+        <div class="bg-slate-900/60 border border-slate-800 p-3.5 rounded-2xl space-y-2.5">
+          <label class="block text-xs font-bold text-slate-300 uppercase flex items-center justify-between">
+            <span><i class="fa-solid fa-image text-lime-400 mr-1.5"></i>Foto / Imagen del Producto:</span>
+            <span class="text-[10px] text-slate-400 font-normal">Sube foto o escribe enlace</span>
+          </label>
+          <div class="flex items-center gap-3">
+            <div id="add-prod-img-preview-box" class="w-16 h-16 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-center shrink-0 overflow-hidden relative shadow-inner">
+              <img id="add-prod-img-preview" src="" class="w-full h-full object-cover hidden" alt="Vista previa">
+              <i id="add-prod-img-placeholder" class="fa-solid fa-camera text-slate-600 text-xl"></i>
+            </div>
+            <div class="flex-1 space-y-1.5">
+              <label class="px-3 py-1.5 bg-lime-500/20 hover:bg-lime-500 text-lime-400 hover:text-black font-extrabold text-xs rounded-xl cursor-pointer transition inline-flex items-center gap-1.5 border border-lime-500/30">
+                <i class="fa-solid fa-cloud-arrow-up"></i> Seleccionar Foto del Equipo
+                <input type="file" id="add-prod-file" accept="image/*" class="hidden" onchange="window.handleProductImageUpload('add', this)">
+              </label>
+              <input id="add-prod-image" type="text" placeholder="O escribe enlace / ruta (ej: assets/images/...)" oninput="window.previewProductImageLive('add', this.value)" class="w-full bg-slate-950 border border-slate-800 text-slate-300 rounded-lg px-3 py-1.5 text-xs focus:border-lime-500">
+            </div>
           </div>
         </div>
 
@@ -529,6 +550,32 @@
         <div>
           <label for="edit-prod-badge" class="block text-xs font-bold text-slate-300 uppercase mb-1">Badge Promocional:</label>
           <input id="edit-prod-badge" type="text" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2 text-xs focus:border-lime-500">
+        </div>
+
+        <!-- Imagen del Producto (Editar) -->
+        <div class="bg-slate-900/60 border border-slate-800 p-3.5 rounded-2xl space-y-2.5">
+          <label class="block text-xs font-bold text-slate-300 uppercase flex items-center justify-between">
+            <span><i class="fa-solid fa-image text-lime-400 mr-1.5"></i>Foto / Imagen del Producto:</span>
+            <span class="text-[10px] text-slate-400 font-normal">Sube foto o escribe enlace</span>
+          </label>
+          <div class="flex items-center gap-3">
+            <div id="edit-prod-img-preview-box" class="w-16 h-16 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-center shrink-0 overflow-hidden relative shadow-inner">
+              <img id="edit-prod-img-preview" src="" class="w-full h-full object-cover hidden" alt="Vista previa">
+              <i id="edit-prod-img-placeholder" class="fa-solid fa-camera text-slate-600 text-xl"></i>
+            </div>
+            <div class="flex-1 space-y-1.5">
+              <div class="flex items-center gap-2">
+                <label class="px-3 py-1.5 bg-lime-500/20 hover:bg-lime-500 text-lime-400 hover:text-black font-extrabold text-xs rounded-xl cursor-pointer transition inline-flex items-center gap-1.5 border border-lime-500/30">
+                  <i class="fa-solid fa-cloud-arrow-up"></i> Cambiar Foto
+                  <input type="file" id="edit-prod-file" accept="image/*" class="hidden" onchange="window.handleProductImageUpload('edit', this)">
+                </label>
+                <button type="button" onclick="window.removeProductImage('edit')" class="px-2.5 py-1.5 bg-slate-800 hover:bg-rose-900/40 text-slate-400 hover:text-rose-400 text-xs rounded-xl transition">
+                  <i class="fa-solid fa-trash-can"></i> Quitar
+                </button>
+              </div>
+              <input id="edit-prod-image" type="text" placeholder="O escribe enlace / ruta de imagen..." oninput="window.previewProductImageLive('edit', this.value)" class="w-full bg-slate-950 border border-slate-800 text-slate-300 rounded-lg px-3 py-1.5 text-xs focus:border-lime-500">
+            </div>
+          </div>
         </div>
 
         <div>

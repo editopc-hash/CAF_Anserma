@@ -54,7 +54,7 @@ const DEFAULT_PRODUCTS = [
     badge: "Más Vendido",
     icon: "fa-solid fa-bottle-droplet",
     color: "from-amber-500 to-yellow-600",
-    image: "",
+    image: "assets/images/tienda/proteina-whey-100.jpg",
     status: "disponible"
   },
   {
@@ -66,7 +66,7 @@ const DEFAULT_PRODUCTS = [
     badge: "Fuerza Pura",
     icon: "fa-solid fa-bolt",
     color: "from-lime-500 to-emerald-600",
-    image: "",
+    image: "https://images.unsplash.com/photo-1593095948071-474c5cc2989d?auto=format&fit=crop&w=600&q=80",
     status: "disponible"
   },
   {
@@ -78,7 +78,7 @@ const DEFAULT_PRODUCTS = [
     badge: "Energía",
     icon: "fa-solid fa-fire-flame-curved",
     color: "from-orange-500 to-red-600",
-    image: "",
+    image: "https://images.unsplash.com/photo-1579722821273-0f6c7d44362f?auto=format&fit=crop&w=600&q=80",
     status: "disponible"
   },
   {
@@ -90,7 +90,7 @@ const DEFAULT_PRODUCTS = [
     badge: "Recuperación",
     icon: "fa-solid fa-heart-pulse",
     color: "from-cyan-500 to-blue-600",
-    image: "",
+    image: "https://images.unsplash.com/photo-1546483875-ad9014c88eba?auto=format&fit=crop&w=600&q=80",
     status: "disponible"
   },
   {
@@ -102,7 +102,7 @@ const DEFAULT_PRODUCTS = [
     badge: "Exclusivo",
     icon: "fa-solid fa-shirt",
     color: "from-neutral-700 to-neutral-900",
-    image: "",
+    image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=600&q=80",
     status: "disponible"
   },
   {
@@ -114,7 +114,7 @@ const DEFAULT_PRODUCTS = [
     badge: "Confort",
     icon: "fa-solid fa-person-running",
     color: "from-zinc-700 to-slate-900",
-    image: "",
+    image: "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?auto=format&fit=crop&w=600&q=80",
     status: "disponible"
   },
   {
@@ -126,7 +126,7 @@ const DEFAULT_PRODUCTS = [
     badge: "Mujer CAF",
     icon: "fa-solid fa-vest",
     color: "from-pink-600 to-rose-700",
-    image: "",
+    image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=600&q=80",
     status: "disponible"
   },
   {
@@ -138,7 +138,7 @@ const DEFAULT_PRODUCTS = [
     badge: "Accesorio",
     icon: "fa-solid fa-hat-cowboy-side",
     color: "from-slate-800 to-zinc-950",
-    image: "",
+    image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=600&q=80",
     status: "disponible"
   },
   {
@@ -150,7 +150,7 @@ const DEFAULT_PRODUCTS = [
     badge: "Indispensable",
     icon: "fa-solid fa-glass-water",
     color: "from-emerald-600 to-teal-700",
-    image: "",
+    image: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=600&q=80",
     status: "disponible"
   },
   {
@@ -162,7 +162,7 @@ const DEFAULT_PRODUCTS = [
     badge: "Levantamiento",
     icon: "fa-solid fa-hand-fist",
     color: "from-amber-600 to-yellow-700",
-    image: "",
+    image: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80",
     status: "disponible"
   }
 ];
@@ -876,11 +876,22 @@ function saveBanners(banners) {
 
 function getProducts() {
   const data = localStorage.getItem('caf_products');
+  let products = DEFAULT_PRODUCTS;
   if (data) {
-    try { return JSON.parse(data); } catch (e) { }
+    try {
+      const parsed = JSON.parse(data);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        products = parsed;
+      }
+    } catch (e) { }
   }
-  localStorage.setItem('caf_products', JSON.stringify(DEFAULT_PRODUCTS));
-  return DEFAULT_PRODUCTS;
+  return products.map(p => {
+    if (!p.image) {
+      const def = DEFAULT_PRODUCTS.find(d => d.id === p.id);
+      if (def && def.image) p.image = def.image;
+    }
+    return p;
+  });
 }
 
 function saveProducts(products) {
@@ -1627,9 +1638,19 @@ function renderProductsEditor(categoryFilter = 'todos', searchTerm = '') {
           </span>
         </div>
 
-        <div class="w-full h-36 rounded-xl bg-gradient-to-br ${p.color || 'from-slate-800 to-slate-950'} flex items-center justify-center mb-3 relative overflow-hidden">
-          ${p.image ? `<img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover">` : `<i class="${p.icon || 'fa-solid fa-dumbbell'} text-5xl text-white drop-shadow"></i>`}
-          <span class="absolute top-2 left-2 bg-black/70 text-lime-400 text-[9px] font-extrabold uppercase px-2 py-0.5 rounded">
+        <div class="w-full h-44 rounded-xl bg-slate-950 border border-slate-800/80 flex items-center justify-center mb-3 relative overflow-hidden group">
+          ${p.image ? `
+            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.classList.add('hidden'); this.nextElementSibling.classList.remove('hidden');">
+            <div class="hidden w-full h-full bg-gradient-to-br ${p.color || 'from-slate-800 to-slate-950'} flex items-center justify-center">
+              <i class="${p.icon || 'fa-solid fa-dumbbell'} text-4xl text-white drop-shadow"></i>
+            </div>
+          ` : `
+            <div class="w-full h-full bg-gradient-to-br ${p.color || 'from-slate-800 to-slate-950'} flex items-center justify-center">
+              <i class="${p.icon || 'fa-solid fa-dumbbell'} text-4xl text-white drop-shadow"></i>
+            </div>
+          `}
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-black/20 pointer-events-none"></div>
+          <span class="absolute top-2 left-2 bg-black/80 text-lime-400 text-[9px] font-extrabold uppercase px-2 py-0.5 rounded border border-lime-500/30">
             ${p.badge}
           </span>
         </div>
@@ -1682,6 +1703,47 @@ window.deleteProduct = function(productId) {
   renderProductsEditor();
 };
 
+// Product Image Upload to Base64
+window.handleProductImageUpload = function(mode, inputEl) {
+  if (inputEl.files && inputEl.files[0]) {
+    const file = inputEl.files[0];
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const dataUrl = e.target.result;
+      const input = document.getElementById(`${mode}-prod-image`);
+      if (input) input.value = dataUrl;
+      window.previewProductImageLive(mode, dataUrl);
+    };
+    reader.readAsDataURL(file);
+  }
+};
+
+// Preview product image live
+window.previewProductImageLive = function(mode, val) {
+  const img = document.getElementById(`${mode}-prod-img-preview`);
+  const ph = document.getElementById(`${mode}-prod-img-placeholder`);
+  if (!img || !ph) return;
+
+  if (val && val.trim()) {
+    img.src = val.trim();
+    img.classList.remove('hidden');
+    ph.classList.add('hidden');
+  } else {
+    img.src = '';
+    img.classList.add('hidden');
+    ph.classList.remove('hidden');
+  }
+};
+
+// Remove product image
+window.removeProductImage = function(mode) {
+  const input = document.getElementById(`${mode}-prod-image`);
+  const fileInput = document.getElementById(`${mode}-prod-file`);
+  if (input) input.value = '';
+  if (fileInput) fileInput.value = '';
+  window.previewProductImageLive(mode, '');
+};
+
 // Open Edit Product Modal
 window.editProductModal = function(productId) {
   const products = getProducts();
@@ -1697,6 +1759,10 @@ window.editProductModal = function(productId) {
   document.getElementById('edit-prod-price').value = prod.price;
   document.getElementById('edit-prod-badge').value = prod.badge;
   document.getElementById('edit-prod-desc').value = prod.desc;
+
+  const imgInput = document.getElementById('edit-prod-image');
+  if (imgInput) imgInput.value = prod.image || '';
+  window.previewProductImageLive('edit', prod.image || '');
 
   modal.classList.remove('hidden');
 };
@@ -1721,6 +1787,7 @@ function initProductsForms() {
       const price = parseInt(document.getElementById('edit-prod-price').value);
       const badge = document.getElementById('edit-prod-badge').value.trim();
       const desc = document.getElementById('edit-prod-desc').value.trim();
+      const image = document.getElementById('edit-prod-image')?.value.trim() || '';
 
       const products = getProducts();
       const p = products.find(item => item.id === id);
@@ -1730,6 +1797,7 @@ function initProductsForms() {
         p.price = price;
         p.badge = badge;
         p.desc = desc;
+        p.image = image;
         saveProducts(products);
         renderProductsEditor();
         editModal.classList.add('hidden');
@@ -1745,7 +1813,13 @@ function initProductsForms() {
   const closeAddBtn = document.getElementById('admin-close-product-add-btn');
 
   if (addBtn && addModal) {
-    addBtn.addEventListener('click', () => addModal.classList.remove('hidden'));
+    addBtn.addEventListener('click', () => {
+      addForm.reset();
+      const imgInput = document.getElementById('add-prod-image');
+      if (imgInput) imgInput.value = '';
+      window.previewProductImageLive('add', '');
+      addModal.classList.remove('hidden');
+    });
   }
   if (closeAddBtn && addModal) {
     closeAddBtn.addEventListener('click', () => addModal.classList.add('hidden'));
@@ -1760,6 +1834,7 @@ function initProductsForms() {
       const badge = document.getElementById('add-prod-badge').value.trim() || 'Nuevo';
       const desc = document.getElementById('add-prod-desc').value.trim();
       const icon = document.getElementById('add-prod-icon')?.value.trim() || 'fa-solid fa-tag';
+      const image = document.getElementById('add-prod-image')?.value.trim() || '';
 
       const products = getProducts();
       const newId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
@@ -1779,7 +1854,7 @@ function initProductsForms() {
         desc,
         icon,
         color: colors[category] || "from-slate-700 to-slate-900",
-        image: "",
+        image: image,
         status: "disponible"
       };
 
@@ -1787,6 +1862,7 @@ function initProductsForms() {
       saveProducts(products);
       renderProductsEditor();
       addForm.reset();
+      window.previewProductImageLive('add', '');
       addModal.classList.add('hidden');
       alert(`¡Producto "${name}" agregado con éxito a la tienda!`);
     });
