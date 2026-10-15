@@ -174,113 +174,630 @@ function getRelativeDate(offsetDays) {
   return d.toISOString().split('T')[0];
 }
 
-// Default Members Database
+// Routine Presets Available at CAF
+const ROUTINE_PRESETS = {
+  perdida_peso: {
+    key: "perdida_peso",
+    title: "Programa Reducción de Peso & Hipertrofia Funcional",
+    trainer: "Víctor Zamorano (Piso 2 CAF)",
+    days: [
+      {
+        day: "Lunes - Empuje (Pecho, Hombro y Tríceps)",
+        items: [
+          { name: "Press de banca plano con mancuernas", sets: "4x12", done: true },
+          { name: "Press inclinado en multipower", sets: "4x10", done: true },
+          { name: "Elevaciones laterales para deltoides", sets: "4x15", done: true },
+          { name: "Fondos en máquina asistida o paralelas", sets: "3x12", done: false },
+          { name: "Caminadora con inclinación al 10%", sets: "20 min", done: false }
+        ]
+      },
+      {
+        day: "Miércoles - Tracción (Espalda, Bíceps y Core)",
+        items: [
+          { name: "Jalón al pecho agarre cerrado neutro", sets: "4x12", done: false },
+          { name: "Remo con mancuerna a una mano", sets: "4x10 por lado", done: false },
+          { name: "Pájaros posteriores en polea", sets: "3x15", done: false },
+          { name: "Curl de bíceps con barra Z", sets: "4x12", done: false },
+          { name: "Circuito de planchas y elevación de piernas", sets: "4 rondas", done: false }
+        ]
+      },
+      {
+        day: "Viernes - Tren Inferior & Acondicionamiento",
+        items: [
+          { name: "Sentadilla profunda en rack", sets: "4x10", done: false },
+          { name: "Prensa de 45° con buena bajada", sets: "4x12", done: false },
+          { name: "Hip Thrust con barra olímpica", sets: "4x12", done: false },
+          { name: "Curl femoral en máquina", sets: "4x15", done: false },
+          { name: "WOD Funcional de alta intensidad", sets: "15 min", done: false }
+        ]
+      }
+    ]
+  },
+  hipertrofia_fuerza: {
+    key: "hipertrofia_fuerza",
+    title: "Hipertrofia Máxima & Halterofilia Pesada",
+    trainer: "Víctor Zamorano (Sala de Musculación CAF)",
+    days: [
+      {
+        day: "Lunes - Fuerza Sentadilla & Tren Inferior",
+        items: [
+          { name: "Sentadilla libre trasera pesada", sets: "5x5", done: true },
+          { name: "Prensa inclinada con cargas progresivas", sets: "4x10", done: true },
+          { name: "Peso muerto rumano con mancuernas", sets: "4x10", done: false },
+          { name: "Elevación de talones en máquina de pie", sets: "5x15", done: false }
+        ]
+      },
+      {
+        day: "Miércoles - Press Banca & Empuje Pesado",
+        items: [
+          { name: "Press de banca plano con barra", sets: "5x5", done: false },
+          { name: "Press militar con barra", sets: "4x8", done: false },
+          { name: "Aperturas en banco inclinado", sets: "4x12", done: false },
+          { name: "Press francés con barra Z", sets: "4x10", done: false }
+        ]
+      },
+      {
+        day: "Viernes - Peso Muerto & Tracción Espalda",
+        items: [
+          { name: "Peso muerto convencional desde suelo", sets: "4x5", done: false },
+          { name: "Dominadas con lastre o agarre prono", sets: "4x8", done: false },
+          { name: "Remo con barra T en esquina", sets: "4x10", done: false },
+          { name: "Curl martillo con mancuernas pesadas", sets: "4x10", done: false }
+        ]
+      }
+    ]
+  },
+  funcional_crossfit: {
+    key: "funcional_crossfit",
+    title: "CrossFit WOD & Acondicionamiento Atlético",
+    trainer: "Instructor Funcional CAF Anserma",
+    days: [
+      {
+        day: "Martes - Cardio HIIT & Kettlebell Swings",
+        items: [
+          { name: "Kettlebell Swings pesados", sets: "5x20", done: true },
+          { name: "Box Jumps al cajón de 60cm", sets: "4x15", done: true },
+          { name: "Wall Balls con balón medicinal 20lb", sets: "4x15", done: false },
+          { name: "Remo en máquina ergómetro", sets: "1000m", done: false }
+        ]
+      },
+      {
+        day: "Jueves - Gimnásticos & Potencia",
+        items: [
+          { name: "Toes to bar (Pies a la barra)", sets: "4x12", done: false },
+          { name: "Flexiones en pino o dominadas estrictas", sets: "4x10", done: false },
+          { name: "Burpees over the bar", sets: "4x15", done: false },
+          { name: "Slam ball al piso con fuerza", sets: "4x20", done: false }
+        ]
+      },
+      {
+        day: "Sábado - WOD Élite en Pareja / Equipo",
+        items: [
+          { name: "Clean & Jerk con barra olímpica", sets: "5x5", done: false },
+          { name: "Double Unders con cuerda rápida", sets: "100 reps", done: false },
+          { name: "Carrera de 800m en exterior", sets: "3 rondas", done: false }
+        ]
+      }
+    ]
+  },
+  rumba_tonificacion: {
+    key: "rumba_tonificacion",
+    title: "Rumbaterapia, Tonificación & GAP",
+    trainer: "Instructora de Clases Grupales CAF",
+    days: [
+      {
+        day: "Lunes - Sesión Grupal Rumbaterapia & Cardio",
+        items: [
+          { name: "Calentamiento aeróbico y ritmos latinos", sets: "45 min", done: true },
+          { name: "Rutina de abdomen y core en colchoneta", sets: "15 min", done: true },
+          { name: "Estiramiento dinámico", sets: "10 min", done: true }
+        ]
+      },
+      {
+        day: "Miércoles - GAP (Glúteos, Abdomen y Pierna)",
+        items: [
+          { name: "Sentadilla búlgara con mancuerna", sets: "4x12 por pierna", done: false },
+          { name: "Patada de glúteo en polea baja", sets: "4x15 por pierna", done: false },
+          { name: "Hip Thrust con banda y barra", sets: "4x12", done: false },
+          { name: "Abductores en máquina", sets: "4x20", done: false }
+        ]
+      },
+      {
+        day: "Viernes - Circuito Full Body & Tonificación",
+        items: [
+          { name: "Circuito con mancuernas livianas", sets: "4 rondas", done: false },
+          { name: "Escaladores y planchas dinámicas", sets: "4x40 seg", done: false },
+          { name: "Elíptica con intervalos de resistencia", sets: "20 min", done: false }
+        ]
+      }
+    ]
+  },
+  krav_maga: {
+    key: "krav_maga",
+    title: "Defensa Personal Krav Maga & Acondicionamiento",
+    trainer: "Instructor Krav Maga Certificado CAF",
+    days: [
+      {
+        day: "Martes - Técnicas de Golpeo & Guardia",
+        items: [
+          { name: "Directos, crochets y golpes de codo", sets: "5 rondas", done: true },
+          { name: "Rodillazos al saco de potencia", sets: "4x25", done: true },
+          { name: "Desplazamientos evasivos y bloqueos", sets: "15 min", done: false }
+        ]
+      },
+      {
+        day: "Jueves - Desarmes & Liberación de Agarres",
+        items: [
+          { name: "Defensa contra agarres y abrazos", sets: "6 series", done: false },
+          { name: "Combate táctico en el suelo", sets: "20 min", done: false },
+          { name: "Circuito de resistencia bajo estrés", sets: "15 min", done: false }
+        ]
+      },
+      {
+        day: "Sábado - Sparring Controlado & Resistencia",
+        items: [
+          { name: "Sparring con guantillas", sets: "5 rounds x 3 min", done: false },
+          { name: "Golpeo continuo a manoplas", sets: "4 rounds", done: false },
+          { name: "Circuito de abdominales y flexiones", sets: "100 reps", done: false }
+        ]
+      }
+    ]
+  }
+};
+
+// Default Members Database with Full Profiles
 const DEFAULT_MEMBERS = [
   {
     id: "SOC-001",
     name: "Carlos Andrés Ramírez",
     cedula: "1.053.840.123",
     phone: "312 456 7890",
+    email: "carlos.ramirez@caf.com",
     confaCategory: "A",
     planName: "Confa Categoría A",
     monthlyFee: 55000,
     paymentMethod: "Nequi",
     startDate: getRelativeDate(-45),
     expirationDate: getRelativeDate(15), // Al día (15 días restantes)
-    notes: "Entrena en las mañanas, objetivo reducción de grasa."
+    notes: "Entrena en las mañanas, objetivo reducción de grasa y definición muscular.",
+    height: 175,
+    initialWeight: 85.0,
+    currentWeight: 78.4,
+    targetWeight: 74.0,
+    weightLogs: [
+      { date: "01 Sep 2026", weight: 85.0, diff: "0.0 kg" },
+      { date: "15 Sep 2026", weight: 82.8, diff: "-2.2 kg" },
+      { date: "29 Sep 2026", weight: 80.2, diff: "-2.6 kg" },
+      { date: "13 Oct 2026", weight: 78.4, diff: "-1.8 kg" }
+    ],
+    assignedRoutine: ROUTINE_PRESETS.perdida_peso,
+    assignedDiet: {
+      calories: "2,150 kcal",
+      protein: "160g",
+      carbs: "190g",
+      fats: "55g",
+      waterLiters: "3.2 Litros al día",
+      notes: "Déficit calórico moderado para oxidación de grasa con alta ingesta proteica.",
+      meals: [
+        { meal: "Desayuno (7:00 AM)", desc: "3 huevos revueltos con vegetales, 1 arepa pequeña campesina sin mantequilla, café sin azúcar, 1 fruta." },
+        { meal: "Media Mañana (10:30 AM)", desc: "1 yogur griego natural sin azúcar + 1 puñado de almendras." },
+        { meal: "Almuerzo (1:00 PM)", desc: "150g pechuga a la plancha, 1 taza de arroz blanco, ensalada fresca con aceite de oliva." },
+        { meal: "Snack / Pre-Entreno (4:30 PM)", desc: "1 batido de Proteína Whey CAF con agua + 1 banano mediano." },
+        { meal: "Cena (8:00 PM)", desc: "Filete de pescado o atún en agua con vegetales salteados (brócoli y calabacín)." }
+      ]
+    },
+    storePurchases: [
+      { id: "VTA-901", date: "05 Oct 2026", product: "Proteína Whey 100% Pura 2lb", category: "Suplementos", qty: 1, price: 135000, paymentMethod: "Nequi" },
+      { id: "VTA-840", date: "22 Sep 2026", product: "Camiseta Oversize Oficial CAF Zamorano", category: "Ropa", qty: 1, price: 65000, paymentMethod: "Nequi" },
+      { id: "VTA-712", date: "10 Sep 2026", product: "Shaker / Termo Mezclador 700ml Pro", category: "Accesorios", qty: 1, price: 25000, paymentMethod: "Efectivo Taquilla" }
+    ],
+    balanceDue: 0,
+    paymentHistory: [
+      { id: "REC-2026-104", date: "28 Sep 2026", concept: "Mensualidad CAF - Confa Cat A", amount: 55000, method: "Nequi", status: "Aprobado" },
+      { id: "REC-2026-078", date: "28 Ago 2026", concept: "Mensualidad CAF - Confa Cat A", amount: 55000, method: "Nequi", status: "Aprobado" },
+      { id: "REC-2026-042", date: "28 Jul 2026", concept: "Mensualidad CAF - Confa Cat A", amount: 55000, method: "Efectivo Taquilla", status: "Aprobado" }
+    ]
   },
   {
     id: "SOC-002",
     name: "Marcela Gómez Duque",
     cedula: "1.054.912.450",
     phone: "310 987 6543",
+    email: "marcela.gomez@gmail.com",
     confaCategory: "B",
     planName: "Confa Categoría B",
     monthlyFee: 80000,
     paymentMethod: "Daviplata",
     startDate: getRelativeDate(-28),
     expirationDate: getRelativeDate(2), // Por vencer (2 días restantes)
-    notes: "Clases de Rumbaterapia y zona de máquinas."
+    notes: "Clases de Rumbaterapia y zona de máquinas con énfasis en tonificación y glúteos.",
+    height: 164,
+    initialWeight: 67.0,
+    currentWeight: 63.5,
+    targetWeight: 60.0,
+    weightLogs: [
+      { date: "05 Sep 2026", weight: 67.0, diff: "0.0 kg" },
+      { date: "19 Sep 2026", weight: 65.2, diff: "-1.8 kg" },
+      { date: "03 Oct 2026", weight: 63.5, diff: "-1.7 kg" }
+    ],
+    assignedRoutine: ROUTINE_PRESETS.rumba_tonificacion,
+    assignedDiet: {
+      calories: "1,850 kcal",
+      protein: "130g",
+      carbs: "170g",
+      fats: "48g",
+      waterLiters: "2.8 Litros al día",
+      notes: "Plan de tonificación enfocado en densidad energética moderada y buena hidratación.",
+      meals: [
+        { meal: "Desayuno (7:30 AM)", desc: "Omelette de 2 huevos con espinaca y queso campesino, 1 arepa delgada, té verde." },
+        { meal: "Media Mañana (10:30 AM)", desc: "1 manzana verde con 1 cucharada de mantequilla de maní sin azúcar." },
+        { meal: "Almuerzo (1:30 PM)", desc: "130g de pechuga a la plancha, ensalada de quinoa con aguacate y limón." },
+        { meal: "Snack (5:00 PM)", desc: "Batido de BCAA con agua fría + 1 puñado de nueces." },
+        { meal: "Cena (8:00 PM)", desc: "Crema casera de calabaza y zanahoria + 100g de pollo desmechado." }
+      ]
+    },
+    storePurchases: [
+      { id: "VTA-922", date: "02 Oct 2026", product: "Top Deportivo Mujer CAF High Impact", category: "Ropa", qty: 1, price: 50000, paymentMethod: "Daviplata" },
+      { id: "VTA-865", date: "18 Sep 2026", product: "BCAA 2:1:1 + Electrolitos 300g", category: "Suplementos", qty: 1, price: 85000, paymentMethod: "Daviplata" }
+    ],
+    balanceDue: 0,
+    paymentHistory: [
+      { id: "REC-2026-108", date: "16 Sep 2026", concept: "Mensualidad CAF - Confa Cat B", amount: 80000, method: "Daviplata", status: "Aprobado" },
+      { id: "REC-2026-065", date: "16 Ago 2026", concept: "Mensualidad CAF - Confa Cat B", amount: 80000, method: "Daviplata", status: "Aprobado" }
+    ]
   },
   {
     id: "SOC-003",
     name: "Jhon Alexander Trejos",
     cedula: "75.084.219",
     phone: "314 555 8921",
+    email: "jhon.trejos@gmail.com",
     confaCategory: "Particular",
     planName: "Particular Mensual",
     monthlyFee: 131000,
     paymentMethod: "Efectivo Taquilla",
     startDate: getRelativeDate(-35),
     expirationDate: getRelativeDate(-5), // Vencido hace 5 días
-    notes: "Entrenamiento de fuerza y halterofilia."
+    notes: "Entrenamiento de fuerza y halterofilia, levantamiento pesado y powerlifting.",
+    height: 180,
+    initialWeight: 88.0,
+    currentWeight: 92.5,
+    targetWeight: 94.0,
+    weightLogs: [
+      { date: "01 Sep 2026", weight: 88.0, diff: "0.0 kg" },
+      { date: "15 Sep 2026", weight: 89.5, diff: "+1.5 kg" },
+      { date: "30 Sep 2026", weight: 91.0, diff: "+1.5 kg" },
+      { date: "10 Oct 2026", weight: 92.5, diff: "+1.5 kg" }
+    ],
+    assignedRoutine: ROUTINE_PRESETS.hipertrofia_fuerza,
+    assignedDiet: {
+      calories: "3,200 kcal",
+      protein: "205g",
+      carbs: "380g",
+      fats: "75g",
+      waterLiters: "4.0 Litros al día",
+      notes: "Superávit calórico controlado para aumento de fuerza e hipertrofia pesada.",
+      meals: [
+        { meal: "Desayuno (6:30 AM)", desc: "4 huevos enteros con jamón magro, 2 arepas con queso, avena cocida con leche y banano." },
+        { meal: "Media Mañana (10:00 AM)", desc: "Sandwich de pechuga con pan integral y frutos secos." },
+        { meal: "Almuerzo (1:00 PM)", desc: "200g de carne de res o cerdo magro, 2 tazas de arroz, frijoles y ensalada." },
+        { meal: "Pre-Entreno (4:30 PM)", desc: "Pre-Entreno Nitro Pump CAF + 5g Creatina Creapure + 1 porción de fruta." },
+        { meal: "Cena (8:30 PM)", desc: "200g de pechuga al horno, puré de papa o plátano asado y ensalada mixta." }
+      ]
+    },
+    storePurchases: [
+      { id: "VTA-934", date: "08 Oct 2026", product: "Creatina Monohidratada 300g (Creapure)", category: "Suplementos", qty: 1, price: 95000, paymentMethod: "Efectivo Taquilla" },
+      { id: "VTA-810", date: "15 Sep 2026", product: "Straps de Agarre + Muñequeras Pro", category: "Accesorios", qty: 1, price: 38000, paymentMethod: "Efectivo Taquilla" },
+      { id: "VTA-755", date: "28 Ago 2026", product: "Pre-Entreno Nitro Pump 30 Serv", category: "Suplementos", qty: 1, price: 110000, paymentMethod: "Efectivo Taquilla" }
+    ],
+    balanceDue: 131000,
+    paymentHistory: [
+      { id: "REC-2026-061", date: getRelativeDate(-35), concept: "Mensualidad Particular Mensual", amount: 131000, method: "Efectivo Taquilla", status: "Aprobado" },
+      { id: "REC-2026-029", date: getRelativeDate(-65), concept: "Mensualidad Particular Mensual", amount: 131000, method: "Efectivo Taquilla", status: "Aprobado" }
+    ]
   },
   {
     id: "SOC-004",
     name: "Santiago Henao & Laura Vélez",
     cedula: "1.053.771.802",
     phone: "311 340 7622",
+    email: "pareja.henao.velez@hotmail.com",
     confaCategory: "Particular",
     planName: "Plan Pareja Dúo CAF",
     monthlyFee: 220000,
     paymentMethod: "Nequi",
     startDate: getRelativeDate(-10),
     expirationDate: getRelativeDate(20), // Al día
-    notes: "Entrenan juntos en las tardes (CrossFit y funcional)."
+    notes: "Entrenan juntos en las tardes (CrossFit, WOD y acondicionamiento funcional en equipo).",
+    height: 176,
+    initialWeight: 75.0,
+    currentWeight: 72.8,
+    targetWeight: 70.0,
+    weightLogs: [
+      { date: "10 Sep 2026", weight: 75.0, diff: "0.0 kg" },
+      { date: "25 Sep 2026", weight: 73.8, diff: "-1.2 kg" },
+      { date: "09 Oct 2026", weight: 72.8, diff: "-1.0 kg" }
+    ],
+    assignedRoutine: ROUTINE_PRESETS.funcional_crossfit,
+    assignedDiet: {
+      calories: "2,400 kcal",
+      protein: "165g",
+      carbs: "250g",
+      fats: "60g",
+      waterLiters: "3.5 Litros al día",
+      notes: "Enfoque en alta energía y rápida reposición de glucógeno para sesiones intensas de WOD.",
+      meals: [
+        { meal: "Desayuno (7:00 AM)", desc: "Bowls de avena con proteína en polvo, frutas del bosque y semillas de chía." },
+        { meal: "Media Mañana (10:30 AM)", desc: "Frutos secos con fruta fresca o yogur." },
+        { meal: "Almuerzo (1:30 PM)", desc: "Pechuga o lomo de res con papas al vapor y ensalada de vegetales coloridos." },
+        { meal: "Snack / Pre-WOD (5:00 PM)", desc: "1 banano con miel y 1 porción de aminoácidos." },
+        { meal: "Cena (8:30 PM)", desc: "Omelette de claras con atún y verduras al vapor." }
+      ]
+    },
+    storePurchases: [
+      { id: "VTA-940", date: "06 Oct 2026", product: "Camiseta Oversize Oficial CAF Zamorano", category: "Ropa", qty: 2, price: 130000, paymentMethod: "Nequi" },
+      { id: "VTA-880", date: "20 Sep 2026", product: "Shaker / Termo Mezclador 700ml Pro", category: "Accesorios", qty: 1, price: 25000, paymentMethod: "Nequi" }
+    ],
+    balanceDue: 0,
+    paymentHistory: [
+      { id: "REC-2026-115", date: getRelativeDate(-10), concept: "Mensualidad Plan Pareja Dúo CAF", amount: 220000, method: "Nequi", status: "Aprobado" },
+      { id: "REC-2026-081", date: getRelativeDate(-40), concept: "Mensualidad Plan Pareja Dúo CAF", amount: 220000, method: "Nequi", status: "Aprobado" }
+    ]
   },
   {
     id: "SOC-005",
     name: "Gloria Esperanza Morales",
     cedula: "24.901.344",
     phone: "320 612 9011",
+    email: "gloria.morales@gmail.com",
     confaCategory: "A",
     planName: "Confa Categoría A",
     monthlyFee: 55000,
     paymentMethod: "Efectivo Confa",
     startDate: getRelativeDate(-40),
     expirationDate: getRelativeDate(-10), // Vencido hace 10 días
-    notes: "Acondicionamiento físico para salud cardiovascular."
+    notes: "Acondicionamiento físico para salud cardiovascular, movilidad articular y bienestar general.",
+    height: 158,
+    initialWeight: 72.0,
+    currentWeight: 69.4,
+    targetWeight: 65.0,
+    weightLogs: [
+      { date: "01 Sep 2026", weight: 72.0, diff: "0.0 kg" },
+      { date: "18 Sep 2026", weight: 70.8, diff: "-1.2 kg" },
+      { date: "04 Oct 2026", weight: 69.4, diff: "-1.4 kg" }
+    ],
+    assignedRoutine: ROUTINE_PRESETS.rumba_tonificacion,
+    assignedDiet: {
+      calories: "1,650 kcal",
+      protein: "110g",
+      carbs: "160g",
+      fats: "45g",
+      waterLiters: "2.5 Litros al día",
+      notes: "Dieta cardioprotectora baja en sodio y rica en fibra vegetal.",
+      meals: [
+        { meal: "Desayuno (8:00 AM)", desc: "2 huevos cocidos, arepa campesina sin sal añadida, infusión de hierbas sin azúcar." },
+        { meal: "Media Mañana (10:30 AM)", desc: "1 porción de papaya con semillas de linaza." },
+        { meal: "Almuerzo (12:30 PM)", desc: "120g de pechuga o pescado blanco, verduras cocidas al vapor y 1 porción pequeña de arroz." },
+        { meal: "Cena (7:00 PM)", desc: "Sopa de verduras con trozos de pollo y 1 aromática caliente." }
+      ]
+    },
+    storePurchases: [
+      { id: "VTA-812", date: "12 Sep 2026", product: "Licra Deportiva de Compresión Pro", category: "Ropa", qty: 1, price: 55000, paymentMethod: "Efectivo Taquilla" }
+    ],
+    balanceDue: 55000,
+    paymentHistory: [
+      { id: "REC-2026-055", date: getRelativeDate(-40), concept: "Mensualidad CAF - Confa Cat A", amount: 55000, method: "Efectivo Confa", status: "Aprobado" }
+    ]
   },
   {
     id: "SOC-006",
     name: "Daniel Felipe Osorio",
     cedula: "1.053.660.198",
     phone: "315 889 0234",
+    email: "daniel.osorio@gmail.com",
     confaCategory: "C",
     planName: "Confa Categoría C",
     monthlyFee: 119000,
     paymentMethod: "Tarjeta Débito",
     startDate: getRelativeDate(-29),
     expirationDate: getRelativeDate(1), // Por vencer (mañana)
-    notes: "CrossFit WOD noche y Krav Maga."
+    notes: "CrossFit WOD noche y Krav Maga defensa personal.",
+    height: 178,
+    initialWeight: 81.0,
+    currentWeight: 78.5,
+    targetWeight: 77.0,
+    weightLogs: [
+      { date: "08 Sep 2026", weight: 81.0, diff: "0.0 kg" },
+      { date: "22 Sep 2026", weight: 79.6, diff: "-1.4 kg" },
+      { date: "06 Oct 2026", weight: 78.5, diff: "-1.1 kg" }
+    ],
+    assignedRoutine: ROUTINE_PRESETS.krav_maga,
+    assignedDiet: {
+      calories: "2,600 kcal",
+      protein: "175g",
+      carbs: "290g",
+      fats: "65g",
+      waterLiters: "3.5 Litros al día",
+      notes: "Nutrición deportiva para atletas de deportes de contacto y resistencia.",
+      meals: [
+        { meal: "Desayuno (7:00 AM)", desc: "3 huevos, tostadas integrales con aguacate, jugo natural sin azúcar." },
+        { meal: "Almuerzo (1:00 PM)", desc: "180g de carne o pollo, pasta o arroz con vegetales salteados." },
+        { meal: "Pre-Entreno (5:30 PM)", desc: "Nitro Pump CAF con agua fría + 1 banano." },
+        { meal: "Cena (9:00 PM)", desc: "Pechuga a la plancha con puré de camote y ensalada verde." }
+      ]
+    },
+    storePurchases: [
+      { id: "VTA-944", date: "09 Oct 2026", product: "Gorra CAF Snapback Bordada", category: "Ropa", qty: 1, price: 45000, paymentMethod: "Tarjeta" },
+      { id: "VTA-911", date: "01 Oct 2026", product: "Pre-Entreno Nitro Pump 30 Serv", category: "Suplementos", qty: 1, price: 110000, paymentMethod: "Tarjeta" }
+    ],
+    balanceDue: 0,
+    paymentHistory: [
+      { id: "REC-2026-118", date: getRelativeDate(-29), concept: "Mensualidad CAF - Confa Cat C", amount: 119000, method: "Tarjeta Débito", status: "Aprobado" }
+    ]
   },
   {
     id: "SOC-007",
     name: "Valentina Cardona Ríos",
     cedula: "1.054.321.789",
     phone: "313 777 4411",
+    email: "vale.cardona@yahoo.com",
     confaCategory: "A",
     planName: "Confa Fin de Semana",
     monthlyFee: 25000,
     paymentMethod: "Nequi",
     startDate: getRelativeDate(-12),
     expirationDate: getRelativeDate(18), // Al día
-    notes: "Viernes, sábado y domingo."
+    notes: "Entrena los fines de semana (Viernes, sábado y domingo).",
+    height: 168,
+    initialWeight: 62.0,
+    currentWeight: 59.8,
+    targetWeight: 58.0,
+    weightLogs: [
+      { date: "15 Sep 2026", weight: 62.0, diff: "0.0 kg" },
+      { date: "30 Sep 2026", weight: 60.8, diff: "-1.2 kg" },
+      { date: "10 Oct 2026", weight: 59.8, diff: "-1.0 kg" }
+    ],
+    assignedRoutine: ROUTINE_PRESETS.perdida_peso,
+    assignedDiet: {
+      calories: "1,900 kcal",
+      protein: "125g",
+      carbs: "185g",
+      fats: "50g",
+      waterLiters: "2.8 Litros al día",
+      notes: "Enfoque de mantenimiento saludable con buena tonificación.",
+      meals: [
+        { meal: "Desayuno (8:00 AM)", desc: "2 huevos revueltos con arepa pequeña campesina y café negro." },
+        { meal: "Almuerzo (1:00 PM)", desc: "Pechuga a la plancha con arroz blanco y ensalada verde abundante." },
+        { meal: "Cena (7:30 PM)", desc: "Atún en agua con vegetales salteados y té aromático." }
+      ]
+    },
+    storePurchases: [
+      { id: "VTA-890", date: "24 Sep 2026", product: "Shaker / Termo Mezclador 700ml Pro", category: "Accesorios", qty: 1, price: 25000, paymentMethod: "Nequi" }
+    ],
+    balanceDue: 0,
+    paymentHistory: [
+      { id: "REC-2026-120", date: getRelativeDate(-12), concept: "Mensualidad Confa Fin de Semana", amount: 25000, method: "Nequi", status: "Aprobado" }
+    ]
   },
   {
     id: "SOC-008",
     name: "Mateo Restrepo Calvo",
     cedula: "1.053.992.114",
     phone: "317 222 5590",
+    email: "mateo.restrepo@outlook.com",
     confaCategory: "Particular",
     planName: "Tiquetera 12 Días",
     monthlyFee: 75000,
     paymentMethod: "Efectivo Taquilla",
     startDate: getRelativeDate(-50),
     expirationDate: getRelativeDate(-2), // Vencido hace 2 días
-    notes: "Tiquetera flexible."
+    notes: "Tiquetera flexible de uso libre para máquinas y pesas.",
+    height: 174,
+    initialWeight: 76.0,
+    currentWeight: 74.2,
+    targetWeight: 72.0,
+    weightLogs: [
+      { date: "01 Sep 2026", weight: 76.0, diff: "0.0 kg" },
+      { date: "20 Sep 2026", weight: 75.0, diff: "-1.0 kg" },
+      { date: "05 Oct 2026", weight: 74.2, diff: "-0.8 kg" }
+    ],
+    assignedRoutine: ROUTINE_PRESETS.perdida_peso,
+    assignedDiet: {
+      calories: "2,200 kcal",
+      protein: "150g",
+      carbs: "220g",
+      fats: "55g",
+      waterLiters: "3.0 Litros al día",
+      notes: "Nutrición general balanceada para entrenamiento funcional y pesas.",
+      meals: [
+        { meal: "Desayuno (7:00 AM)", desc: "3 huevos, arepa con queso, café negro." },
+        { meal: "Almuerzo (12:30 PM)", desc: "150g carne o pollo, arroz y ensalada." },
+        { meal: "Cena (8:00 PM)", desc: "Sandwich de atún o pollo con verduras." }
+      ]
+    },
+    storePurchases: [
+      { id: "VTA-875", date: "19 Sep 2026", product: "BCAA 2:1:1 + Electrolitos 300g", category: "Suplementos", qty: 1, price: 85000, paymentMethod: "Efectivo Taquilla" }
+    ],
+    balanceDue: 75000,
+    paymentHistory: [
+      { id: "REC-2026-049", date: getRelativeDate(-50), concept: "Tiquetera 12 Días Flexible", amount: 75000, method: "Efectivo Taquilla", status: "Aprobado" }
+    ]
   }
 ];
+
+// Ensure any loaded member object has all fields filled
+function ensureMemberDetails(m) {
+  if (!m) return m;
+
+  if (!m.height) m.height = 172;
+  if (!m.initialWeight) m.initialWeight = 80.0;
+  if (!m.currentWeight) m.currentWeight = 76.5;
+  if (!m.targetWeight) m.targetWeight = 72.0;
+
+  if (!m.weightLogs || !m.weightLogs.length) {
+    m.weightLogs = [
+      { date: "01 Sep 2026", weight: m.initialWeight, diff: "0.0 kg" },
+      { date: "15 Sep 2026", weight: Number((m.initialWeight - 1.5).toFixed(1)), diff: "-1.5 kg" },
+      { date: "30 Sep 2026", weight: Number((m.initialWeight - 2.8).toFixed(1)), diff: "-1.3 kg" },
+      { date: "12 Oct 2026", weight: m.currentWeight, diff: Number((m.currentWeight - (m.initialWeight - 2.8)).toFixed(1)) + " kg" }
+    ];
+  }
+
+  if (!m.assignedRoutine) {
+    const notesLower = (m.notes || '').toLowerCase();
+    if (notesLower.includes('fuerza') || notesLower.includes('halterofilia')) {
+      m.assignedRoutine = ROUTINE_PRESETS.hipertrofia_fuerza;
+    } else if (notesLower.includes('rumba') || notesLower.includes('tonificación')) {
+      m.assignedRoutine = ROUTINE_PRESETS.rumba_tonificacion;
+    } else if (notesLower.includes('crossfit') || notesLower.includes('pareja')) {
+      m.assignedRoutine = ROUTINE_PRESETS.funcional_crossfit;
+    } else if (notesLower.includes('krav') || notesLower.includes('defensa')) {
+      m.assignedRoutine = ROUTINE_PRESETS.krav_maga;
+    } else {
+      m.assignedRoutine = ROUTINE_PRESETS.perdida_peso;
+    }
+  }
+
+  if (!m.assignedDiet) {
+    m.assignedDiet = {
+      calories: "2,150 kcal",
+      protein: "150g",
+      carbs: "190g",
+      fats: "55g",
+      waterLiters: "3.0 Litros al día",
+      notes: "Plan diseñado por los instructores de sala de CAF Anserma.",
+      meals: [
+        { meal: "Desayuno (7:00 AM)", desc: "3 huevos revueltos con vegetales, 1 arepa campesina, café sin azúcar." },
+        { meal: "Media Mañana (10:30 AM)", desc: "1 yogur griego o fruta con almendras." },
+        { meal: "Almuerzo (1:00 PM)", desc: "150g pechuga a la plancha, 1 taza de arroz, ensalada verde con limón." },
+        { meal: "Snack / Pre-Entreno (4:30 PM)", desc: "Batido de Proteína Whey o fruta fresca." },
+        { meal: "Cena (8:00 PM)", desc: "Filete de pescado o atún con vegetales al vapor." }
+      ]
+    };
+  }
+
+  if (!m.storePurchases || !m.storePurchases.length) {
+    m.storePurchases = [
+      { id: "VTA-990", date: "05 Oct 2026", product: "Proteína Whey 100% Pura 2lb", category: "Suplementos", qty: 1, price: 135000, paymentMethod: m.paymentMethod || "Nequi" }
+    ];
+  }
+
+  if (!m.paymentHistory || !m.paymentHistory.length) {
+    m.paymentHistory = [
+      { id: `REC-${m.id}-02`, date: getRelativeDate(-30), concept: `Mensualidad ${m.planName}`, amount: m.monthlyFee, method: m.paymentMethod, status: "Aprobado" },
+      { id: `REC-${m.id}-01`, date: getRelativeDate(-60), concept: `Inscripción y Matrícula CAF`, amount: 20000, method: m.paymentMethod, status: "Aprobado" }
+    ];
+  }
+
+  const statusInfo = getMemberPlanStatus(m.expirationDate);
+  if (statusInfo.isOverdue) {
+    m.balanceDue = m.monthlyFee;
+  } else {
+    m.balanceDue = 0;
+  }
+
+  return m;
+}
 
 // Financial Baseline Data
 const DEFAULT_FINANCES = {
@@ -372,11 +889,17 @@ function saveProducts(products) {
 
 function getMembers() {
   const data = localStorage.getItem('caf_members');
+  let members = [];
   if (data) {
-    try { return JSON.parse(data); } catch (e) { }
+    try {
+      members = JSON.parse(data);
+    } catch (e) {
+      members = DEFAULT_MEMBERS;
+    }
+  } else {
+    members = DEFAULT_MEMBERS;
   }
-  localStorage.setItem('caf_members', JSON.stringify(DEFAULT_MEMBERS));
-  return DEFAULT_MEMBERS;
+  return members.map(m => ensureMemberDetails(m));
 }
 
 function saveMembers(members) {
@@ -542,8 +1065,16 @@ function renderMembersAndFinances(filterStatus = 'todos', searchTerm = '') {
     return `
       <tr class="border-b border-slate-800 hover:bg-slate-900/50 transition">
         <td class="py-3.5 px-4">
-          <div class="font-extrabold text-white text-xs sm:text-sm">${m.name}</div>
-          <div class="text-[11px] text-slate-400 font-mono">CC: ${m.cedula}</div>
+          <button type="button" onclick="window.openMemberDashboard('${m.id}')" class="text-left group cursor-pointer focus:outline-none">
+            <div class="font-extrabold text-white text-xs sm:text-sm group-hover:text-lime-400 transition flex items-center gap-1.5 underline decoration-lime-500/40 decoration-2 underline-offset-2">
+              <span>${m.name}</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-lime-400 opacity-60 group-hover:opacity-100 transition"></i>
+            </div>
+            <div class="text-[11px] text-slate-400 font-mono mt-0.5 flex items-center gap-1.5">
+              <span>CC: ${m.cedula}</span>
+              <span class="text-[9px] px-1.5 py-0.5 rounded bg-slate-800 text-lime-400 border border-slate-700 font-sans font-bold">Ver Ficha</span>
+            </div>
+          </button>
         </td>
         <td class="py-3.5 px-4">
           <span class="inline-block px-2 py-0.5 rounded text-[11px] font-bold ${
@@ -577,6 +1108,9 @@ function renderMembersAndFinances(filterStatus = 'todos', searchTerm = '') {
         </td>
         <td class="py-3.5 px-4 text-right">
           <div class="flex items-center justify-end gap-1.5">
+            <button onclick="window.openMemberDashboard('${m.id}')" class="p-2 rounded-lg bg-cyan-500/20 hover:bg-cyan-500 text-cyan-400 hover:text-black transition" title="Ver Dashboard Completo del Socio (Rutina, Avance, Compras, Pagos)">
+              <i class="fa-solid fa-address-card text-sm"></i>
+            </button>
             <a href="https://wa.me/${intPhone}?text=${encodedMsg}" target="_blank" class="p-2 rounded-lg bg-emerald-600/20 hover:bg-emerald-600 text-emerald-400 hover:text-white transition" title="Enviar recordatorio WhatsApp">
               <i class="fa-brands fa-whatsapp text-sm"></i>
             </a>
@@ -789,32 +1323,32 @@ function renderBannersEditor() {
           <!-- Badge text -->
           <div>
             <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Badge Superior:</label>
-            <input type="text" value="${b.badge}" onchange="window.updateBannerField(${b.id}, 'badge', this.value)" class="w-full bg-slate-950 border border-slate-800 text-white rounded-xl px-4 py-2.5 text-xs focus:border-lime-500">
+            <input type="text" value="${b.badge || ''}" oninput="window.updateBannerFieldLive(${b.id}, 'badge', this.value)" onchange="window.updateBannerField(${b.id}, 'badge', this.value)" placeholder="Ej: PISO 2, CRA 5 # 22 - 32..." class="w-full bg-slate-950 border border-slate-800 text-white rounded-xl px-4 py-2.5 text-xs focus:border-lime-500">
           </div>
 
           <!-- Title -->
           <div>
             <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Título Principal (usa saltos de línea):</label>
-            <textarea rows="2" onchange="window.updateBannerField(${b.id}, 'title', this.value)" class="w-full bg-slate-950 border border-slate-800 text-white rounded-xl px-4 py-2.5 text-xs focus:border-lime-500">${b.title}</textarea>
+            <textarea rows="2" oninput="window.updateBannerFieldLive(${b.id}, 'title', this.value)" onchange="window.updateBannerField(${b.id}, 'title', this.value)" placeholder="Título del banner..." class="w-full bg-slate-950 border border-slate-800 text-white rounded-xl px-4 py-2.5 text-xs focus:border-lime-500">${b.title || ''}</textarea>
           </div>
 
           <!-- Subtitle -->
           <div>
             <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Subtítulo / Descripción:</label>
-            <textarea rows="2" onchange="window.updateBannerField(${b.id}, 'subtitle', this.value)" class="w-full bg-slate-950 border border-slate-800 text-white rounded-xl px-4 py-2.5 text-xs focus:border-lime-500">${b.subtitle}</textarea>
+            <textarea rows="2" oninput="window.updateBannerFieldLive(${b.id}, 'subtitle', this.value)" onchange="window.updateBannerField(${b.id}, 'subtitle', this.value)" placeholder="Descripción o detalles del banner..." class="w-full bg-slate-950 border border-slate-800 text-white rounded-xl px-4 py-2.5 text-xs focus:border-lime-500">${b.subtitle || ''}</textarea>
           </div>
 
           <!-- Buttons Editor -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-slate-800">
             <div>
               <label class="block text-[11px] font-bold text-lime-400 uppercase mb-1">Botón 1 (Texto y Enlace):</label>
-              <input type="text" placeholder="Texto" value="${b.btn1Text}" onchange="window.updateBannerField(${b.id}, 'btn1Text', this.value)" class="w-full bg-slate-950 border border-slate-800 text-white rounded-lg px-3 py-2 text-xs mb-1.5 focus:border-lime-500">
-              <input type="text" placeholder="Enlace (ej: #planes)" value="${b.btn1Link}" onchange="window.updateBannerField(${b.id}, 'btn1Link', this.value)" class="w-full bg-slate-950 border border-slate-800 text-slate-400 rounded-lg px-3 py-2 text-xs focus:border-lime-500">
+              <input type="text" placeholder="Texto (dejar vacío si no deseas botón)" value="${b.btn1Text || ''}" oninput="window.updateBannerFieldLive(${b.id}, 'btn1Text', this.value)" onchange="window.updateBannerField(${b.id}, 'btn1Text', this.value)" class="w-full bg-slate-950 border border-slate-800 text-white rounded-lg px-3 py-2 text-xs mb-1.5 focus:border-lime-500">
+              <input type="text" placeholder="Enlace (ej: #planes)" value="${b.btn1Link || ''}" oninput="window.updateBannerFieldLive(${b.id}, 'btn1Link', this.value)" onchange="window.updateBannerField(${b.id}, 'btn1Link', this.value)" class="w-full bg-slate-950 border border-slate-800 text-slate-400 rounded-lg px-3 py-2 text-xs focus:border-lime-500">
             </div>
             <div>
               <label class="block text-[11px] font-bold text-cyan-400 uppercase mb-1">Botón 2 (Texto y Enlace):</label>
-              <input type="text" placeholder="Texto" value="${b.btn2Text}" onchange="window.updateBannerField(${b.id}, 'btn2Text', this.value)" class="w-full bg-slate-950 border border-slate-800 text-white rounded-lg px-3 py-2 text-xs mb-1.5 focus:border-lime-500">
-              <input type="text" placeholder="Enlace (ej: #convenios)" value="${b.btn2Link}" onchange="window.updateBannerField(${b.id}, 'btn2Link', this.value)" class="w-full bg-slate-950 border border-slate-800 text-slate-400 rounded-lg px-3 py-2 text-xs focus:border-lime-500">
+              <input type="text" placeholder="Texto (dejar vacío si no deseas botón)" value="${b.btn2Text || ''}" oninput="window.updateBannerFieldLive(${b.id}, 'btn2Text', this.value)" onchange="window.updateBannerField(${b.id}, 'btn2Text', this.value)" class="w-full bg-slate-950 border border-slate-800 text-white rounded-lg px-3 py-2 text-xs mb-1.5 focus:border-lime-500">
+              <input type="text" placeholder="Enlace (ej: #convenios)" value="${b.btn2Link || ''}" oninput="window.updateBannerFieldLive(${b.id}, 'btn2Link', this.value)" onchange="window.updateBannerField(${b.id}, 'btn2Link', this.value)" class="w-full bg-slate-950 border border-slate-800 text-slate-400 rounded-lg px-3 py-2 text-xs focus:border-lime-500">
             </div>
           </div>
 
@@ -831,24 +1365,36 @@ function renderBannersEditor() {
             <div id="banner-preview-overlay-${b.id}" class="absolute inset-0 transition-opacity" style="background-color: rgba(9, 13, 22, ${b.opacity / 100});"></div>
             
             <!-- Content overlay -->
-            <div class="relative z-10 max-w-sm space-y-3">
-              <span class="inline-block px-2.5 py-0.5 rounded-full bg-lime-500/20 border border-lime-500/40 text-lime-400 text-[9px] font-extrabold uppercase">
-                ${b.badge}
-              </span>
-              <h3 class="text-xl sm:text-2xl font-black text-white leading-tight uppercase">
-                ${b.title.replace(/\n/g, '<br>')}
-              </h3>
-              <p class="text-slate-300 text-[11px] line-clamp-3 leading-relaxed">
-                ${b.subtitle}
-              </p>
-              <div class="flex items-center gap-2 pt-2">
-                <span class="px-3 py-1.5 rounded-lg bg-lime-500 text-black font-extrabold text-[10px]">
-                  ${b.btn1Text}
+            <div id="banner-preview-content-${b.id}" class="relative z-10 max-w-sm space-y-3">
+              ${b.badge && b.badge.trim() ? `
+                <span class="inline-block px-2.5 py-0.5 rounded-full bg-lime-500/20 border border-lime-500/40 text-lime-400 text-[9px] font-extrabold uppercase">
+                  ${b.badge}
                 </span>
-                <span class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-white font-bold text-[10px]">
-                  ${b.btn2Text}
-                </span>
-              </div>
+              ` : ''}
+              ${b.title && b.title.trim() ? `
+                <h3 class="text-xl sm:text-2xl font-black text-white leading-tight uppercase">
+                  ${b.title.replace(/\n/g, '<br>')}
+                </h3>
+              ` : ''}
+              ${b.subtitle && b.subtitle.trim() ? `
+                <p class="text-slate-300 text-[11px] line-clamp-3 leading-relaxed">
+                  ${b.subtitle}
+                </p>
+              ` : ''}
+              ${((b.btn1Text && b.btn1Text.trim()) || (b.btn2Text && b.btn2Text.trim())) ? `
+                <div class="flex items-center gap-2 pt-2">
+                  ${b.btn1Text && b.btn1Text.trim() ? `
+                    <span class="px-3 py-1.5 rounded-lg bg-lime-500 text-black font-extrabold text-[10px]">
+                      ${b.btn1Text}
+                    </span>
+                  ` : ''}
+                  ${b.btn2Text && b.btn2Text.trim() ? `
+                    <span class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-white font-bold text-[10px]">
+                      ${b.btn2Text}
+                    </span>
+                  ` : ''}
+                </div>
+              ` : ''}
             </div>
           </div>
 
@@ -880,6 +1426,71 @@ window.updateBannerOpacityLive = function(bannerId, value) {
   }
 };
 
+// Real-time Banner Field Preview Update (Does not destroy form focus)
+window.updateBannerFieldLive = function(bannerId, field, value) {
+  const banners = getBanners();
+  const banner = banners.find(b => b.id === bannerId);
+  if (banner) {
+    banner[field] = value;
+    saveBanners(banners);
+    updateBannerPreviewDOM(banner);
+  }
+};
+
+function updateBannerPreviewDOM(banner) {
+  const container = document.getElementById(`banner-preview-content-${banner.id}`);
+  if (!container) return;
+
+  const hasBadge = banner.badge && banner.badge.trim();
+  const hasTitle = banner.title && banner.title.trim();
+  const hasSubtitle = banner.subtitle && banner.subtitle.trim();
+  const hasBtn1 = banner.btn1Text && banner.btn1Text.trim();
+  const hasBtn2 = banner.btn2Text && banner.btn2Text.trim();
+
+  let html = '';
+  if (hasBadge) {
+    html += `
+      <span class="inline-block px-2.5 py-0.5 rounded-full bg-lime-500/20 border border-lime-500/40 text-lime-400 text-[9px] font-extrabold uppercase">
+        ${banner.badge}
+      </span>
+    `;
+  }
+  if (hasTitle) {
+    html += `
+      <h3 class="text-xl sm:text-2xl font-black text-white leading-tight uppercase">
+        ${banner.title.replace(/\n/g, '<br>')}
+      </h3>
+    `;
+  }
+  if (hasSubtitle) {
+    html += `
+      <p class="text-slate-300 text-[11px] line-clamp-3 leading-relaxed">
+        ${banner.subtitle}
+      </p>
+    `;
+  }
+  if (hasBtn1 || hasBtn2) {
+    html += `<div class="flex items-center gap-2 pt-2">`;
+    if (hasBtn1) {
+      html += `
+        <span class="px-3 py-1.5 rounded-lg bg-lime-500 text-black font-extrabold text-[10px]">
+          ${banner.btn1Text}
+        </span>
+      `;
+    }
+    if (hasBtn2) {
+      html += `
+        <span class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-white font-bold text-[10px]">
+          ${banner.btn2Text}
+        </span>
+      `;
+    }
+    html += `</div>`;
+  }
+
+  container.innerHTML = html;
+}
+
 // Update field helper
 window.updateBannerField = function(bannerId, field, value) {
   const banners = getBanners();
@@ -887,7 +1498,7 @@ window.updateBannerField = function(bannerId, field, value) {
   if (banner) {
     banner[field] = value;
     saveBanners(banners);
-    renderBannersEditor();
+    updateBannerPreviewDOM(banner);
   }
 };
 
@@ -1183,7 +1794,724 @@ function initProductsForms() {
 }
 
 // ==========================================
-// 8. GLOBAL RENDER & INIT
+// 8. ADMINISTRATOR MEMBER DASHBOARD CONTROLLER
+// ==========================================
+
+let activeDashboardMemberId = null;
+
+// Open member dashboard modal
+window.openMemberDashboard = function(memberId) {
+  const members = getMembers();
+  const member = members.find(m => m.id === memberId);
+  if (!member) {
+    alert("No se encontró la información del socio.");
+    return;
+  }
+
+  activeDashboardMemberId = member.id;
+  const statusInfo = getMemberPlanStatus(member.expirationDate);
+
+  // Initials
+  const initials = member.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+  const avatarEl = document.getElementById('admin-mem-avatar');
+  if (avatarEl) avatarEl.textContent = initials;
+
+  // Header info
+  const nameEl = document.getElementById('admin-mem-name');
+  if (nameEl) nameEl.textContent = member.name;
+
+  const catBadgeEl = document.getElementById('admin-mem-category-badge');
+  if (catBadgeEl) {
+    catBadgeEl.textContent = member.confaCategory === 'Particular' ? 'Particular CAF' : `Confa Cat ${member.confaCategory}`;
+    catBadgeEl.className = `px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase border ${
+      member.confaCategory === 'A' ? 'bg-lime-500/20 text-lime-400 border-lime-500/40' :
+      member.confaCategory === 'B' ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/40' :
+      member.confaCategory === 'C' ? 'bg-amber-500/20 text-amber-400 border-amber-500/40' :
+      'bg-slate-800 text-slate-300 border-slate-700'
+    }`;
+  }
+
+  const statusBadgeEl = document.getElementById('admin-mem-status-badge');
+  if (statusBadgeEl) {
+    statusBadgeEl.textContent = statusInfo.message;
+    statusBadgeEl.className = `px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase ${statusInfo.badgeClass}`;
+  }
+
+  const cedulaEl = document.getElementById('admin-mem-cedula');
+  if (cedulaEl) cedulaEl.innerHTML = `<i class="fa-solid fa-id-card text-slate-500 mr-1"></i>CC: ${member.cedula}`;
+
+  const phoneEl = document.getElementById('admin-mem-phone');
+  if (phoneEl) phoneEl.innerHTML = `<i class="fa-solid fa-phone text-slate-500 mr-1"></i>${member.phone}`;
+
+  const planEl = document.getElementById('admin-mem-plan');
+  if (planEl) planEl.innerHTML = `<i class="fa-solid fa-dumbbell text-slate-500 mr-1"></i>${member.planName} ($${member.monthlyFee.toLocaleString('es-CO')} COP)`;
+
+  // WhatsApp quick button
+  const cleanPhone = member.phone.replace(/[^0-9]/g, '');
+  const intPhone = cleanPhone.startsWith('57') ? cleanPhone : '57' + cleanPhone;
+  let waText = "";
+  if (statusInfo.isOverdue) {
+    waText = `Hola *${member.name}*, te saludamos de *CAF Anserma Caldas (Víctor Zamorano)*. Te recordamos cordialmente que tu plan *${member.planName}* tiene *${statusInfo.overdueDays} días vencido* (venció el ${member.expirationDate}). Puedes renovar hoy mismo en nuestra sede o por Nequi. ¡Te esperamos para seguir entrenando!`;
+  } else if (statusInfo.status === "Por vencer") {
+    waText = `Hola *${member.name}*, te saludamos de *CAF Anserma*. Te recordamos que tu plan *${member.planName}* vence pronto el *${member.expirationDate}*. ¡Puedes renovar para continuar tu progreso sin interrupciones!`;
+  } else {
+    waText = `Hola *${member.name}*, te saludamos de *CAF Anserma*. ¿Cómo va tu plan de entrenamiento hoy? Estamos para apoyarte en tu evolución física.`;
+  }
+  const waBtn = document.getElementById('admin-mem-whatsapp-btn');
+  if (waBtn) waBtn.href = `https://wa.me/${intPhone}?text=${encodeURIComponent(waText)}`;
+
+  // Quick KPIs
+  const diffKg = Number((member.currentWeight - member.initialWeight).toFixed(1));
+  const diffText = diffKg <= 0 ? `${diffKg} kg` : `+${diffKg} kg`;
+  const diffColorClass = diffKg <= 0 ? 'text-lime-400 bg-lime-500/10' : 'text-amber-400 bg-amber-500/10';
+
+  const weightKpi = document.getElementById('admin-mem-weight-kpi');
+  if (weightKpi) {
+    weightKpi.innerHTML = `
+      <span>${member.currentWeight} kg</span>
+      <span class="text-xs font-bold ${diffColorClass} px-1.5 py-0.5 rounded">${diffText}</span>
+    `;
+  }
+
+  // IMC Calculation
+  const hMeters = member.height / 100;
+  const imc = Number((member.currentWeight / (hMeters * hMeters)).toFixed(1));
+  let imcCategory = "Saludable";
+  let imcColor = "text-emerald-400 bg-emerald-500/10";
+  if (imc < 18.5) {
+    imcCategory = "Bajo peso";
+    imcColor = "text-amber-400 bg-amber-500/10";
+  } else if (imc >= 25 && imc < 29.9) {
+    imcCategory = "Sobrepeso leve";
+    imcColor = "text-yellow-400 bg-yellow-500/10";
+  } else if (imc >= 30) {
+    imcCategory = "Obesidad";
+    imcColor = "text-rose-400 bg-rose-500/10";
+  }
+
+  const imcKpi = document.getElementById('admin-mem-imc-kpi');
+  if (imcKpi) {
+    imcKpi.innerHTML = `
+      <span>${imc} IMC</span>
+      <span class="text-[10px] ${imcColor} px-1.5 py-0.5 rounded">${imcCategory}</span>
+    `;
+  }
+
+  // Store purchases total
+  const totalStore = (member.storePurchases || []).reduce((acc, p) => acc + (p.price * (p.qty || 1)), 0);
+  const storeKpi = document.getElementById('admin-mem-store-kpi');
+  if (storeKpi) {
+    storeKpi.innerHTML = `
+      <span>$${totalStore.toLocaleString('es-CO')} COP</span>
+      <div class="text-[10px] text-slate-400 font-normal mt-0.5">${(member.storePurchases || []).length} compras registradas</div>
+    `;
+  }
+
+  // Debt KPI
+  const debtKpi = document.getElementById('admin-mem-debt-kpi');
+  if (debtKpi) {
+    if (member.balanceDue > 0) {
+      debtKpi.innerHTML = `<span class="text-rose-400 font-bold">$${member.balanceDue.toLocaleString('es-CO')} COP Pendiente</span>`;
+    } else {
+      debtKpi.innerHTML = `<span class="text-emerald-400 font-bold">Al día ($0 COP)</span>`;
+    }
+  }
+
+  // Footer info
+  const footerInfo = document.getElementById('admin-mem-footer-info');
+  if (footerInfo) {
+    footerInfo.innerHTML = `Socio ID: <span class="text-white font-mono font-bold">${member.id}</span> · Inscrito desde: <span class="text-white font-mono">${member.startDate}</span>`;
+  }
+
+  // Footer renew button
+  const renewBtn = document.getElementById('admin-mem-renew-btn');
+  if (renewBtn) {
+    renewBtn.onclick = () => window.renewMemberFromModal(member.id);
+  }
+
+  // Default to first tab
+  window.switchMemberDashboardTab('avance');
+
+  // Open modal
+  const modal = document.getElementById('admin-member-dashboard-modal');
+  if (modal) modal.classList.remove('hidden');
+};
+
+// Close modal
+window.closeMemberDashboard = function() {
+  const modal = document.getElementById('admin-member-dashboard-modal');
+  if (modal) modal.classList.add('hidden');
+  activeDashboardMemberId = null;
+};
+
+// Switch Tab inside Member Dashboard
+window.switchMemberDashboardTab = function(tabKey) {
+  if (!activeDashboardMemberId) return;
+  const member = getMembers().find(m => m.id === activeDashboardMemberId);
+  if (!member) return;
+
+  // Toggle button styles
+  document.querySelectorAll('.admin-mem-tab-btn').forEach(btn => {
+    btn.classList.remove('bg-lime-500', 'text-black');
+    btn.classList.add('bg-slate-900', 'text-slate-400');
+  });
+
+  const activeBtn = document.getElementById(`admin-mem-tab-btn-${tabKey}`);
+  if (activeBtn) {
+    activeBtn.classList.remove('bg-slate-900', 'text-slate-400');
+    activeBtn.classList.add('bg-lime-500', 'text-black');
+  }
+
+  // Hide panels
+  document.querySelectorAll('.admin-mem-tab-panel').forEach(p => p.classList.add('hidden'));
+
+  const activePanel = document.getElementById(`admin-mem-tab-content-${tabKey}`);
+  if (activePanel) {
+    activePanel.classList.remove('hidden');
+  }
+
+  // Render content according to tab
+  if (tabKey === 'avance') window.renderMemberTabAvance(member);
+  if (tabKey === 'rutina') window.renderMemberTabRutina(member);
+  if (tabKey === 'dieta') window.renderMemberTabDieta(member);
+  if (tabKey === 'compras') window.renderMemberTabCompras(member);
+  if (tabKey === 'pagos') window.renderMemberTabPagos(member);
+};
+
+// TAB 1: RENDER AVANCE & MEDIDAS
+window.renderMemberTabAvance = function(member) {
+  const container = document.getElementById('admin-mem-tab-content-avance');
+  if (!container) return;
+
+  const hMeters = member.height / 100;
+  const imc = Number((member.currentWeight / (hMeters * hMeters)).toFixed(1));
+  const diffKg = Number((member.currentWeight - member.initialWeight).toFixed(1));
+
+  container.innerHTML = `
+    <!-- Biometrics Card -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-900/40 p-4 rounded-2xl border border-slate-800">
+      <div class="bg-slate-950 p-3 rounded-xl border border-slate-800/80">
+        <span class="text-[10px] text-slate-400 font-bold uppercase block">Estatura</span>
+        <span class="text-base font-black text-white">${member.height} cm</span>
+      </div>
+      <div class="bg-slate-950 p-3 rounded-xl border border-slate-800/80">
+        <span class="text-[10px] text-slate-400 font-bold uppercase block">Peso Inicial</span>
+        <span class="text-base font-black text-slate-300">${member.initialWeight} kg</span>
+      </div>
+      <div class="bg-slate-950 p-3 rounded-xl border border-slate-800/80">
+        <span class="text-[10px] text-lime-400 font-bold uppercase block">Peso Actual</span>
+        <span class="text-base font-black text-lime-400">${member.currentWeight} kg</span>
+      </div>
+      <div class="bg-slate-950 p-3 rounded-xl border border-slate-800/80">
+        <span class="text-[10px] text-slate-400 font-bold uppercase block">Peso Meta</span>
+        <span class="text-base font-black text-white">${member.targetWeight} kg</span>
+      </div>
+    </div>
+
+    <!-- Weight Progress History Table -->
+    <div class="bg-slate-900/40 rounded-2xl border border-slate-800 p-4 sm:p-5">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-xs sm:text-sm font-extrabold text-white uppercase flex items-center gap-2">
+          <i class="fa-solid fa-weight-scale text-lime-400"></i> Historial de Pesajes & Evolución
+        </h3>
+        <span class="text-[11px] text-slate-400 font-mono">${(member.weightLogs || []).length} registros</span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs">
+          <thead>
+            <tr class="text-slate-400 border-b border-slate-800 uppercase text-[10px]">
+              <th class="py-2 px-3">Fecha</th>
+              <th class="py-2 px-3">Peso Registrado</th>
+              <th class="py-2 px-3">Variación</th>
+              <th class="py-2 px-3">Evaluación</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800/60 font-mono">
+            ${(member.weightLogs || []).map((log, idx) => `
+              <tr class="hover:bg-slate-800/30">
+                <td class="py-2.5 px-3 text-slate-300">${log.date}</td>
+                <td class="py-2.5 px-3 font-bold text-white">${log.weight} kg</td>
+                <td class="py-2.5 px-3 font-bold ${
+                  log.diff.includes('-') ? 'text-lime-400' :
+                  log.diff.includes('+') ? 'text-amber-400' : 'text-slate-400'
+                }">
+                  ${log.diff}
+                </td>
+                <td class="py-2.5 px-3 font-sans text-[11px] text-slate-400">
+                  ${idx === 0 ? 'Pesaje inicial de ingreso' : 'Seguimiento en sala CAF'}
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Add Weight Form -->
+      <form onsubmit="window.saveNewMemberWeight(event, '${member.id}')" class="mt-4 pt-4 border-t border-slate-800 flex flex-wrap items-center gap-3">
+        <div class="text-xs font-bold text-slate-300">Registrar Nuevo Pesaje:</div>
+        <input type="date" id="admin-new-weight-date" required value="${new Date().toISOString().split('T')[0]}" class="bg-slate-950 border border-slate-800 text-white rounded-lg px-3 py-1.5 text-xs focus:border-lime-500">
+        <input type="number" step="0.1" id="admin-new-weight-val" required placeholder="Peso en kg (ej: 77.8)" class="bg-slate-950 border border-slate-800 text-white rounded-lg px-3 py-1.5 text-xs w-36 focus:border-lime-500">
+        <button type="submit" class="px-3.5 py-1.5 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-xs rounded-lg transition">
+          <i class="fa-solid fa-plus"></i> Guardar Pesaje
+        </button>
+      </form>
+    </div>
+
+    <!-- Trainer Assessment Note -->
+    <div class="bg-lime-500/10 border border-lime-500/30 p-4 rounded-2xl text-xs space-y-1">
+      <div class="font-extrabold text-lime-400 uppercase flex items-center gap-2">
+        <i class="fa-solid fa-clipboard-user"></i> Observaciones del Entrenador Víctor Zamorano:
+      </div>
+      <p class="text-slate-300 leading-relaxed">
+        ${member.notes || 'Socio con asistencia constante. Se recomienda mantener sobrecarga progresiva y control de hidratación.'}
+      </p>
+    </div>
+  `;
+};
+
+// TAB 2: RENDER RUTINA ASIGNADA
+window.renderMemberTabRutina = function(member) {
+  const container = document.getElementById('admin-mem-tab-content-rutina');
+  if (!container) return;
+
+  const routine = member.assignedRoutine || ROUTINE_PRESETS.perdida_peso;
+
+  container.innerHTML = `
+    <!-- Routine Header & Preset Switcher -->
+    <div class="bg-slate-900/40 p-4 rounded-2xl border border-slate-800 flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <span class="text-[10px] text-lime-400 font-bold uppercase tracking-wider block">Plan de Entrenamiento Activo</span>
+        <h3 class="text-base font-black text-white mt-0.5">${routine.title}</h3>
+        <p class="text-xs text-slate-400 mt-0.5"><i class="fa-solid fa-user-ninja text-slate-500 mr-1"></i>Entrenador a cargo: <strong class="text-slate-300">${routine.trainer || 'Víctor Zamorano'}</strong></p>
+      </div>
+
+      <!-- Quick Preset Change -->
+      <div class="flex items-center gap-2">
+        <select id="admin-routine-preset-select" class="bg-slate-950 border border-slate-800 text-white rounded-xl px-3 py-2 text-xs focus:border-lime-500">
+          <option value="perdida_peso" ${routine.key === 'perdida_peso' ? 'selected' : ''}>Programa Reducción & Hipertrofia</option>
+          <option value="hipertrofia_fuerza" ${routine.key === 'hipertrofia_fuerza' ? 'selected' : ''}>Hipertrofia Máxima & Halterofilia</option>
+          <option value="funcional_crossfit" ${routine.key === 'funcional_crossfit' ? 'selected' : ''}>CrossFit WOD & Funcional</option>
+          <option value="rumba_tonificacion" ${routine.key === 'rumba_tonificacion' ? 'selected' : ''}>Rumbaterapia, Tonificación & GAP</option>
+          <option value="krav_maga" ${routine.key === 'krav_maga' ? 'selected' : ''}>Defensa Personal Krav Maga</option>
+        </select>
+        <button onclick="window.applyRoutinePreset('${member.id}')" class="px-3.5 py-2 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-xs rounded-xl transition">
+          Asignar Rutina
+        </button>
+      </div>
+    </div>
+
+    <!-- Days & Exercises Checklist -->
+    <div class="space-y-3">
+      ${(routine.days || []).map((d, dayIdx) => `
+        <div class="bg-slate-900/30 rounded-2xl border border-slate-800/80 p-4">
+          <div class="font-black text-white text-xs sm:text-sm uppercase flex items-center gap-2 mb-3">
+            <span class="w-2 h-2 rounded-full bg-lime-500"></span>
+            ${d.day}
+          </div>
+
+          <div class="space-y-2">
+            ${(d.items || []).map((ex, itemIdx) => `
+              <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-950/70 border border-slate-800/60 hover:border-slate-700 transition">
+                <label class="flex items-center gap-3 cursor-pointer flex-1 select-none">
+                  <input type="checkbox" ${ex.done ? 'checked' : ''} onchange="window.toggleMemberExerciseDone('${member.id}', ${dayIdx}, ${itemIdx})" class="w-4 h-4 rounded accent-lime-500 cursor-pointer">
+                  <span class="text-xs font-semibold ${ex.done ? 'line-through text-slate-500' : 'text-slate-200'}">
+                    ${ex.name}
+                  </span>
+                </label>
+                <span class="text-xs font-mono font-bold text-lime-400 bg-lime-500/10 px-2 py-0.5 rounded-lg border border-lime-500/20">
+                  ${ex.sets}
+                </span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+};
+
+// TAB 3: RENDER DIETA & NUTRICION
+window.renderMemberTabDieta = function(member) {
+  const container = document.getElementById('admin-mem-tab-content-dieta');
+  if (!container) return;
+
+  const diet = member.assignedDiet || {
+    calories: "2,150 kcal",
+    protein: "150g",
+    carbs: "190g",
+    fats: "55g",
+    waterLiters: "3.0 L/día",
+    meals: []
+  };
+
+  container.innerHTML = `
+    <!-- Macronutrients Summary Cards -->
+    <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 bg-slate-900/40 p-4 rounded-2xl border border-slate-800">
+      <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
+        <span class="text-[10px] text-amber-400 font-bold uppercase block">Calorías Diarias</span>
+        <span class="text-base font-black text-white mt-0.5">${diet.calories}</span>
+      </div>
+      <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
+        <span class="text-[10px] text-lime-400 font-bold uppercase block">Proteína</span>
+        <span class="text-base font-black text-white mt-0.5">${diet.protein}</span>
+      </div>
+      <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
+        <span class="text-[10px] text-cyan-400 font-bold uppercase block">Carbohidratos</span>
+        <span class="text-base font-black text-white mt-0.5">${diet.carbs}</span>
+      </div>
+      <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
+        <span class="text-[10px] text-rose-400 font-bold uppercase block">Grasas Buenas</span>
+        <span class="text-base font-black text-white mt-0.5">${diet.fats}</span>
+      </div>
+      <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center col-span-2 sm:col-span-1">
+        <span class="text-[10px] text-blue-400 font-bold uppercase block">Hidratación</span>
+        <span class="text-base font-black text-white mt-0.5">${diet.waterLiters}</span>
+      </div>
+    </div>
+
+    <!-- Meals Plan -->
+    <div class="bg-slate-900/30 rounded-2xl border border-slate-800 p-4 sm:p-5 space-y-3">
+      <h3 class="text-xs sm:text-sm font-extrabold text-white uppercase flex items-center gap-2 mb-2">
+        <i class="fa-solid fa-utensils text-lime-400"></i> Plan Diario de Comidas
+      </h3>
+
+      <div class="space-y-2.5">
+        ${(diet.meals || []).map(m => `
+          <div class="bg-slate-950/80 p-3.5 rounded-xl border border-slate-800/80">
+            <div class="font-extrabold text-lime-400 text-xs uppercase mb-1 flex items-center gap-2">
+              <i class="fa-regular fa-clock text-slate-500"></i> ${m.meal}
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed font-sans">
+              ${m.desc}
+            </p>
+          </div>
+        `).join('')}
+      </div>
+
+      <div class="mt-4 p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-400">
+        <strong class="text-white">Pauta del Acompañamiento:</strong> ${diet.notes || 'Orientación nutricional de sala para optimizar el rendimiento y composición corporal.'}
+      </div>
+    </div>
+  `;
+};
+
+// TAB 4: RENDER COMPRAS EN TIENDA (ROPA & SUPLEMENTOS)
+window.renderMemberTabCompras = function(member) {
+  const container = document.getElementById('admin-mem-tab-content-compras');
+  if (!container) return;
+
+  const purchases = member.storePurchases || [];
+  const totalSpent = purchases.reduce((acc, p) => acc + (p.price * (p.qty || 1)), 0);
+  const products = getProducts();
+
+  container.innerHTML = `
+    <!-- Purchases Summary Header -->
+    <div class="bg-slate-900/40 p-4 rounded-2xl border border-slate-800 flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <span class="text-[10px] text-lime-400 font-bold uppercase tracking-wider block">Gasto Total en Tienda CAF</span>
+        <div class="text-xl font-black text-white mt-0.5">$${totalSpent.toLocaleString('es-CO')} COP</div>
+        <div class="text-xs text-slate-400 mt-0.5">${purchases.length} compras de suplementos y ropa realizadas en la sede</div>
+      </div>
+    </div>
+
+    <!-- Purchases Table -->
+    <div class="bg-slate-900/30 rounded-2xl border border-slate-800 p-4 overflow-x-auto">
+      <table class="w-full text-left text-xs">
+        <thead>
+          <tr class="text-slate-400 border-b border-slate-800 uppercase text-[10px]">
+            <th class="py-2.5 px-3">Fecha</th>
+            <th class="py-2.5 px-3">Producto</th>
+            <th class="py-2.5 px-3">Categoría</th>
+            <th class="py-2.5 px-3">Cant.</th>
+            <th class="py-2.5 px-3">Total COP</th>
+            <th class="py-2.5 px-3">Método Pago</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-800/60 font-mono">
+          ${purchases.length === 0 ? `
+            <tr>
+              <td colspan="6" class="py-6 text-center text-slate-500 font-sans">
+                El socio no registra compras de ropa o suplementos todavía.
+              </td>
+            </tr>
+          ` : purchases.map(p => `
+            <tr class="hover:bg-slate-800/30">
+              <td class="py-2.5 px-3 text-slate-300">${p.date}</td>
+              <td class="py-2.5 px-3 font-bold text-white font-sans">${p.product}</td>
+              <td class="py-2.5 px-3 font-sans">
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold ${
+                  p.category.toLowerCase().includes('suple') ? 'bg-amber-500/20 text-amber-400' :
+                  p.category.toLowerCase().includes('ropa') ? 'bg-lime-500/20 text-lime-400' :
+                  'bg-cyan-500/20 text-cyan-400'
+                }">
+                  ${p.category}
+                </span>
+              </td>
+              <td class="py-2.5 px-3 font-bold text-slate-300">${p.qty || 1}</td>
+              <td class="py-2.5 px-3 font-bold text-lime-400">$${(p.price * (p.qty || 1)).toLocaleString('es-CO')}</td>
+              <td class="py-2.5 px-3 text-slate-400 font-sans">${p.paymentMethod}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Quick Form: Register new store purchase for this member -->
+    <div class="bg-slate-900/50 p-4 sm:p-5 rounded-2xl border border-slate-800">
+      <h4 class="text-xs font-black text-white uppercase mb-3 flex items-center gap-2">
+        <i class="fa-solid fa-cart-plus text-lime-400"></i> Registrar Nueva Compra en Tienda para este Socio:
+      </h4>
+
+      <form onsubmit="window.saveNewMemberStorePurchase(event, '${member.id}')" class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+        <div class="sm:col-span-2">
+          <label class="block text-[11px] font-bold text-slate-300 uppercase mb-1">Producto:</label>
+          <select id="admin-purchase-prod-select" required class="w-full bg-slate-950 border border-slate-800 text-white rounded-xl px-3 py-2 text-xs focus:border-lime-500">
+            ${products.map(pr => `
+              <option value="${pr.id}">${pr.name} - $${pr.price.toLocaleString('es-CO')} COP (${pr.category})</option>
+            `).join('')}
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-[11px] font-bold text-slate-300 uppercase mb-1">Cantidad:</label>
+          <input type="number" id="admin-purchase-qty" min="1" value="1" required class="w-full bg-slate-950 border border-slate-800 text-white rounded-xl px-3 py-2 text-xs focus:border-lime-500">
+        </div>
+
+        <div>
+          <label class="block text-[11px] font-bold text-slate-300 uppercase mb-1">Método de Pago:</label>
+          <select id="admin-purchase-payment" class="w-full bg-slate-950 border border-slate-800 text-white rounded-xl px-3 py-2 text-xs focus:border-lime-500">
+            <option value="Nequi">Nequi</option>
+            <option value="Daviplata">Daviplata</option>
+            <option value="Efectivo Taquilla">Efectivo Taquilla</option>
+            <option value="Tarjeta">Tarjeta Débito/Crédito</option>
+          </select>
+        </div>
+
+        <div class="sm:col-span-4 pt-2 flex justify-end">
+          <button type="submit" class="px-5 py-2.5 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-xs rounded-xl transition flex items-center gap-2">
+            <i class="fa-solid fa-check"></i> Registrar Venta al Socio
+          </button>
+        </div>
+      </form>
+    </div>
+  `;
+};
+
+// TAB 5: RENDER HISTORIAL DE PAGOS & MEMBRESIA
+window.renderMemberTabPagos = function(member) {
+  const container = document.getElementById('admin-mem-tab-content-pagos');
+  if (!container) return;
+
+  const receipts = member.paymentHistory || [];
+  const statusInfo = getMemberPlanStatus(member.expirationDate);
+
+  container.innerHTML = `
+    <!-- Membership Status Bar -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-slate-900/40 p-4 rounded-2xl border border-slate-800">
+      <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+        <span class="text-[10px] text-slate-400 font-bold uppercase block">Plan Actual</span>
+        <span class="text-sm font-extrabold text-white mt-0.5 block">${member.planName}</span>
+        <span class="text-xs text-lime-400 font-mono font-bold">$${member.monthlyFee.toLocaleString('es-CO')} COP / mes</span>
+      </div>
+      <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+        <span class="text-[10px] text-slate-400 font-bold uppercase block">Fecha de Vencimiento</span>
+        <span class="text-sm font-extrabold text-white font-mono mt-0.5 block">${member.expirationDate}</span>
+        <span class="text-xs ${statusInfo.textClass} font-bold">${statusInfo.message}</span>
+      </div>
+      <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+        <span class="text-[10px] text-slate-400 font-bold uppercase block">Estado de Deuda</span>
+        <span class="text-sm font-extrabold ${member.balanceDue > 0 ? 'text-rose-400' : 'text-emerald-400'} mt-0.5 block">
+          ${member.balanceDue > 0 ? `$${member.balanceDue.toLocaleString('es-CO')} COP Pendiente` : 'Sin deuda ($0 COP)'}
+        </span>
+        <span class="text-xs text-slate-400 font-sans">Pago habitual: ${member.paymentMethod}</span>
+      </div>
+    </div>
+
+    <!-- Receipts History Table -->
+    <div class="bg-slate-900/30 rounded-2xl border border-slate-800 p-4 overflow-x-auto">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-xs sm:text-sm font-extrabold text-white uppercase flex items-center gap-2">
+          <i class="fa-solid fa-receipt text-lime-400"></i> Comprobantes de Pago y Mensualidades
+        </h3>
+        <button onclick="window.renewMemberFromModal('${member.id}')" class="px-3 py-1.5 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-xs rounded-lg transition flex items-center gap-1.5">
+          <i class="fa-solid fa-arrows-rotate"></i> Renovar +30 Días
+        </button>
+      </div>
+
+      <table class="w-full text-left text-xs">
+        <thead>
+          <tr class="text-slate-400 border-b border-slate-800 uppercase text-[10px]">
+            <th class="py-2.5 px-3">Recibo #</th>
+            <th class="py-2.5 px-3">Fecha</th>
+            <th class="py-2.5 px-3">Concepto</th>
+            <th class="py-2.5 px-3">Monto COP</th>
+            <th class="py-2.5 px-3">Método</th>
+            <th class="py-2.5 px-3">Estado</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-800/60 font-mono">
+          ${receipts.map(r => `
+            <tr class="hover:bg-slate-800/30">
+              <td class="py-2.5 px-3 text-slate-300 font-bold">${r.id}</td>
+              <td class="py-2.5 px-3 text-slate-400">${r.date}</td>
+              <td class="py-2.5 px-3 font-sans text-white">${r.concept}</td>
+              <td class="py-2.5 px-3 font-bold text-lime-400">$${r.amount.toLocaleString('es-CO')}</td>
+              <td class="py-2.5 px-3 font-sans text-slate-300">${r.method}</td>
+              <td class="py-2.5 px-3 font-sans">
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                  ${r.status || 'Aprobado'}
+                </span>
+              </td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+};
+
+// HANDLER: Save new weight log for member
+window.saveNewMemberWeight = function(event, memberId) {
+  event.preventDefault();
+  const dateVal = document.getElementById('admin-new-weight-date')?.value;
+  const weightVal = parseFloat(document.getElementById('admin-new-weight-val')?.value);
+
+  if (!dateVal || isNaN(weightVal) || weightVal <= 0) {
+    alert("Por favor ingresa un peso válido.");
+    return;
+  }
+
+  const members = getMembers();
+  const member = members.find(m => m.id === memberId);
+  if (!member) return;
+
+  const prevWeight = member.currentWeight;
+  const diff = Number((weightVal - prevWeight).toFixed(1));
+  const diffStr = diff <= 0 ? `${diff} kg` : `+${diff} kg`;
+
+  member.currentWeight = weightVal;
+  if (!member.weightLogs) member.weightLogs = [];
+  member.weightLogs.push({
+    date: dateVal,
+    weight: weightVal,
+    diff: diffStr
+  });
+
+  saveMembers(members);
+  window.openMemberDashboard(memberId);
+  window.switchMemberDashboardTab('avance');
+  renderMembersAndFinances();
+};
+
+// HANDLER: Apply routine preset to member
+window.applyRoutinePreset = function(memberId) {
+  const select = document.getElementById('admin-routine-preset-select');
+  if (!select) return;
+
+  const presetKey = select.value;
+  const preset = ROUTINE_PRESETS[presetKey];
+  if (!preset) return;
+
+  const members = getMembers();
+  const member = members.find(m => m.id === memberId);
+  if (!member) return;
+
+  member.assignedRoutine = JSON.parse(JSON.stringify(preset));
+  saveMembers(members);
+  window.openMemberDashboard(memberId);
+  window.switchMemberDashboardTab('rutina');
+};
+
+// HANDLER: Toggle exercise done
+window.toggleMemberExerciseDone = function(memberId, dayIdx, itemIdx) {
+  const members = getMembers();
+  const member = members.find(m => m.id === memberId);
+  if (!member || !member.assignedRoutine || !member.assignedRoutine.days) return;
+
+  const day = member.assignedRoutine.days[dayIdx];
+  if (day && day.items && day.items[itemIdx]) {
+    day.items[itemIdx].done = !day.items[itemIdx].done;
+    saveMembers(members);
+    window.renderMemberTabRutina(member);
+  }
+};
+
+// HANDLER: Save store purchase for member
+window.saveNewMemberStorePurchase = function(event, memberId) {
+  event.preventDefault();
+  const prodId = parseInt(document.getElementById('admin-purchase-prod-select')?.value);
+  const qty = parseInt(document.getElementById('admin-purchase-qty')?.value) || 1;
+  const paymentMethod = document.getElementById('admin-purchase-payment')?.value || 'Nequi';
+
+  const products = getProducts();
+  const prod = products.find(p => p.id === prodId);
+  if (!prod) return;
+
+  const members = getMembers();
+  const member = members.find(m => m.id === memberId);
+  if (!member) return;
+
+  const purchaseItem = {
+    id: `VTA-${Math.floor(1000 + Math.random() * 9000)}`,
+    date: new Date().toISOString().split('T')[0],
+    product: prod.name,
+    category: prod.category === 'suplementos' ? 'Suplementos' : prod.category === 'ropa' ? 'Ropa' : 'Accesorios',
+    qty: qty,
+    price: prod.price,
+    paymentMethod: paymentMethod
+  };
+
+  if (!member.storePurchases) member.storePurchases = [];
+  member.storePurchases.unshift(purchaseItem);
+  saveMembers(members);
+
+  // Update overall financial figures
+  const finances = getFinances();
+  finances.storeMonthlySales = (finances.storeMonthlySales || 0) + (prod.price * qty);
+  saveFinances(finances);
+
+  // Refresh view
+  window.openMemberDashboard(memberId);
+  window.switchMemberDashboardTab('compras');
+  renderMembersAndFinances();
+};
+
+// HANDLER: Renew member from inside dashboard
+window.renewMemberFromModal = function(memberId) {
+  const members = getMembers();
+  const member = members.find(m => m.id === memberId);
+  if (!member) return;
+
+  // Add 30 days from current expiration date or today if already overdue
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const currentExp = new Date(member.expirationDate + 'T00:00:00');
+  const baseDate = currentExp < today ? today : currentExp;
+
+  baseDate.setDate(baseDate.getDate() + 30);
+  member.expirationDate = baseDate.toISOString().split('T')[0];
+  member.balanceDue = 0;
+
+  // Add receipt to payment history
+  if (!member.paymentHistory) member.paymentHistory = [];
+  member.paymentHistory.unshift({
+    id: `REC-${Math.floor(100000 + Math.random() * 900000)}`,
+    date: new Date().toISOString().split('T')[0],
+    concept: `Renovación Mensualidad 30 Días (${member.planName})`,
+    amount: member.monthlyFee,
+    method: member.paymentMethod,
+    status: "Aprobado"
+  });
+
+  saveMembers(members);
+  window.openMemberDashboard(memberId);
+  window.switchMemberDashboardTab('pagos');
+  renderMembersAndFinances();
+};
+
+// ==========================================
+// 9. GLOBAL RENDER & INIT
 // ==========================================
 
 function renderAllAdminSections() {

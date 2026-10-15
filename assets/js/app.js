@@ -318,46 +318,65 @@ function initHeroSlider() {
     // Opacity calculation (0 to 100% -> 0 to 1.0)
     const op = (b.opacity !== undefined ? b.opacity : 75) / 100;
     
+    const hasBadge = b.badge && b.badge.trim();
+    const hasTitle = b.title && b.title.trim();
+    const hasSubtitle = b.subtitle && b.subtitle.trim();
+    const hasBtn1 = b.btn1Text && b.btn1Text.trim();
+    const hasBtn2 = b.btn2Text && b.btn2Text.trim();
+    const hasAnyContent = hasBadge || hasTitle || hasSubtitle || hasBtn1 || hasBtn2;
+
+    const altText = (b.title || 'Banner CAF').replace(/<[^>]*>?/gm, '');
+
     return `
       <div class="slide ${i === 0 ? 'active' : ''}">
         <div class="absolute inset-0">
-          <img src="${b.image}" alt="${b.title.replace(/<[^>]*>?/gm, '')}" class="w-full h-full object-cover">
+          <img src="${b.image}" alt="${altText}" class="w-full h-full object-cover">
           <!-- Dynamic Overlay with user defined opacity -->
           <div class="absolute inset-0" style="background-color: rgba(9, 13, 22, ${op});"></div>
           <div class="absolute inset-0 bg-gradient-to-t from-[#090d16] via-transparent to-transparent"></div>
         </div>
+        ${hasAnyContent ? `
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 flex items-center min-h-[560px] md:min-h-[640px]">
           <div class="max-w-2xl space-y-6">
-            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full ${
-              b.badgeColor === 'orange' ? 'bg-orange-500/20 border-orange-500/40 text-orange-400' : 'bg-lime-500/20 border-lime-500/40 text-lime-400'
-            } border text-xs font-extrabold uppercase">
-              <i class="${b.badgeIcon || 'fa-solid fa-location-dot'}"></i> ${b.badge}
-            </div>
-            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white uppercase leading-none">
-              ${b.title.replace(/\n/g, '<br>')}
-            </h1>
-            <p class="text-slate-300 text-base sm:text-lg font-medium leading-relaxed">
-              ${b.subtitle}
-            </p>
-            <div class="flex flex-wrap items-center gap-4 pt-2">
-              ${b.btn1Text ? `
-                <a href="${b.btn1Link || '#planes'}" class="px-6 py-3.5 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-sm sm:text-base rounded-2xl shadow-xl shadow-lime-500/25 transition transform hover:-translate-y-0.5 flex items-center gap-2">
-                  <span>${b.btn1Text}</span>
-                  <i class="fa-solid fa-arrow-right"></i>
-                </a>
-              ` : ''}
-              ${b.btn2Text ? `
-                <a href="${b.btn2Link || '#convenios'}" class="px-6 py-3.5 bg-slate-900/90 hover:bg-slate-800 text-white border border-slate-700 hover:border-lime-500/50 font-bold text-sm sm:text-base rounded-2xl backdrop-blur-md transition flex items-center gap-2">
-                  <i class="fa-solid fa-handshake text-lime-400"></i>
-                  <span>${b.btn2Text}</span>
-                </a>
-              ` : ''}
-              <a href="#rutina" class="px-5 py-3.5 bg-transparent hover:bg-white/10 text-slate-300 hover:text-white font-semibold text-sm rounded-2xl transition">
-                <i class="fa-solid fa-wand-magic-sparkles mr-1 text-lime-400"></i> Rutina Gratis
-              </a>
-            </div>
+            ${hasBadge ? `
+              <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full ${
+                b.badgeColor === 'orange' ? 'bg-orange-500/20 border-orange-500/40 text-orange-400' : 'bg-lime-500/20 border-lime-500/40 text-lime-400'
+              } border text-xs font-extrabold uppercase">
+                <i class="${b.badgeIcon || 'fa-solid fa-location-dot'}"></i> ${b.badge}
+              </div>
+            ` : ''}
+
+            ${hasTitle ? `
+              <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white uppercase leading-none">
+                ${b.title.replace(/\n/g, '<br>')}
+              </h1>
+            ` : ''}
+
+            ${hasSubtitle ? `
+              <p class="text-slate-300 text-base sm:text-lg font-medium leading-relaxed">
+                ${b.subtitle}
+              </p>
+            ` : ''}
+
+            ${(hasBtn1 || hasBtn2) ? `
+              <div class="flex flex-wrap items-center gap-4 pt-2">
+                ${hasBtn1 ? `
+                  <a href="${b.btn1Link || '#planes'}" class="px-6 py-3.5 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-sm sm:text-base rounded-2xl shadow-xl shadow-lime-500/25 transition transform hover:-translate-y-0.5 flex items-center gap-2">
+                    <span>${b.btn1Text}</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                  </a>
+                ` : ''}
+                ${hasBtn2 ? `
+                  <a href="${b.btn2Link || '#convenios'}" class="px-6 py-3.5 bg-slate-900/90 hover:bg-slate-800 text-white border border-slate-700 hover:border-lime-500/50 font-bold text-sm sm:text-base rounded-2xl backdrop-blur-md transition flex items-center gap-2">
+                    <i class="fa-solid fa-handshake text-lime-400"></i>
+                    <span>${b.btn2Text}</span>
+                  </a>
+                ` : ''}
+              </div>
+            ` : ''}
           </div>
         </div>
+        ` : ''}
       </div>
     `;
   }).join('');

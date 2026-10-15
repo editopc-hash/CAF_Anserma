@@ -545,6 +545,139 @@
     </div>
   </div>
 
+  <!-- ================= MODAL: DASHBOARD COMPLETO DEL SOCIO (ADMIN) ================= -->
+  <div id="admin-member-dashboard-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-2 sm:p-4 md:p-6 overflow-y-auto">
+    <div class="bg-slate-950 border border-slate-800 rounded-3xl max-w-4xl w-full my-auto shadow-2xl overflow-hidden flex flex-col max-h-[94vh]">
+      
+      <!-- Modal Header -->
+      <div class="p-5 sm:p-6 border-b border-slate-800/80 bg-slate-900/60 flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-3 sm:gap-4">
+          <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-lime-500 to-emerald-600 flex items-center justify-center text-black font-black text-lg sm:text-xl shadow-lg shadow-lime-500/20" id="admin-mem-avatar">
+            CR
+          </div>
+          <div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <h2 class="text-lg sm:text-xl font-black text-white" id="admin-mem-name">Carlos Andrés Ramírez</h2>
+              <span id="admin-mem-category-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-lime-500/20 text-lime-400 border border-lime-500/30">
+                Confa Cat A
+              </span>
+              <span id="admin-mem-status-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                Al día (15 días)
+              </span>
+            </div>
+            <div class="text-xs text-slate-400 flex flex-wrap items-center gap-3 mt-1">
+              <span id="admin-mem-cedula"><i class="fa-solid fa-id-card text-slate-500 mr-1"></i>CC: 1.053.840.123</span>
+              <span id="admin-mem-phone"><i class="fa-solid fa-phone text-slate-500 mr-1"></i>312 456 7890</span>
+              <span id="admin-mem-plan"><i class="fa-solid fa-dumbbell text-slate-500 mr-1"></i>Plan Mensual</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <a id="admin-mem-whatsapp-btn" href="#" target="_blank" class="px-3.5 py-2 rounded-xl bg-emerald-600/20 hover:bg-emerald-600 text-emerald-400 hover:text-white text-xs font-bold transition flex items-center gap-1.5 border border-emerald-500/30">
+            <i class="fa-brands fa-whatsapp text-sm"></i> Contactar WhatsApp
+          </a>
+          <button onclick="window.closeMemberDashboard()" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition">
+            <i class="fa-solid fa-xmark text-sm"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick KPI Stats Bar -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 bg-slate-900/30 border-b border-slate-800/80 text-xs">
+        <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800">
+          <div class="text-slate-400 text-[10px] uppercase font-bold">Peso Actual vs Inicial</div>
+          <div class="font-black text-white text-sm sm:text-base mt-0.5 flex items-center gap-1.5" id="admin-mem-weight-kpi">
+            <span>78.4 kg</span>
+            <span class="text-xs text-lime-400 font-bold bg-lime-500/10 px-1.5 py-0.5 rounded">-6.6 kg</span>
+          </div>
+        </div>
+        <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800">
+          <div class="text-slate-400 text-[10px] uppercase font-bold">IMC & Estado Físico</div>
+          <div class="font-black text-white text-sm sm:text-base mt-0.5 flex items-center gap-1.5" id="admin-mem-imc-kpi">
+            <span>25.6 IMC</span>
+            <span class="text-[10px] text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">Saludable</span>
+          </div>
+        </div>
+        <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800">
+          <div class="text-slate-400 text-[10px] uppercase font-bold">Compras en Tienda CAF</div>
+          <div class="font-black text-white text-sm sm:text-base mt-0.5" id="admin-mem-store-kpi">
+            $225.000 COP
+          </div>
+        </div>
+        <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800">
+          <div class="text-slate-400 text-[10px] uppercase font-bold">Estado de Cuenta / Deuda</div>
+          <div class="font-black text-sm sm:text-base mt-0.5" id="admin-mem-debt-kpi">
+            <span class="text-emerald-400">Al día ($0)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs Navigation -->
+      <div class="flex items-center gap-1.5 px-4 pt-3 border-b border-slate-800 overflow-x-auto scrollbar-none bg-slate-950">
+        <button onclick="window.switchMemberDashboardTab('avance')" id="admin-mem-tab-btn-avance" class="admin-mem-tab-btn px-3.5 py-2 rounded-t-xl text-xs font-bold transition flex items-center gap-1.5 bg-lime-500 text-black">
+          <i class="fa-solid fa-chart-line"></i> <span>Avance & Pesajes</span>
+        </button>
+        <button onclick="window.switchMemberDashboardTab('rutina')" id="admin-mem-tab-btn-rutina" class="admin-mem-tab-btn px-3.5 py-2 rounded-t-xl text-xs font-bold transition flex items-center gap-1.5 bg-slate-900 text-slate-400 hover:text-white">
+          <i class="fa-solid fa-dumbbell"></i> <span>Rutina Asignada</span>
+        </button>
+        <button onclick="window.switchMemberDashboardTab('dieta')" id="admin-mem-tab-btn-dieta" class="admin-mem-tab-btn px-3.5 py-2 rounded-t-xl text-xs font-bold transition flex items-center gap-1.5 bg-slate-900 text-slate-400 hover:text-white">
+          <i class="fa-solid fa-apple-whole"></i> <span>Plan Nutricional</span>
+        </button>
+        <button onclick="window.switchMemberDashboardTab('compras')" id="admin-mem-tab-btn-compras" class="admin-mem-tab-btn px-3.5 py-2 rounded-t-xl text-xs font-bold transition flex items-center gap-1.5 bg-slate-900 text-slate-400 hover:text-white">
+          <i class="fa-solid fa-bag-shopping"></i> <span>Compras Tienda</span>
+        </button>
+        <button onclick="window.switchMemberDashboardTab('pagos')" id="admin-mem-tab-btn-pagos" class="admin-mem-tab-btn px-3.5 py-2 rounded-t-xl text-xs font-bold transition flex items-center gap-1.5 bg-slate-900 text-slate-400 hover:text-white">
+          <i class="fa-solid fa-receipt"></i> <span>Historial de Pagos</span>
+        </button>
+      </div>
+
+      <!-- Modal Body (Tab Panels) -->
+      <div class="p-4 sm:p-6 overflow-y-auto flex-1 space-y-4">
+        <!-- TAB 1: AVANCE & PESAJE -->
+        <div id="admin-mem-tab-content-avance" class="admin-mem-tab-panel space-y-4">
+          <!-- Dynamically populated -->
+        </div>
+
+        <!-- TAB 2: RUTINA ASIGNADA -->
+        <div id="admin-mem-tab-content-rutina" class="admin-mem-tab-panel hidden space-y-4">
+          <!-- Dynamically populated -->
+        </div>
+
+        <!-- TAB 3: PLAN NUTRICIONAL / DIETA -->
+        <div id="admin-mem-tab-content-dieta" class="admin-mem-tab-panel hidden space-y-4">
+          <!-- Dynamically populated -->
+        </div>
+
+        <!-- TAB 4: COMPRAS EN TIENDA -->
+        <div id="admin-mem-tab-content-compras" class="admin-mem-tab-panel hidden space-y-4">
+          <!-- Dynamically populated -->
+        </div>
+
+        <!-- TAB 5: HISTORIAL DE PAGOS -->
+        <div id="admin-mem-tab-content-pagos" class="admin-mem-tab-panel hidden space-y-4">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- Modal Footer Actions -->
+      <div class="p-4 bg-slate-900/60 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3">
+        <div class="text-xs text-slate-400" id="admin-mem-footer-info">
+          Registrado desde: <span>--</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="admin-mem-renew-btn" class="px-4 py-2 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-xs rounded-xl transition flex items-center gap-1.5">
+            <i class="fa-solid fa-arrows-rotate"></i> Renovar Membresía 30 Días
+          </button>
+          <button onclick="window.closeMemberDashboard()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs rounded-xl transition">
+            Cerrar
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <!-- Scripts -->
   <script src="assets/js/admin.js"></script>
 
