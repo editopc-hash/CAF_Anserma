@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAF Anserma Caldas | Centro de Acondicionamiento Físico & Víctor Zamorano</title>
+  
+  <!-- SEO Meta -->
+  <meta name="description" content="Centro de Acondicionamiento Físico CAF - Centro de Entrenamiento Víctor Zamorano en Anserma, Caldas. Musculación, CrossFit, Funcional, Rumbaterapia, Krav Maga y Convenio Confa.">
+  <meta name="keywords" content="CAF Anserma, Gimnasio Anserma Caldas, Víctor Zamorano, Convenio Confa Anserma, CrossFit, Rumbaterapia, Rutinas personalizadas">
+  <link rel="icon" type="image/png" href="assets/images/banner/banner-anserma-cambio.png">
+
+  <!-- Tailwind CSS & FontAwesome -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            caf: {
+              lime: '#84cc16',
+              dark: '#090d16',
+              card: '#111827',
+              orange: '#f97316',
+              cyan: '#06b6d4'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#090d16] text-slate-100 antialiased selection:bg-lime-500 selection:text-black">
+
+  <!-- ================= TOP NOTICE BAR ================= -->
+  <div class="bg-gradient-to-r from-lime-600 via-lime-500 to-emerald-600 text-black py-2 px-4 text-xs font-black text-center tracking-wide flex items-center justify-center gap-2 shadow-md">
+    <i class="fa-solid fa-certificate"></i>
+    <span>¡CONVENIO ACTIVO CON CONFA! Tarifas subsidiadas en Anserma Caldas desde $55.000 COP/mes</span>
+    <a href="#convenios" class="underline underline-offset-2 ml-2 hover:text-white transition">Ver categorías</a>
+  </div>
+
+  <!-- ================= NAVBAR ================= -->
+  <header class="sticky top-0 z-50 glass-nav transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Logo -->
+        <a href="#inicio" class="flex items-center gap-3 group">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-lime-400 to-lime-600 flex items-center justify-center text-black font-black text-2xl shadow-lg shadow-lime-500/20 group-hover:scale-105 transition-transform">
+            CAF
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xl font-extrabold tracking-tight text-white group-hover:text-lime-400 transition-colors">CAF ANSERMA</span>
+              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-lime-500/20 text-lime-400 border border-lime-500/30">CALDAS</span>
+            </div>
+            <p class="text-[11px] text-slate-400 font-medium">Centro de Entrenamiento Víctor Zamorano</p>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden lg:flex items-center gap-6 text-sm font-semibold text-slate-300">
+          <a href="#inicio" class="hover:text-lime-400 transition-colors">Inicio</a>
+          <a href="#galeria" class="hover:text-lime-400 transition-colors">Galería</a>
+          <a href="#rutina" class="hover:text-lime-400 transition-colors">Tu Rutina</a>
+          <a href="#horarios" class="hover:text-lime-400 transition-colors">Horarios</a>
+          <a href="#tienda" class="hover:text-lime-400 transition-colors">Tienda</a>
+          <a href="#planes" class="hover:text-lime-400 transition-colors">Planes</a>
+          <a href="#convenios" class="hover:text-lime-400 transition-colors flex items-center gap-1.5 text-lime-400">
+            <i class="fa-solid fa-handshake"></i> Convenios (Confa)
+          </a>
+          <a href="#contacto" class="hover:text-lime-400 transition-colors">Contacto</a>
+        </nav>
+
+        <!-- Right Action Buttons -->
+        <div class="flex items-center gap-3">
+          
+          <!-- Open Cart Button -->
+          <button id="open-cart-btn" class="relative p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-lime-500/50 transition">
+            <i class="fa-solid fa-cart-shopping text-base"></i>
+            <span class="cart-count-badge badge-count bg-lime-500 text-black hidden">0</span>
+          </button>
+
+          <!-- User / Dashboard Button -->
+          <a id="nav-auth-btn" href="dashboard.html" class="px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 hover:text-lime-400 hover:border-lime-500/50 text-xs sm:text-sm font-bold flex items-center gap-2 transition">
+            <i class="fa-regular fa-user"></i>
+            <span>Mi Cuenta</span>
+          </a>
+
+          <!-- WhatsApp Direct -->
+          <a href="https://wa.me/573100000000?text=Hola%20CAF%20Anserma%20(Víctor%20Zamorano),%20deseo%20información%20sobre%20inscripciones%20y%20tarifas." target="_blank" class="hidden sm:flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs sm:text-sm shadow-lg shadow-emerald-600/20 transition">
+            <i class="fa-brands fa-whatsapp text-base"></i>
+            <span>WhatsApp</span>
+          </a>
+
+          <!-- Mobile Hamburger Toggle -->
+          <button id="mobile-menu-btn" class="lg:hidden p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white">
+            <i class="fa-solid fa-bars-staggered text-lg"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mobile Drawer Menu -->
+    <div id="mobile-menu-drawer" class="lg:hidden hidden bg-slate-950/95 border-b border-slate-800 px-6 py-6 space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <span class="text-sm font-extrabold text-white">MENÚ PRINCIPAL</span>
+        <button id="mobile-menu-close" class="text-slate-400 hover:text-white">
+          <i class="fa-solid fa-xmark text-xl"></i>
+        </button>
+      </div>
+      <nav class="flex flex-col space-y-3 text-sm font-semibold">
+        <a href="#inicio" class="mobile-nav-link text-slate-300 hover:text-lime-400 py-1">Inicio</a>
+        <a href="#galeria" class="mobile-nav-link text-slate-300 hover:text-lime-400 py-1">Galería de Imágenes</a>
+        <a href="#rutina" class="mobile-nav-link text-slate-300 hover:text-lime-400 py-1">Tu Rutina Personalizada</a>
+        <a href="#horarios" class="mobile-nav-link text-slate-300 hover:text-lime-400 py-1">Horarios y Clases Grupales</a>
+        <a href="#tienda" class="mobile-nav-link text-slate-300 hover:text-lime-400 py-1">Tienda Oficial (Ropa y Suplementos)</a>
+        <a href="#planes" class="mobile-nav-link text-slate-300 hover:text-lime-400 py-1">Planes y Tarifas</a>
+        <a href="#convenios" class="mobile-nav-link text-lime-400 font-bold py-1">Convenio Confa</a>
+        <a href="#contacto" class="mobile-nav-link text-slate-300 hover:text-lime-400 py-1">Contáctenos & Ubicación</a>
+      </nav>
+      <div class="pt-3 border-t border-slate-800 flex flex-col gap-2">
+        <a href="dashboard.html" class="w-full py-3 bg-lime-500 text-black font-extrabold text-center rounded-xl">
+          <i class="fa-solid fa-chart-line mr-2"></i> Mi Dashboard de Usuario
+        </a>
+        <a href="https://wa.me/573100000000?text=Hola%20CAF%20Anserma,%20deseo%20más%20información." target="_blank" class="w-full py-3 bg-emerald-600 text-white font-extrabold text-center rounded-xl">
+          <i class="fa-brands fa-whatsapp mr-2"></i> Hablar por WhatsApp
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= 1. HERO SLIDER (2 BANNERS) ================= -->
+  <section id="inicio" class="relative overflow-hidden slider-container hero-slide-height flex items-center">
+    
+    <!-- Banner 1: En Anserma, tu cambio comienza hoy -->
+    <div class="slide active">
+      <div class="absolute inset-0">
+        <img src="assets/images/banner/banner-anserma-cambio.png" alt="En Anserma, tu cambio comienza hoy - CAF Víctor Zamorano" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-r from-[#090d16]/95 via-[#090d16]/70 to-[#090d16]/40"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#090d16] via-transparent to-transparent"></div>
+      </div>
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 flex items-center min-h-[560px] md:min-h-[640px]">
+        <div class="max-w-2xl space-y-6">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-lime-500/20 border border-lime-500/40 text-lime-400 text-xs font-extrabold">
+            <i class="fa-solid fa-location-dot"></i> PISO 2, CRA 5 # 22 - 32 · AVENIDA LIBERTADOR · ANSERMA
+          </div>
+          <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white uppercase leading-none">
+            EN ANSERMA,<br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-lime-500">TU CAMBIO</span><br>
+            COMIENZA HOY.
+          </h1>
+          <p class="text-slate-300 text-base sm:text-lg font-medium leading-relaxed">
+            Centro de Acondicionamiento Físico CAF & Centro de Entrenamiento Víctor Zamorano. Musculación, CrossFit, Funcional, Rumbaterapia, Krav Maga y el convenio más completo de Caldas con Confa.
+          </p>
+          <div class="flex flex-wrap items-center gap-4 pt-2">
+            <a href="#planes" class="px-6 py-3.5 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-sm sm:text-base rounded-2xl shadow-xl shadow-lime-500/25 transition transform hover:-translate-y-0.5 flex items-center gap-2">
+              <span>¡Inscríbete Hoy!</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+            <a href="#convenios" class="px-6 py-3.5 bg-slate-900/90 hover:bg-slate-800 text-white border border-slate-700 hover:border-lime-500/50 font-bold text-sm sm:text-base rounded-2xl backdrop-blur-md transition flex items-center gap-2">
+              <i class="fa-solid fa-handshake text-lime-400"></i>
+              <span>Convenio Confa</span>
+            </a>
+            <a href="#rutina" class="px-5 py-3.5 bg-transparent hover:bg-white/10 text-slate-300 hover:text-white font-semibold text-sm rounded-2xl transition">
+              <i class="fa-solid fa-wand-magic-sparkles mr-1 text-lime-400"></i> Rutina Gratis
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Banner 2: Cambia tu cuerpo, cambia tu mente -->
+    <div class="slide">
+      <div class="absolute inset-0">
+        <img src="assets/images/banner/banner-cambia-cuerpo.png" alt="Cambia tu cuerpo, cambia tu mente - CAF Víctor Zamorano" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-r from-[#090d16]/95 via-[#090d16]/75 to-[#090d16]/40"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#090d16] via-transparent to-transparent"></div>
+      </div>
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 flex items-center min-h-[560px] md:min-h-[640px]">
+        <div class="max-w-2xl space-y-6">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-500/20 border border-orange-500/40 text-orange-400 text-xs font-extrabold">
+            <i class="fa-solid fa-fire"></i> RESULTADOS REALES CON ASESORÍA DE SALA
+          </div>
+          <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white uppercase leading-none">
+            CAMBIA TU CUERPO,<br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-amber-400 to-lime-400">CAMBIA TU MENTE.</span>
+          </h1>
+          <p class="text-slate-300 text-base sm:text-lg font-medium leading-relaxed">
+            Planes diseñados para cada meta: hipertrofia, reducción de peso, acondicionamiento y bienestar total. Entrena solo o aprovecha nuestro exclusivo <strong class="text-white">Plan Pareja CAF</strong>.
+          </p>
+          <div class="flex flex-wrap items-center gap-4 pt-2">
+            <a href="#rutina" class="px-6 py-3.5 bg-orange-500 hover:bg-orange-400 text-black font-extrabold text-sm sm:text-base rounded-2xl shadow-xl shadow-orange-500/25 transition transform hover:-translate-y-0.5 flex items-center gap-2">
+              <i class="fa-solid fa-dumbbell"></i>
+              <span>Crear Mi Rutina</span>
+            </a>
+            <a href="https://wa.me/573100000000?text=Hola%20CAF%20Anserma,%20quiero%20conocer%20el%20Plan%20Pareja%20y%20tarifas." target="_blank" class="px-6 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm sm:text-base rounded-2xl shadow-lg transition flex items-center gap-2">
+              <i class="fa-brands fa-whatsapp"></i>
+              <span>Preguntar por WhatsApp</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slider Navigation Controls -->
+    <button id="slider-prev" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/50 hover:bg-lime-500 hover:text-black text-white border border-white/20 backdrop-blur-md flex items-center justify-center transition shadow-lg">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <button id="slider-next" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/50 hover:bg-lime-500 hover:text-black text-white border border-white/20 backdrop-blur-md flex items-center justify-center transition shadow-lg">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+
+    <!-- Slider Dots -->
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2.5">
+      <button class="slider-dot h-3 w-8 rounded-full bg-lime-500 transition-all duration-300"></button>
+      <button class="slider-dot h-3 w-3 rounded-full bg-white/40 hover:bg-white transition-all duration-300"></button>
+    </div>
+
+  </section>
+
+  <!-- ================= HIGHLIGHTS & LIVE STATUS BAR ================= -->
+  <section class="bg-slate-950 border-y border-slate-800/80 py-5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        
+        <!-- Live Status Pill -->
+        <div id="gym-live-status" class="flex items-center">
+          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 live-pulse"></span>
+            Verificando horario en Anserma Caldas...
+          </span>
+        </div>
+
+        <!-- Highlights Pills -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+          <div class="flex items-center gap-2 text-slate-300">
+            <i class="fa-solid fa-check-circle text-lime-400"></i>
+            <span>Convenio Confa A, B y C</span>
+          </div>
+          <div class="flex items-center gap-2 text-slate-300">
+            <i class="fa-solid fa-check-circle text-lime-400"></i>
+            <span>CrossFit & Funcional</span>
+          </div>
+          <div class="flex items-center gap-2 text-slate-300">
+            <i class="fa-solid fa-check-circle text-lime-400"></i>
+            <span>Rumbaterapia & Krav Maga</span>
+          </div>
+          <div class="flex items-center gap-2 text-slate-300">
+            <i class="fa-solid fa-check-circle text-lime-400"></i>
+            <span>Entrenadores de Sala</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 2. GALERÍA DE IMÁGENES ================= -->
+  <section id="galeria" class="py-20 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Title -->
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="text-xs font-extrabold uppercase tracking-widest text-lime-400 bg-lime-500/10 border border-lime-500/20 px-3.5 py-1.5 rounded-full">
+          CONOCE NUESTRAS INSTALACIONES
+        </span>
+        <h2 class="text-3xl sm:text-5xl font-black text-white mt-4 uppercase tracking-tight">
+          GALERÍA DE ENTRENAMIENTO CAF
+        </h2>
+        <p class="text-slate-400 text-sm sm:text-base mt-3">
+          Un espacio amplio, moderno e industrial diseñado para todas las disciplinas: musculación, CrossFit, calistenia, clases de rumbaterapia y programas de salud.
+        </p>
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div class="flex flex-wrap items-center justify-center gap-2 mb-10">
+        <button data-filter="todas" class="gallery-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-lime-500 text-black transition">
+          Todas
+        </button>
+        <button data-filter="musculacion" class="gallery-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800/80 text-slate-300 hover:bg-slate-700 transition">
+          Musculación & Pesas
+        </button>
+        <button data-filter="funcional" class="gallery-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800/80 text-slate-300 hover:bg-slate-700 transition">
+          CrossFit & Calistenia
+        </button>
+        <button data-filter="clases" class="gallery-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800/80 text-slate-300 hover:bg-slate-700 transition">
+          Rumbaterapia & Baile
+        </button>
+        <button data-filter="salud" class="gallery-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800/80 text-slate-300 hover:bg-slate-700 transition">
+          Cardio & Reducción
+        </button>
+        <button data-filter="pareja" class="gallery-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800/80 text-slate-300 hover:bg-slate-700 transition">
+          Plan Pareja
+        </button>
+      </div>
+
+      <!-- Gallery Grid -->
+      <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= LIGHTBOX MODAL ================= -->
+  <div id="lightbox-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/95 p-4 backdrop-blur-md">
+    <button id="lightbox-close" class="absolute top-6 right-6 text-white text-3xl hover:text-lime-400 z-50">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <button id="lightbox-prev" class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-3xl hover:text-lime-400 p-3 z-50">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <button id="lightbox-next" class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-3xl hover:text-lime-400 p-3 z-50">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+    <div class="max-w-4xl max-h-[85vh] flex flex-col items-center">
+      <img id="lightbox-image" src="" alt="CAF Anserma" class="max-h-[70vh] w-auto rounded-2xl object-contain shadow-2xl border border-slate-800">
+      <div class="mt-4 text-center">
+        <h4 id="lightbox-title" class="text-xl font-black text-white"></h4>
+        <p id="lightbox-desc" class="text-xs sm:text-sm text-slate-300 mt-1 max-w-xl"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= 3. TU RUTINA PERSONALIZADA ================= -->
+  <section id="rutina" class="py-20 bg-slate-950/70 border-t border-slate-900 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="text-xs font-extrabold uppercase tracking-widest text-lime-400 bg-lime-500/10 border border-lime-500/20 px-3.5 py-1.5 rounded-full">
+          ASESORÍA INTELIGENTE
+        </span>
+        <h2 class="text-3xl sm:text-5xl font-black text-white mt-4 uppercase tracking-tight">
+          TU RUTINA PERSONALIZADA
+        </h2>
+        <p class="text-slate-400 text-sm sm:text-base mt-3">
+          En CAF Víctor Zamorano diseñamos planes para tus capacidades. Elige tu objetivo y nivel para generar tu estructura de ejercicios recomendada de inmediato.
+        </p>
+      </div>
+
+      <!-- Generator Interactive Box -->
+      <div class="glass-panel rounded-3xl p-6 sm:p-10 max-w-4xl mx-auto border border-slate-800 shadow-2xl mb-10">
+        <form id="routine-generator-form" class="space-y-6">
+          
+          <!-- Step 1: Goal -->
+          <div>
+            <label class="block text-sm font-bold text-white mb-3">1. Selecciona tu Objetivo Principal:</label>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <label class="relative flex flex-col p-4 bg-slate-900 border border-slate-800 rounded-2xl cursor-pointer hover:border-lime-500/50 transition">
+                <input type="radio" name="routine-goal" value="reduccion" checked class="peer sr-only">
+                <span class="text-xs font-bold text-lime-400 uppercase tracking-wider mb-1">Pérdida & Salud</span>
+                <span class="text-base font-extrabold text-white">Reducción de Peso</span>
+                <span class="text-xs text-slate-400 mt-1">Quema calórica, cardio y tonificación sin impacto lesivo.</span>
+                <div class="absolute inset-0 rounded-2xl border-2 border-lime-500 opacity-0 peer-checked:opacity-100 pointer-events-none"></div>
+              </label>
+
+              <label class="relative flex flex-col p-4 bg-slate-900 border border-slate-800 rounded-2xl cursor-pointer hover:border-lime-500/50 transition">
+                <input type="radio" name="routine-goal" value="hipertrofia" class="peer sr-only">
+                <span class="text-xs font-bold text-orange-400 uppercase tracking-wider mb-1">Masa Muscular</span>
+                <span class="text-base font-extrabold text-white">Hipertrofia & Fuerza</span>
+                <span class="text-xs text-slate-400 mt-1">Pesas libres, sobrecarga progresiva y ganancia de masa magra.</span>
+                <div class="absolute inset-0 rounded-2xl border-2 border-orange-500 opacity-0 peer-checked:opacity-100 pointer-events-none"></div>
+              </label>
+
+              <label class="relative flex flex-col p-4 bg-slate-900 border border-slate-800 rounded-2xl cursor-pointer hover:border-lime-500/50 transition">
+                <input type="radio" name="routine-goal" value="funcional" class="peer sr-only">
+                <span class="text-xs font-bold text-cyan-400 uppercase tracking-wider mb-1">Rendimiento</span>
+                <span class="text-base font-extrabold text-white">CrossFit & Funcional</span>
+                <span class="text-xs text-slate-400 mt-1">Agilidad, potencia atlética, calistenia y resistencia metabólica.</span>
+                <div class="absolute inset-0 rounded-2xl border-2 border-cyan-500 opacity-0 peer-checked:opacity-100 pointer-events-none"></div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Step 2 & 3: Level and Days -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="routine-level" class="block text-sm font-bold text-white mb-2">2. Tu Nivel Actual:</label>
+              <select id="routine-level" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-lime-500">
+                <option value="principiante">Principiante (0 a 6 meses entrenando)</option>
+                <option value="intermedio" selected>Intermedio (6 meses a 2 años)</option>
+                <option value="avanzado">Avanzado (Más de 2 años de experiencia)</option>
+              </select>
+            </div>
+            <div>
+              <label for="routine-days" class="block text-sm font-bold text-white mb-2">3. Días Disponibles por Semana:</label>
+              <select id="routine-days" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-lime-500">
+                <option value="3">3 Días por semana (Full Body / Esenciales)</option>
+                <option value="4" selected>4 Días por semana (Torso / Pierna o Push-Pull)</option>
+                <option value="5">5 Días por semana (Frecuencia óptima)</option>
+                <option value="6">6 Días por semana (Atletas dedicados)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Generate Action Button -->
+          <button type="submit" class="w-full py-4 bg-gradient-to-r from-lime-500 to-lime-400 hover:from-lime-400 hover:to-lime-300 text-black font-black text-base rounded-2xl shadow-xl shadow-lime-500/20 transition transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+            <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>
+            <span>GENERAR PLAN Y VER EJERCICIOS AHORA</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Result Container (Appears dynamically) -->
+      <div id="routine-result-box" class="max-w-4xl mx-auto">
+        <!-- Injected by app.js when submitted -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 4. HORARIO GENERAL Y HORARIO DE CLASES ================= -->
+  <section id="horarios" class="py-20 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="text-xs font-extrabold uppercase tracking-widest text-lime-400 bg-lime-500/10 border border-lime-500/20 px-3.5 py-1.5 rounded-full">
+          PLANIFICA TU ENTRENAMIENTO
+        </span>
+        <h2 class="text-3xl sm:text-5xl font-black text-white mt-4 uppercase tracking-tight">
+          HORARIOS Y CLASES GRUPALES
+        </h2>
+        <p class="text-slate-400 text-sm sm:text-base mt-3">
+          Acceso a sala de pesas durante todo el día y programación variada de clases: Rumbaterapia, Krav Maga y CrossFit WODs.
+        </p>
+      </div>
+
+      <!-- General Gym Hours Banner -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
+        
+        <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 p-6 rounded-2xl flex items-center gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-lime-500/10 border border-lime-500/20 text-lime-400 flex items-center justify-center text-2xl shrink-0">
+            <i class="fa-solid fa-calendar-days"></i>
+          </div>
+          <div>
+            <span class="text-xs text-slate-400 font-semibold uppercase tracking-wider">Lunes a Viernes</span>
+            <h4 class="text-white font-extrabold text-base sm:text-lg">5:00 AM – 12:00 PM</h4>
+            <h4 class="text-lime-400 font-extrabold text-base sm:text-lg">2:00 PM – 9:30 PM</h4>
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 p-6 rounded-2xl flex items-center gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-orange-500/10 border border-orange-500/20 text-orange-400 flex items-center justify-center text-2xl shrink-0">
+            <i class="fa-solid fa-dumbbell"></i>
+          </div>
+          <div>
+            <span class="text-xs text-slate-400 font-semibold uppercase tracking-wider">Sábados</span>
+            <h4 class="text-white font-extrabold text-lg">6:00 AM – 4:00 PM</h4>
+            <p class="text-xs text-slate-400 mt-1">Jornada continua</p>
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 p-6 rounded-2xl flex items-center gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center text-2xl shrink-0">
+            <i class="fa-solid fa-sun"></i>
+          </div>
+          <div>
+            <span class="text-xs text-slate-400 font-semibold uppercase tracking-wider">Domingos y Festivos</span>
+            <h4 class="text-white font-extrabold text-lg">7:00 AM – 1:00 PM</h4>
+            <p class="text-xs text-slate-400 mt-1">Entrenamiento libre & cardio</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Classes Schedule Header & Day Tabs -->
+      <div class="bg-slate-950 border border-slate-800/80 rounded-3xl p-6 md:p-8">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-6 border-b border-slate-800">
+          <div>
+            <h3 class="text-2xl font-black text-white uppercase">Programación de Clases Dirigidas</h3>
+            <p class="text-xs text-slate-400 mt-1">Incluidas en tu mensualidad CAF o convenio Confa. Reserva tu cupo.</p>
+          </div>
+          
+          <!-- Day tabs -->
+          <div class="flex flex-wrap gap-1.5">
+            <button data-day="Todos" class="schedule-day-tab px-3.5 py-1.5 rounded-xl text-xs font-bold bg-lime-500 text-black transition">Todos</button>
+            <button data-day="Lunes" class="schedule-day-tab px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 hover:text-white transition">Lun</button>
+            <button data-day="Martes" class="schedule-day-tab px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 hover:text-white transition">Mar</button>
+            <button data-day="Miércoles" class="schedule-day-tab px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 hover:text-white transition">Mié</button>
+            <button data-day="Jueves" class="schedule-day-tab px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 hover:text-white transition">Jue</button>
+            <button data-day="Viernes" class="schedule-day-tab px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 hover:text-white transition">Vie</button>
+            <button data-day="Sábado" class="schedule-day-tab px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 hover:text-white transition">Sáb</button>
+            <button data-day="Domingo" class="schedule-day-tab px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 hover:text-white transition">Dom</button>
+          </div>
+        </div>
+
+        <!-- Schedule Dynamic List -->
+        <div id="schedule-list" class="space-y-3">
+          <!-- Rendered by app.js -->
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 5. SECCIÓN VENTA ROPA Y SUPLEMENTOS ================= -->
+  <section id="tienda" class="py-20 bg-slate-950/80 border-t border-slate-900 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div>
+          <span class="text-xs font-extrabold uppercase tracking-widest text-lime-400 bg-lime-500/10 border border-lime-500/20 px-3.5 py-1.5 rounded-full">
+            TIENDA OFICIAL CAF ANSERMA
+          </span>
+          <h2 class="text-3xl sm:text-5xl font-black text-white mt-4 uppercase tracking-tight">
+            ROPA DEPORTIVA Y SUPLEMENTOS
+          </h2>
+          <p class="text-slate-400 text-sm sm:text-base mt-2 max-w-xl">
+            Proteínas, creatinas, pre-entrenos y las prendas oficiales con diseño exclusivo del Centro de Entrenamiento Víctor Zamorano.
+          </p>
+        </div>
+
+        <!-- Search and Filter Bar -->
+        <div class="flex flex-col sm:flex-row gap-3">
+          <div class="relative">
+            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+            <input id="store-search" type="text" placeholder="Buscar producto..." class="bg-slate-900 border border-slate-800 text-white text-xs rounded-xl pl-9 pr-4 py-2.5 focus:outline-none focus:border-lime-500 w-full sm:w-56">
+          </div>
+          <div class="flex gap-1.5">
+            <button data-category="todos" class="store-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-lime-500 text-black">Todos</button>
+            <button data-category="suplementos" class="store-filter-btn px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300">Suplementos</button>
+            <button data-category="ropa" class="store-filter-btn px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300">Ropa</button>
+            <button data-category="accesorios" class="store-filter-btn px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300">Accesorios</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Store Products Grid -->
+      <div id="store-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Rendered by app.js -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= SHOPPING CART DRAWER ================= -->
+  <div id="cart-overlay" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden transition-opacity"></div>
+  <aside id="cart-drawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-slate-950 border-l border-slate-800 z-50 p-6 flex flex-col justify-between transform translate-x-full transition-transform duration-300">
+    <div>
+      <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-bag-shopping text-lime-400 text-xl"></i>
+          <h3 class="text-lg font-black text-white">TU CARRITO DE COMPRAS</h3>
+        </div>
+        <button id="close-cart-btn" class="text-slate-400 hover:text-white">
+          <i class="fa-solid fa-xmark text-xl"></i>
+        </button>
+      </div>
+
+      <!-- Cart Items List -->
+      <div id="cart-items-container" class="mt-6 space-y-3 max-h-[60vh] overflow-y-auto pr-1">
+        <!-- Injected dynamically -->
+      </div>
+    </div>
+
+    <!-- Cart Footer -->
+    <div class="pt-4 border-t border-slate-800 space-y-4">
+      <div class="flex items-center justify-between">
+        <span class="text-slate-400 text-sm">Total Estimado:</span>
+        <span id="cart-total-amount" class="text-2xl font-black text-lime-400">$0</span>
+      </div>
+      <p class="text-[11px] text-slate-500 leading-tight">
+        * Entregas en Anserma Caldas o recogida inmediata en el Piso 2 de la Carrera 5 # 22-32.
+      </p>
+      <button id="cart-checkout-whatsapp" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-black text-sm rounded-xl shadow-xl flex items-center justify-center gap-2 transition">
+        <i class="fa-brands fa-whatsapp text-lg"></i>
+        <span>HACER PEDIDO POR WHATSAPP</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ================= 6. PLANES Y TARIFAS (INVESTIGACIÓN COMPLETA) ================= -->
+  <section id="planes" class="py-20 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="text-xs font-extrabold uppercase tracking-widest text-lime-400 bg-lime-500/10 border border-lime-500/20 px-3.5 py-1.5 rounded-full">
+          TARIFAS Y MENSUALIDADES
+        </span>
+        <h2 class="text-3xl sm:text-5xl font-black text-white mt-4 uppercase tracking-tight">
+          PLANES DISEÑADOS PARA TI
+        </h2>
+        <p class="text-slate-400 text-sm sm:text-base mt-3">
+          Tarifas subsidiadas gracias a nuestro convenio con <strong>Confa Caldas</strong>, planes particulares, tiqueteras por días y nuestro solicitado <strong>Plan Pareja CAF</strong>.
+        </p>
+      </div>
+
+      <!-- Plans Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        
+        <!-- Plan 1: Confa Categoría A (Estrella) -->
+        <div class="bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-lime-500 rounded-3xl p-6 sm:p-7 relative flex flex-col justify-between shadow-2xl shadow-lime-500/10">
+          <span class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-lime-500 text-black text-[11px] font-black uppercase px-4 py-1 rounded-full shadow-md">
+            MÁS POPULAR · CONFA
+          </span>
+          <div>
+            <span class="text-xs font-bold text-lime-400 uppercase tracking-wider">Convenio Confa</span>
+            <h3 class="text-2xl font-black text-white mt-1">Categoría A</h3>
+            <p class="text-xs text-slate-400 mt-1">Afiliados con ingresos de hasta 2 salarios mínimos (SMMLV).</p>
+            
+            <div class="my-6">
+              <span class="text-3xl sm:text-4xl font-black text-lime-400">$55.000</span>
+              <span class="text-xs text-slate-400 block mt-1">COP / Mes completo</span>
+            </div>
+
+            <ul class="space-y-2.5 text-xs text-slate-300 border-t border-slate-800 pt-5">
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-lime-400"></i> Acceso total a sala de musculación</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-lime-400"></i> Zona de CrossFit y Calistenia</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-lime-400"></i> Clases de Rumbaterapia incluidas</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-lime-400"></i> Asesoría de instructores en sala</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-lime-400"></i> Subsidio de más del 55% de la tarifa</li>
+            </ul>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-800">
+            <a href="https://wa.me/573100000000?text=Hola%20CAF%20Anserma,%20quiero%20inscribirme%20en%20el%20Plan%20Confa%20Categoría%20A%20($55.000)." target="_blank" class="w-full py-3 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-xs rounded-xl shadow-md text-center block transition">
+              Elegir Categoría A
+            </a>
+          </div>
+        </div>
+
+        <!-- Plan 2: Confa Categoría B y C -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-7 flex flex-col justify-between hover:border-slate-700 transition">
+          <div>
+            <span class="text-xs font-bold text-cyan-400 uppercase tracking-wider">Convenio Confa</span>
+            <h3 class="text-2xl font-black text-white mt-1">Categoría B & C</h3>
+            <p class="text-xs text-slate-400 mt-1">Trabajadores afiliados con ingresos medianos y superiores.</p>
+            
+            <div class="my-6">
+              <div class="flex justify-between items-baseline">
+                <span class="text-xs text-slate-400">Cat B (2-4 SMMLV):</span>
+                <span class="text-xl font-black text-white">$80.000 <span class="text-xs font-normal text-slate-400">COP</span></span>
+              </div>
+              <div class="flex justify-between items-baseline mt-2 pt-2 border-t border-slate-800">
+                <span class="text-xs text-slate-400">Cat C (&gt;4 SMMLV):</span>
+                <span class="text-xl font-black text-white">$119.000 <span class="text-xs font-normal text-slate-400">COP</span></span>
+              </div>
+            </div>
+
+            <ul class="space-y-2.5 text-xs text-slate-300 border-t border-slate-800 pt-5">
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Acceso ilimitado a todas las áreas</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Clases grupales y Rumbaterapia</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Rutina guiada personalizada</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Planes fin de semana desde $15.000</li>
+            </ul>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-800">
+            <a href="https://wa.me/573100000000?text=Hola%20CAF%20Anserma,%20quiero%20inscribirme%20en%20el%20Plan%20Confa%20Categoría%20B%20o%20C." target="_blank" class="w-full py-3 bg-slate-800 hover:bg-slate-700 text-white font-extrabold text-xs rounded-xl text-center block transition">
+              Elegir Cat B / C
+            </a>
+          </div>
+        </div>
+
+        <!-- Plan 3: Plan Pareja Dúo -->
+        <div class="bg-gradient-to-b from-slate-900 to-slate-950 border border-orange-500/40 rounded-3xl p-6 sm:p-7 relative flex flex-col justify-between hover:border-orange-500 transition shadow-lg">
+          <span class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-orange-500 text-black text-[11px] font-black uppercase px-3 py-1 rounded-full shadow-md">
+            ENTRENA DE A DOS
+          </span>
+          <div>
+            <span class="text-xs font-bold text-orange-400 uppercase tracking-wider">Especial Parejas / Amigos</span>
+            <h3 class="text-2xl font-black text-white mt-1">Plan Pareja CAF</h3>
+            <p class="text-xs text-slate-400 mt-1">Dos personas entrenando juntas bajo el mismo horario o independiente.</p>
+            
+            <div class="my-6">
+              <span class="text-3xl sm:text-4xl font-black text-orange-400">$220.000</span>
+              <span class="text-xs text-slate-400 block mt-1">COP / 2 Personas ($110.000 c/u)</span>
+            </div>
+
+            <ul class="space-y-2.5 text-xs text-slate-300 border-t border-slate-800 pt-5">
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-orange-400"></i> Ahorro de $42.000 COP vs particular</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-orange-400"></i> Acceso 100% libre para ambos</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-orange-400"></i> Rutina sincronizada o individual</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-orange-400"></i> Incluye todas las clases grupales</li>
+            </ul>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-800">
+            <a href="https://wa.me/573100000000?text=Hola%20CAF%20Anserma,%20deseo%20activar%20el%20Plan%20Pareja%20CAF%20para%202%20personas." target="_blank" class="w-full py-3 bg-orange-500 hover:bg-orange-400 text-black font-extrabold text-xs rounded-xl shadow-md text-center block transition">
+              Elegir Plan Pareja
+            </a>
+          </div>
+        </div>
+
+        <!-- Plan 4: Particular y Por Días / Tiquetera -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-7 flex flex-col justify-between hover:border-slate-700 transition">
+          <div>
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">No Afiliados & Flexibles</span>
+            <h3 class="text-2xl font-black text-white mt-1">Particular & Días</h3>
+            <p class="text-xs text-slate-400 mt-1">Para personas no afiliadas a Confa o con tiempos variables.</p>
+            
+            <div class="my-6">
+              <div class="flex justify-between items-baseline">
+                <span class="text-xs text-slate-400">Mensualidad Particular:</span>
+                <span class="text-lg font-black text-white">$131.000</span>
+              </div>
+              <div class="flex justify-between items-baseline mt-2 pt-2 border-t border-slate-800">
+                <span class="text-xs text-slate-400">Tiquetera 12 Días:</span>
+                <span class="text-lg font-black text-lime-400">$75.000</span>
+              </div>
+              <div class="flex justify-between items-baseline mt-2 pt-2 border-t border-slate-800">
+                <span class="text-xs text-slate-400">Pase por Día:</span>
+                <span class="text-sm font-black text-slate-300">$10.000 COP</span>
+              </div>
+            </div>
+
+            <ul class="space-y-2.5 text-xs text-slate-300 border-t border-slate-800 pt-5">
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-slate-400"></i> Sin contratos de permanencia</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-slate-400"></i> Tiquetera válida por 60 días</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-check text-slate-400"></i> Descuentos en planes trimestrales</li>
+            </ul>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-800">
+            <a href="https://wa.me/573100000000?text=Hola%20CAF%20Anserma,%20quiero%20información%20sobre%20el%20Plan%20Particular%20o%20Tiquetera%20por%20días." target="_blank" class="w-full py-3 bg-slate-800 hover:bg-slate-700 text-white font-extrabold text-xs rounded-xl text-center block transition">
+              Elegir Particular / Día
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Confa Calculator Box -->
+      <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-lime-500/20 max-w-3xl mx-auto text-center">
+        <h4 class="text-xl font-black text-white">Calculadora Rápida de Ahorro Confa</h4>
+        <p class="text-xs text-slate-400 mt-1 mb-5">Comprueba tu tarifa mensual de acuerdo a tu categoría laboral:</p>
+        
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-lg mx-auto">
+          <select id="confa-cat-select" class="w-full sm:w-2/3 bg-slate-900 border border-slate-700 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-lime-500">
+            <option value="A">Categoría A (Hasta 2 SMMLV)</option>
+            <option value="B">Categoría B (Entre 2 y 4 SMMLV)</option>
+            <option value="C">Categoría C (Más de 4 SMMLV)</option>
+            <option value="particular">Particular (No afiliado a Confa)</option>
+          </select>
+          <div class="bg-black/40 border border-slate-800 rounded-xl px-6 py-2.5 text-center w-full sm:w-auto">
+            <span class="text-[10px] text-slate-400 block uppercase">Tu Valor:</span>
+            <span id="confa-calc-price" class="text-xl font-black text-lime-400">$55.000 COP</span>
+          </div>
+        </div>
+        <p id="confa-calc-discount" class="text-xs text-emerald-400 font-bold mt-3">Ahorras $76.000 COP vs Particular</p>
+        <p id="confa-calc-desc" class="text-[11px] text-slate-400 mt-1 max-w-md mx-auto">Subsidio máximo para trabajadores con ingresos menores o iguales a 2 salarios mínimos (SMMLV).</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 9. SECCIÓN CONVENIOS (CONVENIO CONFA) ================= -->
+  <section id="convenios" class="py-20 bg-slate-950/80 border-t border-slate-900 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        
+        <div>
+          <span class="text-xs font-extrabold uppercase tracking-widest text-lime-400 bg-lime-500/10 border border-lime-500/20 px-3.5 py-1.5 rounded-full">
+            ALIANZA OFICIAL EN ANSERMA
+          </span>
+          <h2 class="text-3xl sm:text-5xl font-black text-white mt-4 uppercase tracking-tight">
+            CONVENIO CONFA & CAF VÍCTOR ZAMORANO
+          </h2>
+          <p class="text-slate-300 text-sm sm:text-base mt-4 leading-relaxed">
+            El <strong>CAF Anserma Caldas</strong> cuenta con una alianza estratégica con <strong>Confa (Caja de Compensación Familiar de Caldas)</strong> para garantizar que el acondicionamiento físico, la salud y el deporte de alto nivel sean accesibles para todos los trabajadores afiliados y sus familias.
+          </p>
+
+          <div class="space-y-4 mt-8">
+            <div class="flex items-start gap-3 bg-slate-900/80 border border-slate-800 p-4 rounded-2xl">
+              <div class="w-8 h-8 rounded-xl bg-lime-500/10 text-lime-400 flex items-center justify-center shrink-0 mt-0.5">
+                <i class="fa-solid fa-id-card"></i>
+              </div>
+              <div>
+                <h4 class="text-white font-bold text-sm">¿Cómo acceder al beneficio?</h4>
+                <p class="text-xs text-slate-400 mt-1">Solo necesitas presentar tu documento de identidad en nuestra sede de la Cra 5 # 22-32. En recepción verificamos tu estado de afiliación a Confa en tiempo real.</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3 bg-slate-900/80 border border-slate-800 p-4 rounded-2xl">
+              <div class="w-8 h-8 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center shrink-0 mt-0.5">
+                <i class="fa-solid fa-shield-heart"></i>
+              </div>
+              <div>
+                <h4 class="text-white font-bold text-sm">Cobertura Integral</h4>
+                <p class="text-xs text-slate-400 mt-1">Aplica tanto para planes mensuales regulares como para planes de fin de semana (desde $15.000 a $44.000 COP) y programas de reducción de peso.</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3 bg-slate-900/80 border border-slate-800 p-4 rounded-2xl">
+              <div class="w-8 h-8 rounded-xl bg-orange-500/10 text-orange-400 flex items-center justify-center shrink-0 mt-0.5">
+                <i class="fa-solid fa-users"></i>
+              </div>
+              <div>
+                <h4 class="text-white font-bold text-sm">Beneficio para Beneficiarios</h4>
+                <p class="text-xs text-slate-400 mt-1">Los hijos y cónyuges afiliados como beneficiarios también disfrutan de la categoría que les corresponda.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Confa Category Table Card -->
+        <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-lime-500/30 shadow-2xl relative">
+          <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
+            <div>
+              <span class="text-xs text-lime-400 font-bold uppercase">Tarifario de Referencia</span>
+              <h3 class="text-xl font-black text-white">Tarifas Subsidiadas Confa</h3>
+            </div>
+            <span class="w-10 h-10 rounded-xl bg-lime-500/20 text-lime-400 flex items-center justify-center text-lg">
+              <i class="fa-solid fa-tags"></i>
+            </span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs sm:text-sm">
+              <thead>
+                <tr class="text-slate-400 border-b border-slate-800">
+                  <th class="pb-3 font-semibold">Categoría</th>
+                  <th class="pb-3 font-semibold">Rango Salarial</th>
+                  <th class="pb-3 font-semibold text-right">Mensualidad</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800/60">
+                <tr class="hover:bg-slate-900/50">
+                  <td class="py-3 font-extrabold text-lime-400">Categoría A</td>
+                  <td class="py-3 text-slate-300">Hasta 2 SMMLV</td>
+                  <td class="py-3 text-right font-black text-white">$55.000 COP</td>
+                </tr>
+                <tr class="hover:bg-slate-900/50">
+                  <td class="py-3 font-extrabold text-cyan-400">Categoría B</td>
+                  <td class="py-3 text-slate-300">Entre 2 y 4 SMMLV</td>
+                  <td class="py-3 text-right font-black text-white">$80.000 COP</td>
+                </tr>
+                <tr class="hover:bg-slate-900/50">
+                  <td class="py-3 font-extrabold text-amber-400">Categoría C</td>
+                  <td class="py-3 text-slate-300">Más de 4 SMMLV</td>
+                  <td class="py-3 text-right font-black text-white">$119.000 COP</td>
+                </tr>
+                <tr class="hover:bg-slate-900/50">
+                  <td class="py-3 font-extrabold text-slate-400">Particular</td>
+                  <td class="py-3 text-slate-400">No afiliado</td>
+                  <td class="py-3 text-right font-black text-slate-300">$131.000 COP</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="mt-6 pt-5 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <span class="text-xs text-slate-400">¿Dudas sobre tu categoría actual?</span>
+            <a href="https://wa.me/573100000000?text=Hola%20CAF%20Anserma,%20quiero%20consultar%20mi%20categoría%20Confa%20para%20inscribirme." target="_blank" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl flex items-center gap-1.5 transition">
+              <i class="fa-brands fa-whatsapp"></i> Validar mi Cédula
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 7. CONTÁCTENOS & WHATSAPP ================= -->
+  <section id="contacto" class="py-20 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="text-xs font-extrabold uppercase tracking-widest text-lime-400 bg-lime-500/10 border border-lime-500/20 px-3.5 py-1.5 rounded-full">
+          ESTAMOS EN ANSERMA, CALDAS
+        </span>
+        <h2 class="text-3xl sm:text-5xl font-black text-white mt-4 uppercase tracking-tight">
+          CONTÁCTENOS Y VISÍTANOS
+        </h2>
+        <p class="text-slate-400 text-sm sm:text-base mt-3">
+          Resuelve tus inquietudes de inmediato a través de WhatsApp o visítanos en nuestro segundo piso sobre la Avenida Libertador.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        
+        <!-- Info & WhatsApp Action Card -->
+        <div class="space-y-6">
+          <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-6">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 rounded-2xl bg-lime-500/10 border border-lime-500/20 text-lime-400 flex items-center justify-center text-xl shrink-0">
+                <i class="fa-solid fa-location-dot"></i>
+              </div>
+              <div>
+                <h4 class="text-white font-extrabold text-base">Dirección Sede Principal</h4>
+                <p class="text-xs sm:text-sm text-slate-300 mt-1">Piso 2 de la Carrera 5 # 22 - 32 (Avenida Libertador)</p>
+                <p class="text-xs text-lime-400 font-semibold mt-0.5">Anserma, Caldas, Colombia</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4 border-t border-slate-800 pt-6">
+              <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl shrink-0">
+                <i class="fa-brands fa-whatsapp"></i>
+              </div>
+              <div>
+                <h4 class="text-white font-extrabold text-base">Atención WhatsApp</h4>
+                <p class="text-xs sm:text-sm text-slate-300 mt-1">Consultas rápidas, reservas de clases y planes Confa.</p>
+                <a href="https://wa.me/573100000000?text=Hola%20CAF%20Anserma,%20quiero%20más%20información%20sobre%20el%20gimnasio." target="_blank" class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-400 hover:text-emerald-300 mt-1">
+                  Escribir al WhatsApp (+57 310 000 0000) <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                </a>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4 border-t border-slate-800 pt-6">
+              <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center text-xl shrink-0">
+                <i class="fa-solid fa-clock"></i>
+              </div>
+              <div>
+                <h4 class="text-white font-extrabold text-base">Horario de Recepción</h4>
+                <p class="text-xs text-slate-300 mt-1">Lunes a Viernes: 5:00 AM – 12:00 PM y 2:00 PM – 9:30 PM</p>
+                <p class="text-xs text-slate-300">Sábados: 6:00 AM – 4:00 PM | Domingos: 7:00 AM – 1:00 PM</p>
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-slate-800">
+              <a href="https://wa.me/573100000000?text=Hola%20CAF%20Víctor%20Zamorano,%20quiero%20iniciar%20a%20entrenar." target="_blank" class="w-full py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-black text-sm rounded-2xl shadow-xl flex items-center justify-center gap-2 transition">
+                <i class="fa-brands fa-whatsapp text-xl"></i>
+                <span>CHATEAR CON UN ASESOR POR WHATSAPP</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Direct Message Form -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8">
+          <h3 class="text-xl font-black text-white uppercase mb-2">Envíanos un Mensaje</h3>
+          <p class="text-xs text-slate-400 mb-6">Completa tus datos y te redirigiremos a WhatsApp con tu solicitud pre-diligenciada.</p>
+          
+          <form id="contact-gym-form" class="space-y-4">
+            <div>
+              <label for="contact-name" class="block text-xs font-bold text-slate-300 uppercase mb-1">Nombre Completo:</label>
+              <input id="contact-name" type="text" required placeholder="Ej: Marcela Gómez" class="w-full bg-slate-950 border border-slate-800 text-white rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-lime-500">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="contact-phone" class="block text-xs font-bold text-slate-300 uppercase mb-1">Teléfono / WhatsApp:</label>
+                <input id="contact-phone" type="tel" required placeholder="Ej: 310 123 4567" class="w-full bg-slate-950 border border-slate-800 text-white rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-lime-500">
+              </div>
+              <div>
+                <label for="contact-confa" class="block text-xs font-bold text-slate-300 uppercase mb-1">Afiliación Confa:</label>
+                <select id="contact-confa" class="w-full bg-slate-950 border border-slate-800 text-white rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-lime-500">
+                  <option value="Confa Categoría A">Confa Categoría A</option>
+                  <option value="Confa Categoría B">Confa Categoría B</option>
+                  <option value="Confa Categoría C">Confa Categoría C</option>
+                  <option value="Particular">Particular (No afiliado)</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label for="contact-plan" class="block text-xs font-bold text-slate-300 uppercase mb-1">Plan de Interés:</label>
+              <select id="contact-plan" class="w-full bg-slate-950 border border-slate-800 text-white rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-lime-500">
+                <option value="Mensualidad General">Mensualidad General</option>
+                <option value="Plan Pareja CAF">Plan Pareja CAF ($220.000)</option>
+                <option value="Plan Fin de Semana Confa">Plan Fin de Semana Confa</option>
+                <option value="Tiquetera por días">Tiquetera por días</option>
+                <option value="Clases de Rumbaterapia o Krav Maga">Clases de Rumbaterapia o Krav Maga</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="contact-message" class="block text-xs font-bold text-slate-300 uppercase mb-1">Mensaje o pregunta:</label>
+              <textarea id="contact-message" rows="3" placeholder="Quisiera saber sobre los métodos de pago y disponibilidad para comenzar esta semana..." class="w-full bg-slate-950 border border-slate-800 text-white rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-lime-500"></textarea>
+            </div>
+
+            <button type="submit" class="w-full py-3.5 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-sm rounded-xl shadow-lg transition flex items-center justify-center gap-2">
+              <i class="fa-solid fa-paper-plane"></i>
+              <span>ENVIAR MENSAJE AHORA</span>
+            </button>
+          </form>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-black border-t border-slate-800/80 py-12 text-slate-400 text-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+        
+        <div class="space-y-3">
+          <div class="flex items-center gap-2">
+            <span class="w-8 h-8 rounded-lg bg-lime-500 text-black font-black flex items-center justify-center text-sm">CAF</span>
+            <span class="text-white font-extrabold text-sm">CAF ANSERMA CALDAS</span>
+          </div>
+          <p class="text-slate-400 leading-relaxed">
+            Centro de Acondicionamiento Físico & Centro de Entrenamiento Víctor Zamorano. Comprometidos con tu bienestar físico y mental.
+          </p>
+          <p class="text-slate-500">Carrera 5 # 22-32 Piso 2, Anserma, Caldas.</p>
+        </div>
+
+        <div>
+          <h4 class="text-white font-bold text-sm mb-3">Navegación</h4>
+          <ul class="space-y-2">
+            <li><a href="#inicio" class="hover:text-lime-400 transition">Inicio & Banners</a></li>
+            <li><a href="#galeria" class="hover:text-lime-400 transition">Galería Fotográfica</a></li>
+            <li><a href="#rutina" class="hover:text-lime-400 transition">Generador de Rutinas</a></li>
+            <li><a href="#horarios" class="hover:text-lime-400 transition">Horarios y Clases</a></li>
+            <li><a href="#tienda" class="hover:text-lime-400 transition">Tienda de Suplementos</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-white font-bold text-sm mb-3">Planes & Alianzas</h4>
+          <ul class="space-y-2">
+            <li><a href="#convenios" class="hover:text-lime-400 transition">Convenio Confa Caldas</a></li>
+            <li><a href="#planes" class="hover:text-lime-400 transition">Plan Pareja Dúo</a></li>
+            <li><a href="#planes" class="hover:text-lime-400 transition">Tiquetera por Días</a></li>
+            <li><a href="dashboard.html" class="hover:text-lime-400 transition">Portal de Socio / Pagos</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-white font-bold text-sm mb-3">Acceso Socios</h4>
+          <p class="text-slate-400 mb-3">Monitorea tu peso, consulta tu saldo y accede a tu rutina desde el panel de control.</p>
+          <a href="dashboard.html" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white font-bold hover:border-lime-500 transition">
+            <i class="fa-solid fa-arrow-right-to-bracket text-lime-400"></i>
+            <span>Ir a Mi Dashboard</span>
+          </a>
+        </div>
+
+      </div>
+
+      <div class="pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p>© 2026 CAF Anserma Caldas - Centro de Entrenamiento Víctor Zamorano. Todos los derechos reservados.</p>
+        <p class="text-slate-500">Preparado para despliegue en GitHub Pages.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= FLOATING WHATSAPP BUTTON ================= -->
+  <a href="https://wa.me/573100000000?text=Hola%20CAF%20Anserma,%20quisiera%20más%20información%20sobre%20los%20planes%20y%20el%20convenio%20Confa." target="_blank" class="whatsapp-float flex items-center justify-center w-14 h-14 bg-emerald-500 hover:bg-emerald-400 text-white rounded-full text-2xl" title="Preguntar por WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- Main JavaScript File -->
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

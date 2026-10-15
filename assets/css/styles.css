@@ -1,0 +1,192 @@
+/* CAF - Centro de Acondicionamiento Físico & Centro de Entrenamiento Víctor Zamorano */
+/* Anserma, Caldas */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Teko:wght@500;600;700&display=swap');
+
+:root {
+  --caf-dark: #090d16;
+  --caf-dark-card: #111827;
+  --caf-dark-card-border: rgba(255, 255, 255, 0.08);
+  --caf-primary: #84cc16; /* Energetic lime */
+  --caf-primary-glow: rgba(132, 204, 22, 0.35);
+  --caf-secondary: #f97316; /* Energetic orange */
+  --caf-cyan: #06b6d4;
+  --caf-text: #f3f4f6;
+  --caf-muted: #9ca3af;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: var(--caf-dark);
+  color: var(--caf-text);
+  overflow-x: hidden;
+}
+
+.font-heading {
+  font-family: 'Teko', sans-serif;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0b0f19;
+}
+::-webkit-scrollbar-thumb {
+  background: #374151;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--caf-primary);
+}
+
+/* Glassmorphism */
+.glass-panel {
+  background: rgba(17, 24, 39, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--caf-dark-card-border);
+}
+
+.glass-nav {
+  background: rgba(9, 13, 22, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Glowing effects */
+.glow-lime {
+  box-shadow: 0 0 25px -5px var(--caf-primary-glow);
+}
+.glow-orange {
+  box-shadow: 0 0 25px -5px rgba(249, 115, 22, 0.35);
+}
+
+/* Banner Slider transitions */
+.slider-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out, transform 0.8s ease-out;
+  transform: scale(1.03);
+  pointer-events: none;
+}
+
+.slide.active {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+  position: relative;
+}
+
+/* Gallery Hover & Lightbox */
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gallery-item img {
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.gallery-item:hover img {
+  transform: scale(1.08);
+}
+
+.gallery-overlay {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.gallery-item:hover .gallery-overlay {
+  opacity: 1;
+}
+
+/* Pulse animation for live status */
+@keyframes pulse-dot {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(34, 197, 94, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  }
+}
+
+.live-pulse {
+  animation: pulse-dot 2s infinite;
+}
+
+/* WhatsApp floating button */
+.whatsapp-float {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 999;
+  box-shadow: 0 10px 25px -5px rgba(37, 211, 102, 0.5);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.08) translateY(-4px);
+  box-shadow: 0 15px 30px -5px rgba(37, 211, 102, 0.7);
+}
+
+/* Cart badge badge */
+.badge-count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  font-size: 0.7rem;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  font-weight: 700;
+}
+
+/* Custom Checkbox */
+.custom-checkbox:checked {
+  background-color: var(--caf-primary);
+  border-color: var(--caf-primary);
+}
+
+/* Responsive grid adjustments */
+@media (max-width: 768px) {
+  .hero-slide-height {
+    min-height: 520px;
+  }
+}
+@media (min-width: 769px) {
+  .hero-slide-height {
+    min-height: 640px;
+  }
+}
