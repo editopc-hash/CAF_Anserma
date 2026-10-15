@@ -1312,6 +1312,7 @@ function initLoginModal() {
             membershipStatus: "Activo (Al día)"
           };
         }
+        localStorage.setItem('caf_session_active', 'true');
         localStorage.setItem('caf_current_user', JSON.stringify(demoUser));
         window.location.href = 'dashboard.html';
         return;
@@ -1436,6 +1437,7 @@ function initLoginModal() {
           ]
         }
       };
+      localStorage.setItem('caf_session_active', 'true');
       localStorage.setItem('caf_current_user', JSON.stringify(demoUser));
       window.location.href = 'dashboard.html';
     });
@@ -1471,15 +1473,25 @@ function initMobileMenu() {
 }
 
 function updateUserNavBadge() {
-  const user = JSON.parse(localStorage.getItem('caf_current_user') || 'null');
+  const isSessionActive = localStorage.getItem('caf_session_active') === 'true';
   const authBtn = document.getElementById('nav-auth-btn');
   if (!authBtn) return;
 
-  if (user) {
-    authBtn.innerHTML = `
-      <i class="fa-solid fa-user-check text-lime-400"></i>
-      <span class="hidden sm:inline">${user.name.split(' ')[0]}</span>
-      <span class="sm:hidden">Mi Cuenta</span>
-    `;
+  if (isSessionActive) {
+    const user = JSON.parse(localStorage.getItem('caf_current_user') || 'null');
+    if (user) {
+      authBtn.innerHTML = `
+        <i class="fa-solid fa-user-check text-lime-400"></i>
+        <span>${user.name.split(' ')[0]}</span>
+      `;
+      authBtn.onclick = () => { window.location.href = 'dashboard.html'; };
+      return;
+    }
   }
+
+  // Estado por defecto: No autenticado
+  authBtn.innerHTML = `
+    <i class="fa-regular fa-user text-sm"></i>
+    <span>Mi Cuenta</span>
+  `;
 }

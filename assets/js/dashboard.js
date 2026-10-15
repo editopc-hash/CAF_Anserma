@@ -115,15 +115,17 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initUserSession() {
-  const stored = localStorage.getItem('caf_current_user');
-  if (stored) {
+  const isSessionActive = localStorage.getItem('caf_session_active') === 'true';
+  if (isSessionActive) {
+    const stored = localStorage.getItem('caf_current_user');
     try {
       currentUser = JSON.parse(stored);
     } catch (e) {
       currentUser = null;
     }
   } else {
-    currentUser = null; // No iniciar sesión por defecto
+    currentUser = null;
+    localStorage.removeItem('caf_current_user');
   }
 
   // Check if we are on dashboard.html
@@ -148,6 +150,7 @@ function checkDashboardAuth() {
 }
 
 window.loginAsDemoSocio = function() {
+  localStorage.setItem('caf_session_active', 'true');
   currentUser = { ...DEFAULT_USER };
   localStorage.setItem('caf_current_user', JSON.stringify(currentUser));
   checkDashboardAuth();
