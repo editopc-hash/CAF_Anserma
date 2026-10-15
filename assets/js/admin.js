@@ -155,14 +155,14 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id: 10,
-    name: "Straps de Agarre + Muñequeras Pro",
+    name: "Guantes de Entrenamiento + Straps de Agarre",
     category: "accesorios",
     price: 38000,
-    desc: "Aumenta tus cargas en peso muerto y remos sin comprometer el agarre. Algodón reforzado.",
-    badge: "Levantamiento",
+    desc: "Aumenta tus cargas en peso muerto y remos con protección palmar antiampollas y soporte de muñeca.",
+    badge: "Protección",
     icon: "fa-solid fa-hand-fist",
     color: "from-amber-600 to-yellow-700",
-    image: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80",
+    image: "assets/images/tienda/guantes.png",
     status: "disponible"
   }
 ];
@@ -833,15 +833,16 @@ function initAdminLogin() {
     const u = document.getElementById('admin-user-input')?.value.trim();
     const p = document.getElementById('admin-pass-input')?.value.trim();
 
-    if (u === '123456' && p === '123456') {
+    if (u === '123456' && p === 'cristal') {
       localStorage.setItem('caf_admin_logged', 'true');
       if (errorMsg) errorMsg.classList.add('hidden');
       checkAdminAuth();
-      renderAllAdminSections();
+      initAdminApp();
+      showAdminToast("¡Bienvenido al Panel de Control de CAF!");
     } else {
       if (errorMsg) {
         errorMsg.classList.remove('hidden');
-        errorMsg.textContent = "Usuario o contraseña incorrectos. Usa 123456 / 123456";
+        errorMsg.textContent = "Usuario o contraseña incorrectos. Usa 123456 / cristal";
       }
     }
   });
@@ -857,6 +858,68 @@ function initAdminLogin() {
   }
 }
 
+// Client-side image compression utility via HTML5 Canvas
+function compressImage(file, maxWidth, maxHeight, quality, callback) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = new Image();
+    img.onload = function() {
+      const canvas = document.createElement('canvas');
+      let w = img.width;
+      let h = img.height;
+      if (w > maxWidth || h > maxHeight) {
+        const ratio = Math.min(maxWidth / w, maxHeight / h);
+        w = Math.round(w * ratio);
+        h = Math.round(h * ratio);
+      }
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, w, h);
+      const dataUrl = canvas.toDataURL('image/jpeg', quality || 0.85);
+      callback(dataUrl);
+    };
+    img.onerror = function() {
+      callback(e.target.result);
+    };
+    img.src = e.target.result;
+  };
+  reader.onerror = function() {
+    alert("Error al leer el archivo de imagen.");
+  };
+  reader.readAsDataURL(file);
+}
+
+// Safe storage writing with quota guard
+function safeSave(key, data) {
+  try {
+    localStorage.setItem(key, typeof data === 'string' ? data : JSON.stringify(data));
+    return true;
+  } catch (e) {
+    console.warn("Storage quota exceeded for " + key, e);
+    alert("Atención: El almacenamiento local está lleno. Intenta con una imagen más liviana.");
+    return false;
+  }
+}
+
+// Floating Toast Notification
+function showAdminToast(msg) {
+  let toast = document.getElementById('admin-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'admin-toast';
+    toast.className = 'fixed bottom-6 right-6 z-50 bg-lime-500 text-black font-extrabold text-xs px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-2 transform transition-all duration-300 pointer-events-none opacity-0 translate-y-4';
+    document.body.appendChild(toast);
+  }
+  toast.innerHTML = `<i class="fa-solid fa-circle-check text-base"></i><span>${msg}</span>`;
+  toast.classList.remove('opacity-0', 'translate-y-4');
+  clearTimeout(window._adminToastTimeout);
+  window._adminToastTimeout = setTimeout(() => {
+    toast.classList.add('opacity-0', 'translate-y-4');
+  }, 3000);
+}
+
 // ==========================================
 // 3. STORAGE GETTERS & SETTERS
 // ==========================================
@@ -866,12 +929,12 @@ function getBanners() {
   if (data) {
     try { return JSON.parse(data); } catch (e) { }
   }
-  localStorage.setItem('caf_banners', JSON.stringify(DEFAULT_BANNERS));
+  safeSave('caf_banners', DEFAULT_BANNERS);
   return DEFAULT_BANNERS;
 }
 
 function saveBanners(banners) {
-  localStorage.setItem('caf_banners', JSON.stringify(banners));
+  safeSave('caf_banners', banners);
 }
 
 function getProducts() {
@@ -895,7 +958,98 @@ function getProducts() {
 }
 
 function saveProducts(products) {
-  localStorage.setItem('caf_products', JSON.stringify(products));
+  safeSave('caf_products', products);
+}
+
+const DEFAULT_GALLERY = [
+  {
+    id: 1,
+    title: "Plan Pareja y Motivación",
+    category: "pareja",
+    categoryLabel: "Plan Pareja",
+    desc: "Entrenar en pareja multiplica los resultados. En CAF Anserma diseñamos planes a la medida para dos.",
+    image: "assets/images/galeria/galeria-1.jpg",
+    enabled: true
+  },
+  {
+    id: 2,
+    title: "Área de CrossFit & Entrenamiento Funcional",
+    category: "funcional",
+    categoryLabel: "CrossFit & Funcional",
+    desc: "Zona industrial equipada para entrenamientos de alta intensidad, fuerza y resistencia metabólica.",
+    image: "assets/images/galeria/galeria-2.jpg",
+    enabled: true
+  },
+  {
+    id: 3,
+    title: "Zona de Calistenia & Peso Corporal",
+    category: "funcional",
+    categoryLabel: "Calistenia",
+    desc: "Barras, anillas y estructuras especializadas para dominar el control y fuerza corporal.",
+    image: "assets/images/galeria/galeria-3.jpg",
+    enabled: true
+  },
+  {
+    id: 4,
+    title: "Sala de Halterofilia & Levantamiento de Pesas",
+    category: "musculacion",
+    categoryLabel: "Pesas Libres",
+    desc: "Plataformas de levantamiento, barras olímpicas y discos bumpers para desarrollo de potencia.",
+    image: "assets/images/galeria/galeria-4.jpg",
+    enabled: true
+  },
+  {
+    id: 5,
+    title: "Estudio de Rumbaterapia & Clases Grupales",
+    category: "clases",
+    categoryLabel: "Rumbaterapia",
+    desc: "Ritmo, diversión y quema calórica con los mejores instructores en un ambiente con luces y energía.",
+    image: "assets/images/galeria/galeria-5.jpg",
+    enabled: true
+  },
+  {
+    id: 6,
+    title: "Musculación e Hipertrofia Dirigida",
+    category: "musculacion",
+    categoryLabel: "Musculación",
+    desc: "Mancuernas de todos los pesos y máquinas guiadas para desarrollo muscular seguro y progresivo.",
+    image: "assets/images/galeria/galeria-6.jpg",
+    enabled: true
+  },
+  {
+    id: 7,
+    title: "Programas de Reducción de Peso y Salud Integral",
+    category: "salud",
+    categoryLabel: "Reducción de Peso",
+    desc: "Acompañamiento sin juzgar: planes amables y efectivos adaptados a personas de todas las edades y tallas.",
+    image: "assets/images/galeria/galeria-7.jpg",
+    enabled: true
+  },
+  {
+    id: 8,
+    title: "Zona Cardiovascular Moderna",
+    category: "salud",
+    categoryLabel: "Cardio & Salud",
+    desc: "Caminadoras de última generación, elípticas y bicicletas para acondicionamiento aeróbico.",
+    image: "assets/images/galeria/galeria-8.jpg",
+    enabled: true
+  }
+];
+
+function getGallery() {
+  const data = localStorage.getItem('caf_gallery');
+  if (data) {
+    try {
+      const parsed = JSON.parse(data);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    } catch (e) {}
+  }
+  safeSave('caf_gallery', DEFAULT_GALLERY);
+  return DEFAULT_GALLERY;
+}
+
+function saveGallery(gallery) {
+  safeSave('caf_gallery', gallery);
 }
 
 function getMembers() {
@@ -1306,7 +1460,7 @@ function renderBannersEditor() {
           <div>
             <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Imagen del Banner:</label>
             <div class="flex items-center gap-3">
-              <input type="text" id="banner-img-url-${b.id}" value="${b.image}" onchange="window.updateBannerField(${b.id}, 'image', this.value)" class="flex-1 bg-slate-950 border border-slate-800 text-white rounded-xl px-4 py-2.5 text-xs focus:border-lime-500">
+              <input type="text" id="banner-img-url-${b.id}" value="${b.image}" oninput="window.updateBannerFieldLive(${b.id}, 'image', this.value)" onchange="window.updateBannerField(${b.id}, 'image', this.value)" class="flex-1 bg-slate-950 border border-slate-800 text-white rounded-xl px-4 py-2.5 text-xs focus:border-lime-500">
               <label class="px-3.5 py-2.5 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold rounded-xl cursor-pointer transition flex items-center gap-1.5 shrink-0">
                 <i class="fa-solid fa-upload text-lime-400"></i> Subir Foto
                 <input type="file" accept="image/*" class="hidden" onchange="window.handleBannerImageUpload(${b.id}, this)">
@@ -1444,7 +1598,12 @@ window.updateBannerFieldLive = function(bannerId, field, value) {
   if (banner) {
     banner[field] = value;
     saveBanners(banners);
-    updateBannerPreviewDOM(banner);
+    if (field === 'image') {
+      const previewImg = document.getElementById(`banner-preview-img-${bannerId}`);
+      if (previewImg) previewImg.src = value;
+    } else {
+      updateBannerPreviewDOM(banner);
+    }
   }
 };
 
@@ -1537,23 +1696,28 @@ window.deleteBanner = function(bannerId) {
   renderBannersEditor();
 };
 
-// Handle file upload -> Base64
+// Handle banner file upload -> compressed Image with live preview
 window.handleBannerImageUpload = function(bannerId, inputEl) {
   if (inputEl.files && inputEl.files[0]) {
     const file = inputEl.files[0];
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const dataUrl = e.target.result;
+    compressImage(file, 1600, 900, 0.85, function(dataUrl) {
       const banners = getBanners();
       const banner = banners.find(b => b.id === bannerId);
       if (banner) {
         banner.image = dataUrl;
         saveBanners(banners);
-        renderBannersEditor();
-        alert("¡Imagen cargada exitosamente para el banner!");
+        
+        // Update live preview in real time
+        const previewImg = document.getElementById(`banner-preview-img-${bannerId}`);
+        if (previewImg) previewImg.src = dataUrl;
+
+        // Update image url input field
+        const txtInput = document.getElementById(`banner-img-url-${bannerId}`);
+        if (txtInput) txtInput.value = dataUrl;
+
+        showAdminToast("¡Imagen del banner actualizada en tiempo real!");
       }
-    };
-    reader.readAsDataURL(file);
+    });
   }
 };
 
@@ -1703,19 +1867,27 @@ window.deleteProduct = function(productId) {
   renderProductsEditor();
 };
 
-// Product Image Upload to Base64
+// Product Image Upload with canvas compression
 window.handleProductImageUpload = function(mode, inputEl) {
   if (inputEl.files && inputEl.files[0]) {
     const file = inputEl.files[0];
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const dataUrl = e.target.result;
+    compressImage(file, 800, 800, 0.82, function(dataUrl) {
       const input = document.getElementById(`${mode}-prod-image`);
       if (input) input.value = dataUrl;
       window.previewProductImageLive(mode, dataUrl);
-    };
-    reader.readAsDataURL(file);
+      showAdminToast("¡Foto de producto cargada y optimizada!");
+    });
   }
+};
+
+window.openAddProductModal = function() {
+  const addModal = document.getElementById('admin-product-add-modal');
+  const addForm = document.getElementById('admin-product-add-form');
+  if (addForm) addForm.reset();
+  const imgInput = document.getElementById('add-prod-image');
+  if (imgInput) imgInput.value = '';
+  window.previewProductImageLive('add', '');
+  if (addModal) addModal.classList.remove('hidden');
 };
 
 // Preview product image live
@@ -1814,11 +1986,7 @@ function initProductsForms() {
 
   if (addBtn && addModal) {
     addBtn.addEventListener('click', () => {
-      addForm.reset();
-      const imgInput = document.getElementById('add-prod-image');
-      if (imgInput) imgInput.value = '';
-      window.previewProductImageLive('add', '');
-      addModal.classList.remove('hidden');
+      window.openAddProductModal();
     });
   }
   if (closeAddBtn && addModal) {
@@ -1864,7 +2032,7 @@ function initProductsForms() {
       addForm.reset();
       window.previewProductImageLive('add', '');
       addModal.classList.add('hidden');
-      alert(`¡Producto "${name}" agregado con éxito a la tienda!`);
+      showAdminToast(`¡Producto "${name}" agregado con éxito a la tienda!`);
     });
   }
 }
@@ -2587,13 +2755,360 @@ window.renewMemberFromModal = function(memberId) {
 };
 
 // ==========================================
-// 9. GLOBAL RENDER & INIT
+// 9. GALLERY MANAGEMENT CONTROLLER
+// ==========================================
+
+function renderGalleryEditor(categoryFilter = 'todas', searchTerm = '') {
+  const container = document.getElementById('admin-gallery-list');
+  if (!container) return;
+
+  const gallery = getGallery();
+  let filtered = gallery;
+
+  if (categoryFilter !== 'todas') {
+    filtered = filtered.filter(g => g.category === categoryFilter);
+  }
+
+  if (searchTerm && searchTerm.trim()) {
+    const q = searchTerm.toLowerCase().trim();
+    filtered = filtered.filter(g => 
+      (g.title && g.title.toLowerCase().includes(q)) || 
+      (g.desc && g.desc.toLowerCase().includes(q)) ||
+      (g.categoryLabel && g.categoryLabel.toLowerCase().includes(q))
+    );
+  }
+
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div class="col-span-full py-12 text-center bg-slate-900/40 rounded-3xl border border-slate-800">
+        <i class="fa-solid fa-camera-retro text-4xl text-slate-600 mb-3 block"></i>
+        <p class="text-sm text-slate-400">No se encontraron fotografías con los filtros seleccionados.</p>
+        <button onclick="window.openAddGalleryModal()" class="mt-4 px-4 py-2 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-xs rounded-xl shadow transition">
+          + Agregar Primera Foto
+        </button>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = filtered.map(g => {
+    const isEnabled = g.enabled !== false;
+    return `
+      <div class="bg-slate-900 border ${isEnabled ? 'border-slate-800' : 'border-rose-900/40 opacity-70'} rounded-3xl p-5 flex flex-col justify-between hover:border-lime-500/30 transition shadow-lg group relative" id="gallery-card-${g.id}">
+        <div>
+          <!-- Thumbnail with overlay badges -->
+          <div class="relative w-full aspect-4/3 rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 mb-4 shadow-inner">
+            <img src="${g.image}" alt="${g.title}" id="gal-card-img-${g.id}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <span class="absolute top-2.5 left-2.5 bg-black/75 backdrop-blur-md text-lime-400 border border-lime-500/30 text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase">
+              ${g.categoryLabel || g.category}
+            </span>
+            <span class="absolute top-2.5 right-2.5 text-[10px] font-bold px-2 py-0.5 rounded-full ${isEnabled ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-rose-500/20 text-rose-400 border border-rose-500/30'}">
+              ${isEnabled ? 'Visible' : 'Oculto'}
+            </span>
+          </div>
+
+          <!-- Title and Category info -->
+          <h4 class="text-white font-black text-sm uppercase leading-tight line-clamp-2 mb-1" id="gal-card-title-${g.id}">
+            ${g.title}
+          </h4>
+          <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed mb-4">
+            ${g.desc || 'Sin descripción'}
+          </p>
+        </div>
+
+        <!-- Action Controls -->
+        <div class="space-y-3 pt-3 border-t border-slate-800/80">
+          <!-- Quick Image Change Bar -->
+          <div class="flex items-center gap-2">
+            <input type="text" value="${g.image}" oninput="window.updateGalleryItemLive(${g.id}, 'image', this.value)" placeholder="Ruta o enlace..." class="flex-1 bg-slate-950 border border-slate-800 text-slate-300 rounded-xl px-3 py-1.5 text-[11px] focus:border-lime-500 font-mono">
+            <label class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-white text-[11px] font-bold rounded-xl cursor-pointer transition flex items-center gap-1 shrink-0" title="Subir foto desde tu dispositivo">
+              <i class="fa-solid fa-cloud-arrow-up text-lime-400"></i>
+              <input type="file" accept="image/*" class="hidden" onchange="window.handleGalleryCardImageUpload(${g.id}, this)">
+            </label>
+          </div>
+
+          <!-- Bottom Button Row -->
+          <div class="flex items-center justify-between gap-2">
+            <button onclick="window.toggleGalleryItem(${g.id})" class="px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${isEnabled ? 'bg-slate-800 hover:bg-slate-700 text-slate-300' : 'bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-black border border-emerald-500/30'}">
+              <i class="fa-solid ${isEnabled ? 'fa-eye-slash' : 'fa-eye'}"></i>
+              <span>${isEnabled ? 'Ocultar' : 'Activar'}</span>
+            </button>
+
+            <div class="flex items-center gap-1.5">
+              <button onclick="window.openEditGalleryModal(${g.id})" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-bold transition flex items-center gap-1">
+                <i class="fa-solid fa-pen text-lime-400"></i> Editar
+              </button>
+              <button onclick="window.deleteGalleryItem(${g.id})" class="w-8 h-8 rounded-xl bg-slate-950 hover:bg-rose-500/20 text-slate-500 hover:text-rose-400 border border-slate-800 transition flex items-center justify-center" title="Eliminar foto">
+                <i class="fa-solid fa-trash-can text-xs"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    `;
+  }).join('');
+}
+
+// Live update field on gallery item
+window.updateGalleryItemLive = function(id, field, value) {
+  const gallery = getGallery();
+  const item = gallery.find(g => g.id === id);
+  if (item) {
+    item[field] = value;
+    saveGallery(gallery);
+    if (field === 'image') {
+      const img = document.getElementById(`gal-card-img-${id}`);
+      if (img) img.src = value;
+    }
+  }
+};
+
+// Upload photo directly on card
+window.handleGalleryCardImageUpload = function(id, inputEl) {
+  if (inputEl.files && inputEl.files[0]) {
+    const file = inputEl.files[0];
+    compressImage(file, 1200, 900, 0.85, function(dataUrl) {
+      const gallery = getGallery();
+      const item = gallery.find(g => g.id === id);
+      if (item) {
+        item.image = dataUrl;
+        saveGallery(gallery);
+        const img = document.getElementById(`gal-card-img-${id}`);
+        if (img) img.src = dataUrl;
+        showAdminToast("¡Foto de galería actualizada con éxito!");
+      }
+    });
+  }
+};
+
+// Toggle enable/disable gallery photo
+window.toggleGalleryItem = function(id) {
+  const gallery = getGallery();
+  const item = gallery.find(g => g.id === id);
+  if (item) {
+    item.enabled = item.enabled === false ? true : false;
+    saveGallery(gallery);
+    const cat = document.getElementById('admin-gallery-filter')?.value || 'todas';
+    const q = document.getElementById('admin-gallery-search')?.value || '';
+    renderGalleryEditor(cat, q);
+    showAdminToast(item.enabled ? "Foto activada en la galería" : "Foto ocultada de la galería");
+  }
+};
+
+// Delete gallery item
+window.deleteGalleryItem = function(id) {
+  if (!confirm("¿Deseas eliminar esta fotografía de la galería?")) return;
+  let gallery = getGallery();
+  gallery = gallery.filter(g => g.id !== id);
+  saveGallery(gallery);
+  const cat = document.getElementById('admin-gallery-filter')?.value || 'todas';
+  const q = document.getElementById('admin-gallery-search')?.value || '';
+  renderGalleryEditor(cat, q);
+  showAdminToast("Fotografía eliminada");
+};
+
+// Modal handlers
+window.openAddGalleryModal = function() {
+  const form = document.getElementById('admin-gallery-add-form');
+  const modal = document.getElementById('admin-gallery-add-modal');
+  if (form) form.reset();
+  window.previewGalleryImageLive('add', '');
+  if (modal) modal.classList.remove('hidden');
+};
+
+window.closeAddGalleryModal = function() {
+  const modal = document.getElementById('admin-gallery-add-modal');
+  if (modal) modal.classList.add('hidden');
+};
+
+window.saveNewGalleryItem = function(e) {
+  e.preventDefault();
+  const title = document.getElementById('add-gal-title')?.value.trim();
+  const category = document.getElementById('add-gal-category')?.value;
+  const badge = document.getElementById('add-gal-badge')?.value.trim() || '';
+  const image = document.getElementById('add-gal-image')?.value.trim();
+  const desc = document.getElementById('add-gal-desc')?.value.trim() || '';
+
+  if (!title || !image) {
+    alert("Por favor ingresa un título y una imagen para la foto.");
+    return;
+  }
+
+  const categoryLabels = {
+    musculacion: "Musculación & Pesas",
+    funcional: "CrossFit & Calistenia",
+    clases: "Rumbaterapia",
+    salud: "Cardio & Salud",
+    pareja: "Plan Pareja"
+  };
+
+  const gallery = getGallery();
+  const newId = gallery.length > 0 ? Math.max(...gallery.map(g => g.id)) + 1 : 1;
+  const newItem = {
+    id: newId,
+    title,
+    category,
+    categoryLabel: badge || categoryLabels[category] || category,
+    desc,
+    image,
+    enabled: true
+  };
+
+  gallery.unshift(newItem);
+  saveGallery(gallery);
+  window.closeAddGalleryModal();
+  const cat = document.getElementById('admin-gallery-filter')?.value || 'todas';
+  const q = document.getElementById('admin-gallery-search')?.value || '';
+  renderGalleryEditor(cat, q);
+  showAdminToast(`¡Foto "${title}" agregada con éxito a la galería!`);
+};
+
+window.openEditGalleryModal = function(id) {
+  const gallery = getGallery();
+  const item = gallery.find(g => g.id === id);
+  if (!item) return;
+
+  const modal = document.getElementById('admin-gallery-edit-modal');
+  document.getElementById('edit-gal-id').value = item.id;
+  document.getElementById('edit-gal-title').value = item.title;
+  document.getElementById('edit-gal-category').value = item.category;
+  document.getElementById('edit-gal-badge').value = item.categoryLabel || '';
+  document.getElementById('edit-gal-image').value = item.image;
+  document.getElementById('edit-gal-desc').value = item.desc || '';
+  window.previewGalleryImageLive('edit', item.image);
+
+  if (modal) modal.classList.remove('hidden');
+};
+
+window.closeEditGalleryModal = function() {
+  const modal = document.getElementById('admin-gallery-edit-modal');
+  if (modal) modal.classList.add('hidden');
+};
+
+window.saveEditGalleryItem = function(e) {
+  e.preventDefault();
+  const id = parseInt(document.getElementById('edit-gal-id').value);
+  const title = document.getElementById('edit-gal-title')?.value.trim();
+  const category = document.getElementById('edit-gal-category')?.value;
+  const badge = document.getElementById('edit-gal-badge')?.value.trim() || '';
+  const image = document.getElementById('edit-gal-image')?.value.trim();
+  const desc = document.getElementById('edit-gal-desc')?.value.trim() || '';
+
+  const gallery = getGallery();
+  const item = gallery.find(g => g.id === id);
+  if (item) {
+    item.title = title;
+    item.category = category;
+    item.categoryLabel = badge || item.categoryLabel;
+    item.image = image;
+    item.desc = desc;
+    saveGallery(gallery);
+    window.closeEditGalleryModal();
+    const cat = document.getElementById('admin-gallery-filter')?.value || 'todas';
+    const q = document.getElementById('admin-gallery-search')?.value || '';
+    renderGalleryEditor(cat, q);
+    showAdminToast("¡Cambios de la fotografía guardados!");
+  }
+};
+
+window.handleGalleryImageUpload = function(mode, inputEl) {
+  if (inputEl.files && inputEl.files[0]) {
+    const file = inputEl.files[0];
+    compressImage(file, 1200, 900, 0.85, function(dataUrl) {
+      const input = document.getElementById(`${mode}-gal-image`);
+      if (input) input.value = dataUrl;
+      window.previewGalleryImageLive(mode, dataUrl);
+      showAdminToast("¡Foto cargada y optimizada!");
+    });
+  }
+};
+
+window.previewGalleryImageLive = function(mode, val) {
+  const img = document.getElementById(`${mode}-gal-img-preview`);
+  const ph = document.getElementById(`${mode}-gal-img-placeholder`);
+  if (!img || !ph) return;
+
+  if (val && val.trim()) {
+    img.src = val.trim();
+    img.classList.remove('hidden');
+    ph.classList.add('hidden');
+  } else {
+    img.src = '';
+    img.classList.add('hidden');
+    ph.classList.remove('hidden');
+  }
+};
+
+// ==========================================
+// 10. GLOBAL RENDER & INIT
 // ==========================================
 
 function renderAllAdminSections() {
   renderMembersAndFinances();
   renderBannersEditor();
   renderProductsEditor();
+  renderGalleryEditor();
+}
+
+let adminAppInitialized = false;
+function initAdminApp() {
+  renderAllAdminSections();
+  if (adminAppInitialized) return;
+  adminAppInitialized = true;
+
+  initAddMemberForm();
+  initFinancesEditor();
+  initAddNewBanner();
+  initProductsForms();
+
+  // Members search & filter listeners
+  const memberSearch = document.getElementById('admin-member-search');
+  const memberFilter = document.getElementById('admin-member-filter');
+  if (memberSearch) {
+    memberSearch.addEventListener('input', (e) => {
+      const status = memberFilter ? memberFilter.value : 'todos';
+      renderMembersAndFinances(status, e.target.value);
+    });
+  }
+  if (memberFilter) {
+    memberFilter.addEventListener('change', (e) => {
+      const q = memberSearch ? memberSearch.value : '';
+      renderMembersAndFinances(e.target.value, q);
+    });
+  }
+
+  // Product search & filter listeners
+  const prodSearch = document.getElementById('admin-prod-search');
+  const prodFilter = document.getElementById('admin-prod-filter');
+  if (prodSearch) {
+    prodSearch.addEventListener('input', (e) => {
+      const cat = prodFilter ? prodFilter.value : 'todos';
+      renderProductsEditor(cat, e.target.value);
+    });
+  }
+  if (prodFilter) {
+    prodFilter.addEventListener('change', (e) => {
+      const q = prodSearch ? prodSearch.value : '';
+      renderProductsEditor(e.target.value, q);
+    });
+  }
+
+  // Gallery search & filter listeners
+  const galSearch = document.getElementById('admin-gallery-search');
+  const galFilter = document.getElementById('admin-gallery-filter');
+  if (galSearch) {
+    galSearch.addEventListener('input', (e) => {
+      const cat = galFilter ? galFilter.value : 'todas';
+      renderGalleryEditor(cat, e.target.value);
+    });
+  }
+  if (galFilter) {
+    galFilter.addEventListener('change', (e) => {
+      const q = galSearch ? galSearch.value : '';
+      renderGalleryEditor(e.target.value, q);
+    });
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -2601,42 +3116,6 @@ document.addEventListener('DOMContentLoaded', () => {
   checkAdminAuth();
 
   if (localStorage.getItem('caf_admin_logged') === 'true') {
-    renderAllAdminSections();
-    initAddMemberForm();
-    initFinancesEditor();
-    initAddNewBanner();
-    initProductsForms();
-
-    // Members search & filter listeners
-    const memberSearch = document.getElementById('admin-member-search');
-    const memberFilter = document.getElementById('admin-member-filter');
-    if (memberSearch) {
-      memberSearch.addEventListener('input', (e) => {
-        const status = memberFilter ? memberFilter.value : 'todos';
-        renderMembersAndFinances(status, e.target.value);
-      });
-    }
-    if (memberFilter) {
-      memberFilter.addEventListener('change', (e) => {
-        const q = memberSearch ? memberSearch.value : '';
-        renderMembersAndFinances(e.target.value, q);
-      });
-    }
-
-    // Product search & filter listeners
-    const prodSearch = document.getElementById('admin-prod-search');
-    const prodFilter = document.getElementById('admin-prod-filter');
-    if (prodSearch) {
-      prodSearch.addEventListener('input', (e) => {
-        const cat = prodFilter ? prodFilter.value : 'todos';
-        renderProductsEditor(cat, e.target.value);
-      });
-    }
-    if (prodFilter) {
-      prodFilter.addEventListener('change', (e) => {
-        const q = prodSearch ? prodSearch.value : '';
-        renderProductsEditor(e.target.value, q);
-      });
-    }
+    initAdminApp();
   }
 });

@@ -63,7 +63,7 @@
           <label for="admin-pass-input" class="block text-xs font-bold text-slate-300 uppercase mb-1">Contraseña:</label>
           <div class="relative">
             <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"><i class="fa-solid fa-key"></i></span>
-            <input id="admin-pass-input" type="password" required placeholder="123456" value="123456" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl pl-9 pr-4 py-3 text-sm focus:outline-none focus:border-lime-500 font-mono">
+            <input id="admin-pass-input" type="password" required placeholder="cristal" value="cristal" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl pl-9 pr-4 py-3 text-sm focus:outline-none focus:border-lime-500 font-mono">
           </div>
         </div>
 
@@ -126,15 +126,19 @@
       <div class="flex flex-wrap items-center gap-2.5 mb-8 bg-slate-950 p-2 rounded-2xl border border-slate-800/80">
         <button onclick="window.switchAdminSection('finanzas')" id="admin-tab-btn-finanzas" class="admin-tab-btn px-5 py-3 rounded-xl text-xs sm:text-sm font-bold bg-lime-500 text-black transition flex items-center gap-2">
           <i class="fa-solid fa-users-gear text-base"></i>
-          <span>1. Finanzas & Socios Inscritos</span>
+          <span>1. Finanzas & Socios</span>
         </button>
         <button onclick="window.switchAdminSection('banners')" id="admin-tab-btn-banners" class="admin-tab-btn px-5 py-3 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-300 hover:text-white transition flex items-center gap-2">
           <i class="fa-solid fa-images text-base"></i>
-          <span>2. Editor de Banners & Opacidad</span>
+          <span>2. Banners & Opacidad</span>
         </button>
         <button onclick="window.switchAdminSection('tienda')" id="admin-tab-btn-tienda" class="admin-tab-btn px-5 py-3 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-300 hover:text-white transition flex items-center gap-2">
           <i class="fa-solid fa-store text-base"></i>
-          <span>3. Editor Ropa Deportiva & Suplementos</span>
+          <span>3. Ropa & Suplementos</span>
+        </button>
+        <button onclick="window.switchAdminSection('galeria')" id="admin-tab-btn-galeria" class="admin-tab-btn px-5 py-3 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-slate-300 hover:text-white transition flex items-center gap-2">
+          <i class="fa-solid fa-camera-retro text-base"></i>
+          <span>4. Galería de Fotos</span>
         </button>
       </div>
 
@@ -302,7 +306,7 @@
             <h2 class="text-xl sm:text-2xl font-black text-white uppercase">Gestión de Ropa Deportiva y Suplementos</h2>
             <p class="text-xs text-slate-400">Agrega nuevos productos, modifica precios, categorías y disponibilidad en la tienda.</p>
           </div>
-          <button id="admin-open-add-product-btn" class="px-4 py-2.5 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-xs rounded-xl shadow-md transition flex items-center gap-2">
+          <button id="admin-open-add-product-btn" onclick="window.openAddProductModal()" class="px-4 py-2.5 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-xs rounded-xl shadow-md transition flex items-center gap-2">
             <i class="fa-solid fa-plus-circle"></i> + Agregar Producto
           </button>
         </div>
@@ -325,6 +329,44 @@
 
         <!-- Products List Grid -->
         <div id="admin-products-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          <!-- Rendered by admin.js -->
+        </div>
+
+      </section>
+
+      <!-- ================= SECTION 4: EDITOR DE GALERÍA DE FOTOS ================= -->
+      <section id="admin-section-galeria" class="admin-tab-content hidden space-y-6">
+        
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+          <div>
+            <h2 class="text-xl sm:text-2xl font-black text-white uppercase">Gestión de Galería de Fotos (CAF Anserma)</h2>
+            <p class="text-xs text-slate-400">Edita imágenes, cambia títulos o sube nuevas fotografías para que se muestren en la galería pública del gimnasio.</p>
+          </div>
+          <button onclick="window.openAddGalleryModal()" id="admin-open-add-gallery-btn" class="px-4 py-2.5 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-xs rounded-xl shadow-md transition flex items-center gap-2">
+            <i class="fa-solid fa-camera-retro"></i> + Agregar Foto a la Galería
+          </button>
+        </div>
+
+        <!-- Filter and Search Bar for Gallery -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="sm:col-span-2 relative">
+            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+            <input id="admin-gallery-search" type="text" placeholder="Buscar foto por título o descripción..." class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl pl-9 pr-4 py-2.5 text-xs focus:outline-none focus:border-lime-500">
+          </div>
+          <div>
+            <select id="admin-gallery-filter" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-lime-500">
+              <option value="todas">Todas las Categorías</option>
+              <option value="musculacion">Musculación & Pesas</option>
+              <option value="funcional">CrossFit & Calistenia</option>
+              <option value="clases">Rumbaterapia & Baile</option>
+              <option value="salud">Cardio & Reducción</option>
+              <option value="pareja">Plan Pareja</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Gallery Items List Grid -->
+        <div id="admin-gallery-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           <!-- Rendered by admin.js -->
         </div>
 
@@ -722,6 +764,140 @@
         </div>
       </div>
 
+    </div>
+  </div>
+
+  <!-- ================= MODAL: AGREGAR FOTO A LA GALERÍA ================= -->
+  <div id="admin-gallery-add-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-950 border border-slate-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-4">
+        <h3 class="text-base font-black text-white uppercase"><i class="fa-solid fa-camera-retro text-lime-400 mr-2"></i>Agregar Foto a la Galería</h3>
+        <button onclick="window.closeAddGalleryModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <form id="admin-gallery-add-form" onsubmit="window.saveNewGalleryItem(event)" class="space-y-3.5">
+        <div>
+          <label for="add-gal-title" class="block text-xs font-bold text-slate-300 uppercase mb-1">Título de la Foto / Área:</label>
+          <input id="add-gal-title" type="text" required placeholder="Ej: Nueva Zona de Pesas Libres" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2 text-xs focus:border-lime-500">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="add-gal-category" class="block text-xs font-bold text-slate-300 uppercase mb-1">Categoría / Disciplina:</label>
+            <select id="add-gal-category" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-3 py-2 text-xs focus:border-lime-500">
+              <option value="musculacion">Musculación & Pesas</option>
+              <option value="funcional">CrossFit & Calistenia</option>
+              <option value="clases">Rumbaterapia & Baile</option>
+              <option value="salud">Cardio & Reducción</option>
+              <option value="pareja">Plan Pareja</option>
+            </select>
+          </div>
+          <div>
+            <label for="add-gal-badge" class="block text-xs font-bold text-slate-300 uppercase mb-1">Etiqueta Visual:</label>
+            <input id="add-gal-badge" type="text" placeholder="Ej: Pesas Libres" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2 text-xs focus:border-lime-500">
+          </div>
+        </div>
+
+        <!-- Imagen de la Galería -->
+        <div class="bg-slate-900/60 border border-slate-800 p-3.5 rounded-2xl space-y-2.5">
+          <label class="block text-xs font-bold text-slate-300 uppercase flex items-center justify-between">
+            <span><i class="fa-solid fa-image text-lime-400 mr-1.5"></i>Fotografía:</span>
+            <span class="text-[10px] text-slate-400 font-normal">Sube foto o escribe enlace</span>
+          </label>
+          <div class="flex items-center gap-3">
+            <div id="add-gal-img-preview-box" class="w-20 h-16 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-center shrink-0 overflow-hidden relative shadow-inner">
+              <img id="add-gal-img-preview" src="" class="w-full h-full object-cover hidden" alt="Vista previa">
+              <i id="add-gal-img-placeholder" class="fa-solid fa-camera text-slate-600 text-xl"></i>
+            </div>
+            <div class="flex-1 space-y-1.5">
+              <label class="px-3 py-1.5 bg-lime-500/20 hover:bg-lime-500 text-lime-400 hover:text-black font-extrabold text-xs rounded-xl cursor-pointer transition inline-flex items-center gap-1.5 border border-lime-500/30">
+                <i class="fa-solid fa-cloud-arrow-up"></i> Subir Foto de Galería
+                <input type="file" id="add-gal-file" accept="image/*" class="hidden" onchange="window.handleGalleryImageUpload('add', this)">
+              </label>
+              <input id="add-gal-image" type="text" placeholder="O escribe enlace / ruta (ej: assets/images/...)" oninput="window.previewGalleryImageLive('add', this.value)" class="w-full bg-slate-950 border border-slate-800 text-slate-300 rounded-lg px-3 py-1.5 text-xs focus:border-lime-500">
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label for="add-gal-desc" class="block text-xs font-bold text-slate-300 uppercase mb-1">Descripción de la Foto:</label>
+          <textarea id="add-gal-desc" rows="2" placeholder="Detalles de la máquina, disciplina, instructor o ambiente..." class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2 text-xs focus:border-lime-500"></textarea>
+        </div>
+
+        <div class="pt-3">
+          <button type="submit" class="w-full py-3 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-xs rounded-xl shadow-md transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-floppy-disk"></i> Publicar en la Galería
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: EDITAR FOTO DE LA GALERÍA ================= -->
+  <div id="admin-gallery-edit-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-950 border border-slate-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-4">
+        <h3 class="text-base font-black text-white uppercase"><i class="fa-solid fa-pen text-lime-400 mr-2"></i>Editar Foto de Galería</h3>
+        <button onclick="window.closeEditGalleryModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <form id="admin-gallery-edit-form" onsubmit="window.saveEditGalleryItem(event)" class="space-y-3.5">
+        <input type="hidden" id="edit-gal-id">
+
+        <div>
+          <label for="edit-gal-title" class="block text-xs font-bold text-slate-300 uppercase mb-1">Título de la Foto / Área:</label>
+          <input id="edit-gal-title" type="text" required class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2 text-xs focus:border-lime-500">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="edit-gal-category" class="block text-xs font-bold text-slate-300 uppercase mb-1">Categoría / Disciplina:</label>
+            <select id="edit-gal-category" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-3 py-2 text-xs focus:border-lime-500">
+              <option value="musculacion">Musculación & Pesas</option>
+              <option value="funcional">CrossFit & Calistenia</option>
+              <option value="clases">Rumbaterapia & Baile</option>
+              <option value="salud">Cardio & Reducción</option>
+              <option value="pareja">Plan Pareja</option>
+            </select>
+          </div>
+          <div>
+            <label for="edit-gal-badge" class="block text-xs font-bold text-slate-300 uppercase mb-1">Etiqueta Visual:</label>
+            <input id="edit-gal-badge" type="text" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2 text-xs focus:border-lime-500">
+          </div>
+        </div>
+
+        <!-- Imagen de la Galería (Editar) -->
+        <div class="bg-slate-900/60 border border-slate-800 p-3.5 rounded-2xl space-y-2.5">
+          <label class="block text-xs font-bold text-slate-300 uppercase flex items-center justify-between">
+            <span><i class="fa-solid fa-image text-lime-400 mr-1.5"></i>Fotografía:</span>
+            <span class="text-[10px] text-slate-400 font-normal">Sube foto o escribe enlace</span>
+          </label>
+          <div class="flex items-center gap-3">
+            <div id="edit-gal-img-preview-box" class="w-20 h-16 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-center shrink-0 overflow-hidden relative shadow-inner">
+              <img id="edit-gal-img-preview" src="" class="w-full h-full object-cover" alt="Vista previa">
+              <i id="edit-gal-img-placeholder" class="fa-solid fa-camera text-slate-600 text-xl hidden"></i>
+            </div>
+            <div class="flex-1 space-y-1.5">
+              <label class="px-3 py-1.5 bg-lime-500/20 hover:bg-lime-500 text-lime-400 hover:text-black font-extrabold text-xs rounded-xl cursor-pointer transition inline-flex items-center gap-1.5 border border-lime-500/30">
+                <i class="fa-solid fa-cloud-arrow-up"></i> Cambiar Foto de Galería
+                <input type="file" id="edit-gal-file" accept="image/*" class="hidden" onchange="window.handleGalleryImageUpload('edit', this)">
+              </label>
+              <input id="edit-gal-image" type="text" oninput="window.previewGalleryImageLive('edit', this.value)" class="w-full bg-slate-950 border border-slate-800 text-slate-300 rounded-lg px-3 py-1.5 text-xs focus:border-lime-500">
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label for="edit-gal-desc" class="block text-xs font-bold text-slate-300 uppercase mb-1">Descripción de la Foto:</label>
+          <textarea id="edit-gal-desc" rows="2" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2 text-xs focus:border-lime-500"></textarea>
+        </div>
+
+        <div class="pt-3">
+          <button type="submit" class="w-full py-3 bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-xs rounded-xl shadow-md transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-floppy-disk"></i> Guardar Cambios de la Foto
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 

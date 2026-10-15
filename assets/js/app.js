@@ -149,14 +149,14 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id: 10,
-    name: "Straps de Agarre + Muñequeras Pro",
+    name: "Guantes de Entrenamiento + Straps de Agarre",
     category: "accesorios",
     price: 38000,
-    desc: "Aumenta tus cargas en peso muerto y remos sin comprometer el agarre. Algodón reforzado.",
-    badge: "Levantamiento",
+    desc: "Aumenta tus cargas en peso muerto y remos con protección palmar antiampollas y soporte de muñeca.",
+    badge: "Protección",
     icon: "fa-solid fa-hand-fist",
     color: "from-amber-600 to-yellow-700",
-    image: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80",
+    image: "assets/images/tienda/guantes.png",
     status: "disponible"
   }
 ];
@@ -167,11 +167,26 @@ function getAppBanners() {
   if (stored) {
     try {
       const parsed = JSON.parse(stored);
-      const enabledOnly = parsed.filter(b => b.enabled !== false);
-      if (enabledOnly.length > 0) return enabledOnly;
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed.filter(b => b.enabled !== false);
+      }
     } catch (e) {}
   }
-  return DEFAULT_BANNERS;
+  return DEFAULT_BANNERS.filter(b => b.enabled !== false);
+}
+
+// Helper to get gallery from storage
+function getAppGallery() {
+  const stored = localStorage.getItem('caf_gallery');
+  if (stored) {
+    try {
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed.filter(g => g.enabled !== false);
+      }
+    } catch (e) {}
+  }
+  return GALLERY_DATA.filter(g => g.enabled !== false);
 }
 
 // Helper to get products from storage
@@ -519,14 +534,15 @@ function initGallery() {
   const lightboxPrev = document.getElementById('lightbox-prev');
   const lightboxNext = document.getElementById('lightbox-next');
 
-  let filteredItems = [...GALLERY_DATA];
+  let filteredItems = getAppGallery();
   let currentLightboxIdx = 0;
 
   function renderGallery(cat = 'todas') {
+    const allGalleryItems = getAppGallery();
     if (cat === 'todas') {
-      filteredItems = [...GALLERY_DATA];
+      filteredItems = [...allGalleryItems];
     } else {
-      filteredItems = GALLERY_DATA.filter(item => item.category === cat);
+      filteredItems = allGalleryItems.filter(item => item.category === cat);
     }
 
     if (!grid) return;
@@ -1314,8 +1330,8 @@ function initLoginModal() {
       const u = document.getElementById('login-username-input')?.value.trim();
       const p = document.getElementById('login-password-input')?.value.trim();
 
-      // Check if Admin Credentials (123456 / 123456)
-      if (u === '123456' && p === '123456') {
+      // Check if Admin Credentials (123456 / cristal)
+      if (u === '123456' && p === 'cristal') {
         localStorage.setItem('caf_admin_logged', 'true');
         window.location.href = 'admin.html';
         return;
@@ -1354,7 +1370,7 @@ function initLoginModal() {
       }
 
       if (errorBox) {
-        errorBox.textContent = 'Credenciales no válidas. Usa 123456 / 123456 para Administrador.';
+        errorBox.textContent = 'Credenciales no válidas. Usa 123456 / cristal para Administrador.';
         errorBox.classList.remove('hidden');
       }
     });
@@ -1363,7 +1379,7 @@ function initLoginModal() {
   if (demoAdminBtn) {
     demoAdminBtn.addEventListener('click', () => {
       document.getElementById('login-username-input').value = '123456';
-      document.getElementById('login-password-input').value = '123456';
+      document.getElementById('login-password-input').value = 'cristal';
       localStorage.setItem('caf_admin_logged', 'true');
       window.location.href = 'admin.html';
     });
