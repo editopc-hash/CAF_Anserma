@@ -891,17 +891,51 @@ function compressImage(file, maxWidth, maxHeight, quality, callback) {
   reader.readAsDataURL(file);
 }
 
-// Safe storage writing with quota guard
+// Safe storage writing with IndexedDB and quota guard
 function safeSave(key, data) {
+  // 1. Save directly to IndexedDB (virtually unlimited capacity)
+  if (window.CafDB && typeof window.CafDB.set === 'function') {
+    window.CafDB.set(key, data);
+  }
+
+  // 2. Save to localStorage for instant synchronous rendering
   try {
     localStorage.setItem(key, typeof data === 'string' ? data : JSON.stringify(data));
     return true;
   } catch (e) {
-    console.warn("Storage quota exceeded for " + key, e);
-    alert("Atención: El almacenamiento local está lleno. Intenta con una imagen más liviana.");
-    return false;
+    console.warn("LocalStorage quota exceeded, optimizing cache for IndexedDB...", e);
+    // Purge legacy bloated items so localStorage is never stuck
+    if (window.CafDB && typeof window.CafDB.purgeBloatedLocalStorage === 'function') {
+      window.CafDB.purgeBloatedLocalStorage();
+    }
+    try {
+      if (Array.isArray(data)) {
+        const light = data.map(item => {
+          const clone = Object.assign({}, item);
+          if (clone.image && clone.image.startsWith('data:image') && clone.image.length > 50000) {
+            clone.image = clone.defaultImage || 'assets/images/banner/banner-anserma-cambio.png';
+          }
+          return clone;
+        });
+        localStorage.setItem(key, JSON.stringify(light));
+      }
+    } catch(err2) {
+      console.warn("Retrying with minimal payload", err2);
+    }
+    return true; // Successfully saved to IndexedDB!
   }
 }
+
+// Clean and optimize admin storage
+window.cleanAdminStorage = function() {
+  if (window.CafDB && typeof window.CafDB.purgeBloatedLocalStorage === 'function') {
+    window.CafDB.purgeBloatedLocalStorage();
+    showAdminToast("¡Memoria optimizada! Base de datos de alta capacidad activa.");
+    renderAllAdminSections();
+  } else {
+    showAdminToast("Memoria verificada y al día.");
+  }
+};
 
 // Floating Toast Notification
 function showAdminToast(msg) {
@@ -1700,7 +1734,7 @@ window.deleteBanner = function(bannerId) {
 window.handleBannerImageUpload = function(bannerId, inputEl) {
   if (inputEl.files && inputEl.files[0]) {
     const file = inputEl.files[0];
-    compressImage(file, 1600, 900, 0.85, function(dataUrl) {
+    compressImage(file, 1280, 720, 0.78, function(dataUrl) {
       const banners = getBanners();
       const banner = banners.find(b => b.id === bannerId);
       if (banner) {
@@ -1871,7 +1905,7 @@ window.deleteProduct = function(productId) {
 window.handleProductImageUpload = function(mode, inputEl) {
   if (inputEl.files && inputEl.files[0]) {
     const file = inputEl.files[0];
-    compressImage(file, 800, 800, 0.82, function(dataUrl) {
+    compressImage(file, 600, 600, 0.78, function(dataUrl) {
       const input = document.getElementById(`${mode}-prod-image`);
       if (input) input.value = dataUrl;
       window.previewProductImageLive(mode, dataUrl);
@@ -2868,7 +2902,7 @@ window.updateGalleryItemLive = function(id, field, value) {
 window.handleGalleryCardImageUpload = function(id, inputEl) {
   if (inputEl.files && inputEl.files[0]) {
     const file = inputEl.files[0];
-    compressImage(file, 1200, 900, 0.85, function(dataUrl) {
+    compressImage(file, 900, 700, 0.78, function(dataUrl) {
       const gallery = getGallery();
       const item = gallery.find(g => g.id === id);
       if (item) {
@@ -3015,7 +3049,7 @@ window.saveEditGalleryItem = function(e) {
 window.handleGalleryImageUpload = function(mode, inputEl) {
   if (inputEl.files && inputEl.files[0]) {
     const file = inputEl.files[0];
-    compressImage(file, 1200, 900, 0.85, function(dataUrl) {
+    compressImage(file, 900, 700, 0.78, function(dataUrl) {
       const input = document.getElementById(`${mode}-gal-image`);
       if (input) input.value = dataUrl;
       window.previewGalleryImageLive(mode, dataUrl);

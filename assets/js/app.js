@@ -324,6 +324,28 @@ document.addEventListener('DOMContentLoaded', () => {
   initBackToTop();
   initLoginModal();
   updateUserNavBadge();
+
+  // High capacity IndexedDB background sync
+  if (window.CafDB && typeof window.CafDB.get === 'function') {
+    Promise.all([
+      window.CafDB.get('caf_banners'),
+      window.CafDB.get('caf_products'),
+      window.CafDB.get('caf_gallery')
+    ]).then(([banners, products, gallery]) => {
+      if (banners && Array.isArray(banners)) {
+        try { localStorage.setItem('caf_banners', JSON.stringify(banners)); } catch(e){}
+        initHeroSlider();
+      }
+      if (products && Array.isArray(products)) {
+        try { localStorage.setItem('caf_products', JSON.stringify(products)); } catch(e){}
+        initStore();
+      }
+      if (gallery && Array.isArray(gallery)) {
+        try { localStorage.setItem('caf_gallery', JSON.stringify(gallery)); } catch(e){}
+        initGallery();
+      }
+    }).catch(() => {});
+  }
 });
 
 // ==========================================

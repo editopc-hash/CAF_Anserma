@@ -109,6 +109,10 @@
               <i class="fa-solid fa-arrow-up-right-from-square"></i>
               <span class="hidden sm:inline">Ver Sitio Web</span>
             </a>
+            <button onclick="window.cleanAdminStorage()" class="px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-amber-400 hover:bg-amber-500/10 hover:border-amber-500/40 transition flex items-center gap-1.5" title="Liberar memoria y optimizar almacenamiento">
+              <i class="fa-solid fa-broom"></i>
+              <span class="hidden sm:inline">Liberar Memoria</span>
+            </button>
             <button id="admin-logout-btn" class="px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-rose-400 hover:bg-rose-500/10 hover:border-rose-500/40 transition flex items-center gap-1.5">
               <i class="fa-solid fa-power-off"></i>
               <span class="hidden sm:inline">Cerrar Sesión</span>
@@ -902,6 +906,7 @@
   </div>
 
   <!-- Scripts -->
+  <script src="assets/js/db.js"></script>
   <script src="assets/js/admin.js"></script>
 
   <script>
